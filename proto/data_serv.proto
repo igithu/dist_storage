@@ -1,0 +1,25 @@
+package dist_storage;
+
+option cc_generic_services = true;    
+
+enum DSCode {
+    SUC = 0;
+    ERR = 1;
+    NOFOUND = 2;
+}
+
+message DSRequest {
+    optional string ds_key = 1 [default = ""];
+    optional string ds_value = 2 [default = ""];
+}
+
+message DSResponse {
+    optional DSCode code = 1 [default = SUC];
+    optional string ds_res = 2 [default = "NULL"];
+}
+
+service DataService {
+    rpc Put(DSRequest) returns (DSResponse);
+    rpc Get(DSRequest) returns (DSResponse);
+    rpc Delete(DSRequest) returns (DSResponse);
+}

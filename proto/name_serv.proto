@@ -1,0 +1,36 @@
+package dist_storage;
+
+option cc_generic_services = true; 
+
+enum DSCode {
+     SUC = 0;
+     ERR = 1;
+}
+
+enum NodeAction {
+    Reg = 0;
+    UnReg = 1;
+    Beat = 2;
+    NUL = 3;
+} 
+
+message HBRequest {
+    optional string host = 1 [default = ""];
+    optional NodeAction action = 2 [default = NUL];
+    optional int64 updated_time = 3 [default = 0];
+    optional int64 avail_space = 4 [default = 0];
+    optional int64 visit_flow = 5 [default = 0];
+}
+
+message HBResponse {
+    optional DSCode code = 1 [default = SUC];
+}
+
+//service HeartBeatService {
+    // rpc Registe(HBRequest) returns (HBResponse);
+//    rpc HeartBeat(HBRequest) returns (HBResponse);
+//}
+
+service NameSevice {
+    rpc HeartBeat(HBRequest) returns (HBResponse);
+}
