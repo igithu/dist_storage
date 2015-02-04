@@ -16,7 +16,7 @@
 
 #include "name_service.h"
 
-#include "node_manager.h"
+#include "../node_manager/node_manager.h"
 #include "../../include/inter_include.h"
 
 namespace dist_storage {

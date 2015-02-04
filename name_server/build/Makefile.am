@@ -35,11 +35,11 @@ COMMON_LD = -lpthread -lz -ldl -lrt \
 bin_PROGRAMS = name_server
 
 name_server_SOURCES = \
-		      ../name_server.cc \
+		      ../common/name_server.cc \
+		      ../common/name_service.h \
+		      ../common/name_service.cpp \
 		      ../node_manager/node_manager.h \
 		      ../node_manager/node_manager.cpp \
-		      ../node_manager/name_service.h \
-		      ../node_manager/name_service.cpp \
 		      ../node_manager/node_status_updater.h \
 		      ../node_manager/node_status_updater.cpp \
 			  ../../rpc/rpc_server.h \

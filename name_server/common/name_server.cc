@@ -21,9 +21,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "../include/inter_include.h"
-#include "../include/ext_include.h"
-#include "node_manager/node_manager.h"
+#include "../../include/inter_include.h"
+#include "../../include/ext_include.h"
+#include "../node_manager/node_manager.h"
 
 using namespace dist_storage;
 using namespace dist_storage::name_server;

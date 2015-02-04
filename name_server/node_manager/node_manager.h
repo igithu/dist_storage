@@ -32,8 +32,8 @@
 #include "pthread_mutex.h"
 #include "pthread_rwlock.h"
 #include "disallow_copy_and_assign.h"
-#include "name_service.h"
 #include "node_status_updater.h"
+#include "../common/name_service.h"
 
 namespace dist_storage {
 
@@ -92,6 +92,7 @@ typedef struct NodeStatusInfo_t {
 class NodeManager;
 
 typedef boost::unordered_map<std::string, NodeStatusInfo> NS_HASH_MAP;
+typedef boost::shared_ptr<NS_HASH_MAP> NS_HASH_MAP_PTR;
 typedef boost::unordered_set<std::string> NODE_LIST; 
 typedef boost::shared_ptr<boost::unordered_set<std::string> > NODE_LIST_PTR; 
 typedef std::auto_ptr<NodeManager> NSSmartPtr;
