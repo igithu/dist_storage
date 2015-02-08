@@ -21,7 +21,6 @@
 
 #include "rpc_util.h"
 #include "rpc_msg.pb.h"
-#include "socket_util.h"
 #include "../log/ds_log.h"
 
 namespace dist_storage {
@@ -52,7 +51,7 @@ void Channel::CallMethod(const MethodDescriptor* method,
                          Message* response,
                          Closure* done) {
 
-    connect_fd_ = TcpConnect(addr_, port_);
+    connect_fd_ = connection_manager_.TcpConnect(addr_, port_);
     if (connect_fd_ < 0) {
         DS_LOG(ERROR, "rpc connect server failed!");
         return;
@@ -63,12 +62,12 @@ void Channel::CallMethod(const MethodDescriptor* method,
         return;
     }
   
-    if (SendMsg(connect_fd_, send_str) < 0) {
+    if (connection_manager_.SendMsg(connect_fd_, send_str) < 0) {
         DS_LOG(ERROR, "send msg error!");
     }
 
     string recv_str;
-    if (RecvMsg(connect_fd_, recv_str) < 0) {
+    if (connection_manager_.RecvMsg(connect_fd_, recv_str) < 0) {
         DS_LOG(ERROR, "rcv msg error!");
     }
     close(connect_fd_);

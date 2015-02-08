@@ -6,8 +6,8 @@ UTIL_LIB=../../../util/tools/tools.h ../../../util/tools/tools.cpp
 
 COMM_LIB=../../config/config_manager.h \
 		 ../../config/config_manager.cpp \
-		 ../../rpc/connection_manager.h \
-		 ../../rpc/connection_manager.cpp \
+		 ../../rpc/socket_util.h \
+		 ../../rpc/socket_util.cpp \
 		 ../../rpc/rpc_util.h \
 		 ../../rpc/rpc_util.cpp \
 		 ../../rpc/rpc_msg.pb.h \
@@ -23,12 +23,14 @@ COMMON_CF = -I../../../third-64/protobuf/include/ \
 		   -I../../../third-64/glog/include/ \
 		   -I../../../third-64/boost/include/ \
 		   -I../../../third-64/iniparser/include/ \
+		   -I../../../third-64/libev/include/ \
 		   -I../../../util/tools/include/
 
 COMMON_LD = -lpthread -lz -ldl -lrt \
 		   ../../../third-64/protobuf/lib/*.a \
 		   ../../../third-64/glog/lib/*.a \
 		   ../../../third-64/iniparser/lib/*.a \
+		   ../../../third-64/libev/lib/*.a \
 		   ../../../third-64/boost/lib/*.a
 
 bin_PROGRAMS = data_server
@@ -40,6 +42,8 @@ data_server_SOURCES = \
 			  ../storage/common_db.h \
 			  ../storage/level_db.h \
 			  ../storage/level_db.cpp \
+			  ../../rpc/libev_connector.h \
+			  ../../rpc/libev_connector.cpp \
 			  ../../rpc/rpc_server.h \
 			  ../../rpc/rpc_server.cpp \
 			  ../../rpc/io_thread.h \

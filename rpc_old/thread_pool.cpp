@@ -61,7 +61,6 @@ bool ThreadPool::Start() {
 }
 
 bool ThreadPool::Wait() {
-    sleep(8);
     if (NULL != thread_ids_) {
         for (int i = 0; i < nthread_num_; ++i) {
             if (thread_ids_[i] == 0) {
@@ -121,8 +120,7 @@ void *ThreadPool::WorkerThread(void *arg) {
             while (task_list.task_head->next == task_list.task_head) {
                 ConditionWait(pool->cond_, pool->task_mutex_);
                 if (false == running_) {
-                    return NULL;
-                    //pthread_exit(0);
+                    pthread_exit(0);
                 }
             }
             task_proc = task_list.task_head->prev;

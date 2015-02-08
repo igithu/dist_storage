@@ -29,7 +29,6 @@ namespace dist_storage {
 IOThread::IOThread(const char* addr, const char* port) {
     strcpy(addr_ = (char*)malloc(strlen(addr) + 1), addr);
     strcpy(port_ = (char*)malloc(strlen(port) + 1), port);
-    printf("Test %s, %s", addr_, port_);
 }
 
 IOThread::~IOThread() {
@@ -39,12 +38,29 @@ IOThread::~IOThread() {
 
 void IOThread::Run() {
     RpcServer& rpc_server = RpcServer::GetInstance();
-    LibevConnector* libev_connector_ptr = rpc_server.GetLibevConnector();
-    if (NULL == libev_connector_ptr) {
+    ConnectionManager* connection_manager_ptr = rpc_server.GetConnectionManager();
+    if (NULL == connection_manager_ptr) {
         return;
     }
-    libev_connector_ptr->Initialize(addr_, port_);
-    libev_connector_ptr->LibevLoop();
+    int32_t listenfd = connection_manager_ptr->TcpListen(addr_, port_);
+    if (connection_manager_ptr->EpollInit(listenfd) < 0) {
+        DS_LOG(ERROR, "epollInit failed!");
+        return;
+    }
+    struct epoll_event events[MAXEVENTS];
+    while (true) {
+        int32_t ready = connection_manager_ptr->EpollWait(MAXEVENTS, events);
+        for (int32_t i = 0; i < ready; ++i) {
+            int32_t event_fd = events[i].data.fd;
+            uint32_t cur_events = events[i].events;
+            if (event_fd == listenfd) {
+                DS_LOG(INFO, "new connection!");
+                connection_manager_ptr->EpollNewConnect(listenfd);
+            } else if (cur_events & EPOLLIN) {
+                rpc_server.RpcCall(event_fd);
+            } 
+        }
+    }
 
 }
 

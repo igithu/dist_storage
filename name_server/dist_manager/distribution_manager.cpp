@@ -27,6 +27,8 @@ DistributionManager::~DistributionManager() {
 }
 
 bool DistributionManager::InitDistTable() {
+
+
     return true;
 }
 

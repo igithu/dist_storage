@@ -24,6 +24,8 @@
 #include <google/protobuf/service.h>
 #include <google/protobuf/message.h>
 
+#include "connection_manager.h"
+
 namespace dist_storage {
 
 using namespace google::protobuf;
@@ -48,6 +50,8 @@ class Channel : public RpcChannel {
         char* port_;
 
         int32_t connect_fd_;
+
+        ConnectionManager connection_manager_;
 
 };
 
