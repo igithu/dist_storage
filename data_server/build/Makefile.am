@@ -2,7 +2,7 @@
 #SUBDIRS=src
 #DIST_SUBDIRS=src
 
-UTIL_LIB=../../../util/tools/tools.h ../../../util/tools/tools.cpp
+UTIL_LIB=../../../pub_util/tools/tools.h ../../../pub_util/tools/tools.cpp
 
 COMM_LIB=../../config/config_manager.h \
 		 ../../config/config_manager.cpp \
@@ -24,7 +24,7 @@ COMMON_CF = -I../../../third-64/protobuf/include/ \
 		   -I../../../third-64/boost/include/ \
 		   -I../../../third-64/iniparser/include/ \
 		   -I../../../third-64/libev/include/ \
-		   -I../../../util/tools/include/
+		   -I../../../pub_util/tools/include/
 
 COMMON_LD = -lpthread -lz -ldl -lrt \
 		   ../../../third-64/protobuf/lib/*.a \
@@ -54,6 +54,6 @@ data_server_SOURCES = \
 			  $(UTIL_LIB)
 data_server_CPPFLAGS = $(COMMON_CF) \
 						 -I../../../third-64/leveldb/include/ \
-  						 -I../../../util/thread/include/
+  						 -I../../../pub_util/thread/include/
 data_server_LDFLAGS =-DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H -fpermissive 
 data_server_LDADD = $(COMMON_LD)  ../../../third-64/leveldb/lib/*.a 
