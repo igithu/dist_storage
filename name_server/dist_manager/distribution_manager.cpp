@@ -16,19 +16,31 @@
 
 #include "distribution_manager.h"
 
+#include "ketamadist_alg.h" 
+
 namespace dist_storage {
 
 namespace name_server {
 
-DistributionManager::DistributionManager() {
+DistributionManager::DistributionManager() :
+   distribute_alg_ptr_(NULL) {
 }
 
 DistributionManager::~DistributionManager() {
+    if (NULL != distribute_alg_ptr_) {
+        delete distribute_alg_ptr_;
+    }
 }
 
 bool DistributionManager::InitDistTable() {
+    if (NULL == distribute_alg_ptr_) {
+        return false;
+    }
+    // for now only ketama hash alg
+    distribute_alg_ptr_ = new KetamaDistAlg();
 
-
+    // start to build dist mapping table
+    distribute_alg_ptr_->BuildDistTable(bucket_node_map_);
     return true;
 }
 

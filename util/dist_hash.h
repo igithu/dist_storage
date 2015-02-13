@@ -7,9 +7,9 @@
  
  
 /**
- * @file ext_include.h
+ * @file truncate_hash.h
  * @author aishuyu(asy5178@163.com)
- * @date 2015/01/09 16:36:04
+ * @date 2015/02/11 13:20:36
  * @brief 
  *  
  **/
@@ -17,19 +17,27 @@
 
 
 
-#ifndef  __EXT_INCLUDE_H_
-#define  __EXT_INCLUDE_H_
+#ifndef  __TRUNCATE_HASH_H_
+#define  __TRUNCATE_HASH_H_
+
+#include <stdio.h>
+
+namespace dist_storage {
+
+typedef unsigned long Long;
+
+Long KetamaHash(unsigned char digest[], Long locate);
+
+
+}  // end of namespace dist_strorage
 
 
 
-#include "../../pub_util/tools/tools.h"
 
 
 
 
 
-
-
-#endif  //__EXT_INCLUDE_H_
+#endif  //__TRUNCATE_HASH_H_
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */
