@@ -17,6 +17,7 @@
 #include "name_service.h"
 
 #include "../node_manager/node_manager.h"
+#include "../dist_manager/distribution_manager.h"
 #include "../../include/inter_include.h"
 #include "../../rpc/rpc_server.h"
 
@@ -51,6 +52,14 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
     //GlobalNM.UpdateNodeList();
 }
 
+void NameServiceImpl::GetBucketList(RpcController* controller
+                                      const CNSRequest* request,
+                                      CNSResponse* response,
+                                      Closure* done) {
+    GlobalDM.GetBucketList(*response->mutable_bucket_list());
+    response.set_ret_code(true);
+}
+
 void NameServiceThread::Run() {
     RpcServer& rpc_server = RpcServer::GetInstance();
     NameServiceImpl name_service;
@@ -62,7 +71,6 @@ void NameServiceThread::Run() {
 
     rpc_server.Start(thread_num, addr, port);
     rpc_server.Wait();
-      while (true);
 }
 
 }  // end of namespace name_server

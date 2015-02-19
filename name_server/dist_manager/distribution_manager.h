@@ -21,15 +21,21 @@
 #define  __DISTRIBUTION_MANAGER_H_
 
 #include "distribute_alg.h"
+#include "disallow_copy_and_assign.h"
+#include "../../proto/name_serv.pb.h"
 
 namespace dist_storage {
 
 namespace name_server {
 
+#define GlobalDM DistributionManager::GetInstance()
+
 class DistributionManager {
     public:
-        // ctor
-        DistributionManager();
+        friend class NameServiceImpl
+
+    public:
+        static DistributionManager& GetInstance();
 
         // dtor
         ~DistributionManager();
@@ -38,11 +44,18 @@ class DistributionManager {
 
         bool BuildDistTable();
 
-        bool GetDistNodeList(std::vector<std::string> )
-        
+        bool GetBucketList(::google::protobuf::RepeatedPtrField<Bucket>& bucket_list);
+
+
+    private:
+        // ctor
+        DistributionManager();
+
+        DISALLOW_COPY_AND_ASSIGN(DistributionManager);
+
     private:
         // bucket <---> node mapping
-        BI_HASH_MAP bucket_node_map_;
+        BUCKET_NODE_MAP bucket_node_map_;
 
         // hash alg
         DistributeAlg* distribute_alg_ptr_;

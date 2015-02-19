@@ -42,6 +42,12 @@ class NameServiceImpl : public NameSevice {
                                HBResponse* hb_reponse,
                                Closure* done);
 
+        virtual void GetBucketList(RpcController* controller,
+                                   const CNSRequest* request,
+                                   CNSResponse* response,
+                                   Closure* done);
+
+
     private:
 };
 

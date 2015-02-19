@@ -35,15 +35,16 @@ message Bucket {
 
 message CNSRequest {
     //optional bool is_suc = 1 [default = false];
-    repeated Bucket bucket_list = 1; 
+    optional string dist_alg = 1 [default = "ketama"];
 }
 
 message CNSResponse {
     optional bool ret_code = 1 [default = false];
+    repeated Bucket bucket_list = 2; 
 }
 
 
 service NameSevice {
     rpc HeartBeat(HBRequest) returns (HBResponse);
-    rpc GetDistNodeList(CNSRequest) returns (CNSResponse);
+    rpc GetBuketList(CNSRequest) returns (CNSResponse);
 }

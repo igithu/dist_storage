@@ -53,13 +53,13 @@ typedef struct BucketInfo_t {
 } BucketInfo;
 
 typedef boost::shared_ptr<BucketInfo> BI_PTR;
-typedef std::map<Long, BI_PTR> BI_HASH_MAP;
+typedef std::map<Long, BI_PTR> BUCKET_NODE_MAP;
 
 class DistributeAlg {
     public:
-        virtual bool BuildDistTable(BI_HASH_MAP& bi_hash_map) = 0;
+        virtual bool BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) = 0;
 
-        virtual bool GetDistNode(const BI_HASH_MAP& bi_hash_map,
+        virtual bool GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
                                  const std::string& key,
                                  std::string& host) = 0;
 };

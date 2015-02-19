@@ -48,6 +48,34 @@ bool DistributionManager::BuildDistTable() {
     return true;
 }
 
+bool DistributionManager::GetBucketList(
+        ::google::protobuf::RepeatedPtrField<Bucket>& bucket_list) {
+    for (BUCKET_NODE_MAP::iterator bn_iter = bucket_node_map_.end();
+         bn_iter != bucket_node_map_.end();
+         ++bn_iter) {
+        Bucket* bucket_ptr = bucket_list.add_bucket_list();
+        bucket_ptr->set_number(bn_iter->first);
+        BI_PTR bi_ptr = bn_iter->second;
+        BN_LIST_PTR bnode_list_ptr(NULL);
+        {
+            ReadLockGuard rguard(bi_ptr->rwlock);
+            bnode_list_ptr = bi_ptr->bnode_list_ptr;
+        }
+
+        if (NULL == bnode_list_ptr) {
+            continue;
+        }
+        BN_LIST& bn_list = *bnode_list_ptr
+        for (BN_LIST::iterator bnl_iter = bn_list.begin();
+             bnl_iter != bn_list.end();
+             ++bnl_iter) {
+            bucket_ptr->add_node_list(*bnl_iter);
+        }
+
+    }
+    return true;
+}
+
 }  // end of namespace name_server
 
 }  // end of namespace dist_storage

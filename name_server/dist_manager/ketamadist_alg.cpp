@@ -30,7 +30,7 @@ using std::vector;
 using std::string;
 using namespace PUBLIC_UTIL;
 
-bool KetamaDistAlg::BuildDistTable(BI_HASH_MAP& bi_hash_map) {
+bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) {
 
     int32_t buckt_num = 100;
     int32_t group_num = buckt_num / 4;
@@ -64,7 +64,7 @@ bool KetamaDistAlg::BuildDistTable(BI_HASH_MAP& bi_hash_map) {
     return true;
 }
 
-bool KetamaDistAlg::GetDistNode(const BI_HASH_MAP& bi_hash_map,
+bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
                                 const string& key, 
                                 string& host) {
     if (bi_hash_map.size() == 0) {
@@ -77,7 +77,7 @@ bool KetamaDistAlg::GetDistNode(const BI_HASH_MAP& bi_hash_map,
     MD5(md5_str, digest);
     Long m = KetamaHash(digest, 0);
 
-    BI_HASH_MAP::const_iterator bi_itr = bi_hash_map.find(m);
+    BUCKET_NODE_MAP::const_iterator bi_itr = bi_hash_map.find(m);
     if (bi_itr != bi_hash_map.end()) {
         const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
         if (bi_list.size() == 0) {

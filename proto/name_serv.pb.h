@@ -435,26 +435,29 @@ class CNSRequest : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .dist_storage.Bucket bucket_list = 1;
-  inline int bucket_list_size() const;
-  inline void clear_bucket_list();
-  static const int kBucketListFieldNumber = 1;
-  inline const ::dist_storage::Bucket& bucket_list(int index) const;
-  inline ::dist_storage::Bucket* mutable_bucket_list(int index);
-  inline ::dist_storage::Bucket* add_bucket_list();
-  inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
-      bucket_list() const;
-  inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
-      mutable_bucket_list();
+  // optional string dist_alg = 1 [default = "ketama"];
+  inline bool has_dist_alg() const;
+  inline void clear_dist_alg();
+  static const int kDistAlgFieldNumber = 1;
+  inline const ::std::string& dist_alg() const;
+  inline void set_dist_alg(const ::std::string& value);
+  inline void set_dist_alg(const char* value);
+  inline void set_dist_alg(const char* value, size_t size);
+  inline ::std::string* mutable_dist_alg();
+  inline ::std::string* release_dist_alg();
+  inline void set_allocated_dist_alg(::std::string* dist_alg);
 
   // @@protoc_insertion_point(class_scope:dist_storage.CNSRequest)
  private:
+  inline void set_has_dist_alg();
+  inline void clear_has_dist_alg();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket > bucket_list_;
+  static ::std::string* _default_dist_alg_;
+  ::std::string* dist_alg_;
   friend void  protobuf_AddDesc_name_5fserv_2eproto();
   friend void protobuf_AssignDesc_name_5fserv_2eproto();
   friend void protobuf_ShutdownFile_name_5fserv_2eproto();
@@ -524,6 +527,18 @@ class CNSResponse : public ::google::protobuf::Message {
   inline bool ret_code() const;
   inline void set_ret_code(bool value);
 
+  // repeated .dist_storage.Bucket bucket_list = 2;
+  inline int bucket_list_size() const;
+  inline void clear_bucket_list();
+  static const int kBucketListFieldNumber = 2;
+  inline const ::dist_storage::Bucket& bucket_list(int index) const;
+  inline ::dist_storage::Bucket* mutable_bucket_list(int index);
+  inline ::dist_storage::Bucket* add_bucket_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
+      bucket_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
+      mutable_bucket_list();
+
   // @@protoc_insertion_point(class_scope:dist_storage.CNSResponse)
  private:
   inline void set_has_ret_code();
@@ -533,6 +548,7 @@ class CNSResponse : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket > bucket_list_;
   bool ret_code_;
   friend void  protobuf_AddDesc_name_5fserv_2eproto();
   friend void protobuf_AssignDesc_name_5fserv_2eproto();
@@ -560,7 +576,7 @@ class NameSevice : public ::google::protobuf::Service {
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
                        ::google::protobuf::Closure* done);
-  virtual void GetDistNodeList(::google::protobuf::RpcController* controller,
+  virtual void GetBuketList(::google::protobuf::RpcController* controller,
                        const ::dist_storage::CNSRequest* request,
                        ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
@@ -597,7 +613,7 @@ class NameSevice_Stub : public NameSevice {
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
                        ::google::protobuf::Closure* done);
-  void GetDistNodeList(::google::protobuf::RpcController* controller,
+  void GetBuketList(::google::protobuf::RpcController* controller,
                        const ::dist_storage::CNSRequest* request,
                        ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
@@ -903,34 +919,80 @@ Bucket::mutable_node_list() {
 
 // CNSRequest
 
-// repeated .dist_storage.Bucket bucket_list = 1;
-inline int CNSRequest::bucket_list_size() const {
-  return bucket_list_.size();
+// optional string dist_alg = 1 [default = "ketama"];
+inline bool CNSRequest::has_dist_alg() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void CNSRequest::clear_bucket_list() {
-  bucket_list_.Clear();
+inline void CNSRequest::set_has_dist_alg() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline const ::dist_storage::Bucket& CNSRequest::bucket_list(int index) const {
-  // @@protoc_insertion_point(field_get:dist_storage.CNSRequest.bucket_list)
-  return bucket_list_.Get(index);
+inline void CNSRequest::clear_has_dist_alg() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::dist_storage::Bucket* CNSRequest::mutable_bucket_list(int index) {
-  // @@protoc_insertion_point(field_mutable:dist_storage.CNSRequest.bucket_list)
-  return bucket_list_.Mutable(index);
+inline void CNSRequest::clear_dist_alg() {
+  if (dist_alg_ != _default_dist_alg_) {
+    dist_alg_->assign(*_default_dist_alg_);
+  }
+  clear_has_dist_alg();
 }
-inline ::dist_storage::Bucket* CNSRequest::add_bucket_list() {
-  // @@protoc_insertion_point(field_add:dist_storage.CNSRequest.bucket_list)
-  return bucket_list_.Add();
+inline const ::std::string& CNSRequest::dist_alg() const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSRequest.dist_alg)
+  return *dist_alg_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
-CNSRequest::bucket_list() const {
-  // @@protoc_insertion_point(field_list:dist_storage.CNSRequest.bucket_list)
-  return bucket_list_;
+inline void CNSRequest::set_dist_alg(const ::std::string& value) {
+  set_has_dist_alg();
+  if (dist_alg_ == _default_dist_alg_) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(value);
+  // @@protoc_insertion_point(field_set:dist_storage.CNSRequest.dist_alg)
 }
-inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
-CNSRequest::mutable_bucket_list() {
-  // @@protoc_insertion_point(field_mutable_list:dist_storage.CNSRequest.bucket_list)
-  return &bucket_list_;
+inline void CNSRequest::set_dist_alg(const char* value) {
+  set_has_dist_alg();
+  if (dist_alg_ == _default_dist_alg_) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(value);
+  // @@protoc_insertion_point(field_set_char:dist_storage.CNSRequest.dist_alg)
+}
+inline void CNSRequest::set_dist_alg(const char* value, size_t size) {
+  set_has_dist_alg();
+  if (dist_alg_ == _default_dist_alg_) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dist_storage.CNSRequest.dist_alg)
+}
+inline ::std::string* CNSRequest::mutable_dist_alg() {
+  set_has_dist_alg();
+  if (dist_alg_ == _default_dist_alg_) {
+    dist_alg_ = new ::std::string(*_default_dist_alg_);
+  }
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSRequest.dist_alg)
+  return dist_alg_;
+}
+inline ::std::string* CNSRequest::release_dist_alg() {
+  clear_has_dist_alg();
+  if (dist_alg_ == _default_dist_alg_) {
+    return NULL;
+  } else {
+    ::std::string* temp = dist_alg_;
+    dist_alg_ = const_cast< ::std::string*>(_default_dist_alg_);
+    return temp;
+  }
+}
+inline void CNSRequest::set_allocated_dist_alg(::std::string* dist_alg) {
+  if (dist_alg_ != _default_dist_alg_) {
+    delete dist_alg_;
+  }
+  if (dist_alg) {
+    set_has_dist_alg();
+    dist_alg_ = dist_alg;
+  } else {
+    clear_has_dist_alg();
+    dist_alg_ = const_cast< ::std::string*>(_default_dist_alg_);
+  }
+  // @@protoc_insertion_point(field_set_allocated:dist_storage.CNSRequest.dist_alg)
 }
 
 // -------------------------------------------------------------------
@@ -959,6 +1021,36 @@ inline void CNSResponse::set_ret_code(bool value) {
   set_has_ret_code();
   ret_code_ = value;
   // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.ret_code)
+}
+
+// repeated .dist_storage.Bucket bucket_list = 2;
+inline int CNSResponse::bucket_list_size() const {
+  return bucket_list_.size();
+}
+inline void CNSResponse::clear_bucket_list() {
+  bucket_list_.Clear();
+}
+inline const ::dist_storage::Bucket& CNSResponse::bucket_list(int index) const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.bucket_list)
+  return bucket_list_.Get(index);
+}
+inline ::dist_storage::Bucket* CNSResponse::mutable_bucket_list(int index) {
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSResponse.bucket_list)
+  return bucket_list_.Mutable(index);
+}
+inline ::dist_storage::Bucket* CNSResponse::add_bucket_list() {
+  // @@protoc_insertion_point(field_add:dist_storage.CNSResponse.bucket_list)
+  return bucket_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
+CNSResponse::bucket_list() const {
+  // @@protoc_insertion_point(field_list:dist_storage.CNSResponse.bucket_list)
+  return bucket_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
+CNSResponse::mutable_bucket_list() {
+  // @@protoc_insertion_point(field_mutable_list:dist_storage.CNSResponse.bucket_list)
+  return &bucket_list_;
 }
 
 
