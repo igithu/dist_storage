@@ -37,6 +37,8 @@ class DistributionManager {
         bool InitDistTable();
 
         bool BuildDistTable();
+
+        bool GetDistNodeList(std::vector<std::string> )
         
     private:
         // bucket <---> node mapping
@@ -44,6 +46,8 @@ class DistributionManager {
 
         // hash alg
         DistributeAlg* distribute_alg_ptr_;
+
+
 
 };
 

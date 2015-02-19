@@ -18,6 +18,7 @@
 
 #include "../node_manager/node_manager.h"
 #include "../../include/inter_include.h"
+#include "../../rpc/rpc_server.h"
 
 namespace dist_storage {
 
@@ -51,16 +52,16 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
 }
 
 void NameServiceThread::Run() {
-//    RpcServer& rpc_server = RpcServer::GetInstance();
-//    NameServiceImpl name_service;
-//    rpc_server.RegisteService(&name_service);
-//
-//    int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
-//    const char* addr = DS_SYS_CONF.IniGetString("name_service:addr");
-//    const char* port = DS_SYS_CONF.IniGetString("name_service:port");
-//
-//    rpc_server.Start(thread_num, addr, port);
-//    rpc_server.Wait();
+    RpcServer& rpc_server = RpcServer::GetInstance();
+    NameServiceImpl name_service;
+    rpc_server.RegisteService(&name_service);
+
+    int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
+    const char* addr = DS_SYS_CONF.IniGetString("name_service:addr");
+    const char* port = DS_SYS_CONF.IniGetString("name_service:port");
+
+    rpc_server.Start(thread_num, addr, port);
+    rpc_server.Wait();
       while (true);
 }
 

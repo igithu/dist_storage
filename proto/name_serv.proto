@@ -14,6 +14,7 @@ enum NodeAction {
     NUL = 3;
 } 
 
+// HBRequest HBResponse is used by heartbeat 
 message HBRequest {
     optional string host = 1 [default = ""];
     optional NodeAction action = 2 [default = NUL];
@@ -26,11 +27,23 @@ message HBResponse {
     optional DSCode code = 1 [default = SUC];
 }
 
-//service HeartBeatService {
-    // rpc Registe(HBRequest) returns (HBResponse);
-//    rpc HeartBeat(HBRequest) returns (HBResponse);
-//}
+// Bucket, CNSRequest, CNSResponse is used to make client get dist node list 
+message Bucket {
+    required uint64 number = 1;
+    repeated string node_list = 2;  
+}
+
+message CNSRequest {
+    //optional bool is_suc = 1 [default = false];
+    repeated Bucket bucket_list = 1; 
+}
+
+message CNSResponse {
+    optional bool ret_code = 1 [default = false];
+}
+
 
 service NameSevice {
     rpc HeartBeat(HBRequest) returns (HBResponse);
+    rpc GetDistNodeList(CNSRequest) returns (CNSResponse);
 }

@@ -37,6 +37,9 @@ void protobuf_ShutdownFile_name_5fserv_2eproto();
 
 class HBRequest;
 class HBResponse;
+class Bucket;
+class CNSRequest;
+class CNSResponse;
 
 enum DSCode {
   SUC = 0,
@@ -281,6 +284,263 @@ class HBResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static HBResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class Bucket : public ::google::protobuf::Message {
+ public:
+  Bucket();
+  virtual ~Bucket();
+
+  Bucket(const Bucket& from);
+
+  inline Bucket& operator=(const Bucket& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Bucket& default_instance();
+
+  void Swap(Bucket* other);
+
+  // implements Message ----------------------------------------------
+
+  Bucket* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Bucket& from);
+  void MergeFrom(const Bucket& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint64 number = 1;
+  inline bool has_number() const;
+  inline void clear_number();
+  static const int kNumberFieldNumber = 1;
+  inline ::google::protobuf::uint64 number() const;
+  inline void set_number(::google::protobuf::uint64 value);
+
+  // repeated string node_list = 2;
+  inline int node_list_size() const;
+  inline void clear_node_list();
+  static const int kNodeListFieldNumber = 2;
+  inline const ::std::string& node_list(int index) const;
+  inline ::std::string* mutable_node_list(int index);
+  inline void set_node_list(int index, const ::std::string& value);
+  inline void set_node_list(int index, const char* value);
+  inline void set_node_list(int index, const char* value, size_t size);
+  inline ::std::string* add_node_list();
+  inline void add_node_list(const ::std::string& value);
+  inline void add_node_list(const char* value);
+  inline void add_node_list(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& node_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_node_list();
+
+  // @@protoc_insertion_point(class_scope:dist_storage.Bucket)
+ private:
+  inline void set_has_number();
+  inline void clear_has_number();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint64 number_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> node_list_;
+  friend void  protobuf_AddDesc_name_5fserv_2eproto();
+  friend void protobuf_AssignDesc_name_5fserv_2eproto();
+  friend void protobuf_ShutdownFile_name_5fserv_2eproto();
+
+  void InitAsDefaultInstance();
+  static Bucket* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CNSRequest : public ::google::protobuf::Message {
+ public:
+  CNSRequest();
+  virtual ~CNSRequest();
+
+  CNSRequest(const CNSRequest& from);
+
+  inline CNSRequest& operator=(const CNSRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CNSRequest& default_instance();
+
+  void Swap(CNSRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  CNSRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CNSRequest& from);
+  void MergeFrom(const CNSRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .dist_storage.Bucket bucket_list = 1;
+  inline int bucket_list_size() const;
+  inline void clear_bucket_list();
+  static const int kBucketListFieldNumber = 1;
+  inline const ::dist_storage::Bucket& bucket_list(int index) const;
+  inline ::dist_storage::Bucket* mutable_bucket_list(int index);
+  inline ::dist_storage::Bucket* add_bucket_list();
+  inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
+      bucket_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
+      mutable_bucket_list();
+
+  // @@protoc_insertion_point(class_scope:dist_storage.CNSRequest)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket > bucket_list_;
+  friend void  protobuf_AddDesc_name_5fserv_2eproto();
+  friend void protobuf_AssignDesc_name_5fserv_2eproto();
+  friend void protobuf_ShutdownFile_name_5fserv_2eproto();
+
+  void InitAsDefaultInstance();
+  static CNSRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class CNSResponse : public ::google::protobuf::Message {
+ public:
+  CNSResponse();
+  virtual ~CNSResponse();
+
+  CNSResponse(const CNSResponse& from);
+
+  inline CNSResponse& operator=(const CNSResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CNSResponse& default_instance();
+
+  void Swap(CNSResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  CNSResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CNSResponse& from);
+  void MergeFrom(const CNSResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional bool ret_code = 1 [default = false];
+  inline bool has_ret_code() const;
+  inline void clear_ret_code();
+  static const int kRetCodeFieldNumber = 1;
+  inline bool ret_code() const;
+  inline void set_ret_code(bool value);
+
+  // @@protoc_insertion_point(class_scope:dist_storage.CNSResponse)
+ private:
+  inline void set_has_ret_code();
+  inline void clear_has_ret_code();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  bool ret_code_;
+  friend void  protobuf_AddDesc_name_5fserv_2eproto();
+  friend void protobuf_AssignDesc_name_5fserv_2eproto();
+  friend void protobuf_ShutdownFile_name_5fserv_2eproto();
+
+  void InitAsDefaultInstance();
+  static CNSResponse* default_instance_;
+};
 // ===================================================================
 
 class NameSevice_Stub;
@@ -299,6 +559,10 @@ class NameSevice : public ::google::protobuf::Service {
   virtual void HeartBeat(::google::protobuf::RpcController* controller,
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
+                       ::google::protobuf::Closure* done);
+  virtual void GetDistNodeList(::google::protobuf::RpcController* controller,
+                       const ::dist_storage::CNSRequest* request,
+                       ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
 
   // implements Service ----------------------------------------------
@@ -332,6 +596,10 @@ class NameSevice_Stub : public NameSevice {
   void HeartBeat(::google::protobuf::RpcController* controller,
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
+                       ::google::protobuf::Closure* done);
+  void GetDistNodeList(::google::protobuf::RpcController* controller,
+                       const ::dist_storage::CNSRequest* request,
+                       ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
  private:
   ::google::protobuf::RpcChannel* channel_;
@@ -547,6 +815,150 @@ inline void HBResponse::set_code(::dist_storage::DSCode value) {
   set_has_code();
   code_ = value;
   // @@protoc_insertion_point(field_set:dist_storage.HBResponse.code)
+}
+
+// -------------------------------------------------------------------
+
+// Bucket
+
+// required uint64 number = 1;
+inline bool Bucket::has_number() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Bucket::set_has_number() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Bucket::clear_has_number() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Bucket::clear_number() {
+  number_ = GOOGLE_ULONGLONG(0);
+  clear_has_number();
+}
+inline ::google::protobuf::uint64 Bucket::number() const {
+  // @@protoc_insertion_point(field_get:dist_storage.Bucket.number)
+  return number_;
+}
+inline void Bucket::set_number(::google::protobuf::uint64 value) {
+  set_has_number();
+  number_ = value;
+  // @@protoc_insertion_point(field_set:dist_storage.Bucket.number)
+}
+
+// repeated string node_list = 2;
+inline int Bucket::node_list_size() const {
+  return node_list_.size();
+}
+inline void Bucket::clear_node_list() {
+  node_list_.Clear();
+}
+inline const ::std::string& Bucket::node_list(int index) const {
+  // @@protoc_insertion_point(field_get:dist_storage.Bucket.node_list)
+  return node_list_.Get(index);
+}
+inline ::std::string* Bucket::mutable_node_list(int index) {
+  // @@protoc_insertion_point(field_mutable:dist_storage.Bucket.node_list)
+  return node_list_.Mutable(index);
+}
+inline void Bucket::set_node_list(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:dist_storage.Bucket.node_list)
+  node_list_.Mutable(index)->assign(value);
+}
+inline void Bucket::set_node_list(int index, const char* value) {
+  node_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:dist_storage.Bucket.node_list)
+}
+inline void Bucket::set_node_list(int index, const char* value, size_t size) {
+  node_list_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dist_storage.Bucket.node_list)
+}
+inline ::std::string* Bucket::add_node_list() {
+  return node_list_.Add();
+}
+inline void Bucket::add_node_list(const ::std::string& value) {
+  node_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:dist_storage.Bucket.node_list)
+}
+inline void Bucket::add_node_list(const char* value) {
+  node_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:dist_storage.Bucket.node_list)
+}
+inline void Bucket::add_node_list(const char* value, size_t size) {
+  node_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:dist_storage.Bucket.node_list)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+Bucket::node_list() const {
+  // @@protoc_insertion_point(field_list:dist_storage.Bucket.node_list)
+  return node_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+Bucket::mutable_node_list() {
+  // @@protoc_insertion_point(field_mutable_list:dist_storage.Bucket.node_list)
+  return &node_list_;
+}
+
+// -------------------------------------------------------------------
+
+// CNSRequest
+
+// repeated .dist_storage.Bucket bucket_list = 1;
+inline int CNSRequest::bucket_list_size() const {
+  return bucket_list_.size();
+}
+inline void CNSRequest::clear_bucket_list() {
+  bucket_list_.Clear();
+}
+inline const ::dist_storage::Bucket& CNSRequest::bucket_list(int index) const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSRequest.bucket_list)
+  return bucket_list_.Get(index);
+}
+inline ::dist_storage::Bucket* CNSRequest::mutable_bucket_list(int index) {
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSRequest.bucket_list)
+  return bucket_list_.Mutable(index);
+}
+inline ::dist_storage::Bucket* CNSRequest::add_bucket_list() {
+  // @@protoc_insertion_point(field_add:dist_storage.CNSRequest.bucket_list)
+  return bucket_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >&
+CNSRequest::bucket_list() const {
+  // @@protoc_insertion_point(field_list:dist_storage.CNSRequest.bucket_list)
+  return bucket_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
+CNSRequest::mutable_bucket_list() {
+  // @@protoc_insertion_point(field_mutable_list:dist_storage.CNSRequest.bucket_list)
+  return &bucket_list_;
+}
+
+// -------------------------------------------------------------------
+
+// CNSResponse
+
+// optional bool ret_code = 1 [default = false];
+inline bool CNSResponse::has_ret_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CNSResponse::set_has_ret_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CNSResponse::clear_has_ret_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CNSResponse::clear_ret_code() {
+  ret_code_ = false;
+  clear_has_ret_code();
+}
+inline bool CNSResponse::ret_code() const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.ret_code)
+  return ret_code_;
+}
+inline void CNSResponse::set_ret_code(bool value) {
+  set_has_ret_code();
+  ret_code_ = value;
+  // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.ret_code)
 }
 
 

@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include "name_service.h"
 #include "../../include/inter_include.h"
 #include "../../include/ext_include.h"
 #include "../node_manager/node_manager.h"
@@ -86,6 +87,11 @@ int main(int argc, char* argv[]) {
     }
 
     GlobalNM.Start();
+
+    NameServiceThread ns_thread;
+    ns_thread.Start();
+
+    ns_thread.Wait();
     GlobalNM.Wait();
 
 
