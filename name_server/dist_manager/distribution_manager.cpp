@@ -40,8 +40,12 @@ DistributionManager::~DistributionManager() {
 }
 
 DistributionManager& DistributionManager::GetInstance() {
-    static DistributionManager instance;
-    return instance;
+    if (NULL == dist_manager_ptr_.get()) {
+        MutexLockGuard lock(instance_mutex_);
+        dist_manager_ptr_.reset(new DistributionManager());
+        return *dist_manager_ptr_;
+    }   
+    return *dist_manager_ptr_;
 }
 
 bool DistributionManager::InitDistTable() {
