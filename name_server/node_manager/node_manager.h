@@ -95,7 +95,7 @@ typedef boost::unordered_map<std::string, NodeStatusInfo> NS_HASH_MAP;
 typedef boost::shared_ptr<NS_HASH_MAP> NS_HASH_MAP_PTR;
 typedef boost::unordered_set<std::string> NODE_LIST; 
 typedef boost::shared_ptr<boost::unordered_set<std::string> > NODE_LIST_PTR; 
-typedef std::auto_ptr<NodeManager> NSSmartPtr;
+typedef std::auto_ptr<NodeManager> NMSmartPtr;
 
 class NodeManager {
     public:
@@ -148,7 +148,7 @@ class NodeManager {
         PUBLIC_UTIL::RWLock unavail_rwlock_;  
 
         // for static
-        static NSSmartPtr node_manager_ptr_;
+        static NMSmartPtr node_manager_ptr_;
 
         static PUBLIC_UTIL::Mutex instance_mutex_;
     private:

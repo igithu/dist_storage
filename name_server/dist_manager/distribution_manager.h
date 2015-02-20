@@ -28,11 +28,14 @@ namespace dist_storage {
 
 namespace name_server {
 
+class DistributionManager;
+typedef std::auto_ptr<DistributionManager> DMSmartPtr;
+
 #define GlobalDM DistributionManager::GetInstance()
 
 class DistributionManager {
     public:
-        friend class NameServiceImpl
+        friend class NameServiceImpl;
 
     public:
         static DistributionManager& GetInstance();
@@ -59,6 +62,11 @@ class DistributionManager {
 
         // hash alg
         DistributeAlg* distribute_alg_ptr_;
+
+        // for static
+        static DMSmartPtr dist_manager_ptr_;
+
+        static PUBLIC_UTIL::Mutex instance_mutex_;
 
 
 

@@ -52,12 +52,12 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
     //GlobalNM.UpdateNodeList();
 }
 
-void NameServiceImpl::GetBucketList(RpcController* controller
-                                      const CNSRequest* request,
-                                      CNSResponse* response,
-                                      Closure* done) {
+void NameServiceImpl::GetBucketList(RpcController* controller,
+                                    const CNSRequest* request,
+                                    CNSResponse* response,
+                                    Closure* done) {
     GlobalDM.GetBucketList(*response->mutable_bucket_list());
-    response.set_ret_code(true);
+    response->set_ret_code(true);
 }
 
 void NameServiceThread::Run() {

@@ -30,7 +30,7 @@ using namespace PUBLIC_UTIL;
 using std::string;
 
 PUBLIC_UTIL::Mutex NodeManager::instance_mutex_;
-NSSmartPtr NodeManager::node_manager_ptr_(NULL);
+NMSmartPtr NodeManager::node_manager_ptr_(NULL);
 
 NodeManager::NodeManager() :
    nse_thread_ptr_(NULL),

@@ -9,18 +9,25 @@
 /**
  * @file distribution_manager.cpp
  * @author aishuyu(asy5178@163.com)
+ *
  * @date 2015/02/04 10:36:34
+ *
  * @brief 
  *  
  **/
 
 #include "distribution_manager.h"
-
+#include "pthread_rwlock.h"
 #include "ketamadist_alg.h" 
 
 namespace dist_storage {
 
 namespace name_server {
+
+using namespace PUBLIC_UTIL;
+
+PUBLIC_UTIL::Mutex DistributionManager::instance_mutex_;
+DMSmartPtr DistributionManager::dist_manager_ptr_(NULL);
 
 DistributionManager::DistributionManager() :
    distribute_alg_ptr_(NULL) {
@@ -30,6 +37,11 @@ DistributionManager::~DistributionManager() {
     if (NULL != distribute_alg_ptr_) {
         delete distribute_alg_ptr_;
     }
+}
+
+DistributionManager& DistributionManager::GetInstance() {
+    static DistributionManager instance;
+    return instance;
 }
 
 bool DistributionManager::InitDistTable() {
@@ -53,10 +65,10 @@ bool DistributionManager::GetBucketList(
     for (BUCKET_NODE_MAP::iterator bn_iter = bucket_node_map_.end();
          bn_iter != bucket_node_map_.end();
          ++bn_iter) {
-        Bucket* bucket_ptr = bucket_list.add_bucket_list();
+        Bucket* bucket_ptr = bucket_list.Add();
         bucket_ptr->set_number(bn_iter->first);
         BI_PTR bi_ptr = bn_iter->second;
-        BN_LIST_PTR bnode_list_ptr(NULL);
+        BN_LIST_PTR bnode_list_ptr;
         {
             ReadLockGuard rguard(bi_ptr->rwlock);
             bnode_list_ptr = bi_ptr->bnode_list_ptr;
@@ -65,7 +77,7 @@ bool DistributionManager::GetBucketList(
         if (NULL == bnode_list_ptr) {
             continue;
         }
-        BN_LIST& bn_list = *bnode_list_ptr
+        BN_LIST& bn_list = *bnode_list_ptr;
         for (BN_LIST::iterator bnl_iter = bn_list.begin();
              bnl_iter != bn_list.end();
              ++bnl_iter) {
