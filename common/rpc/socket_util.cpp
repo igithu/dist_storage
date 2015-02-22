@@ -30,7 +30,7 @@
 #include <netinet/tcp.h> 
 #include <netdb.h>
 
-#include "../log/ds_log.h"
+#include "log/ds_log.h"
 
 namespace dist_storage {
 

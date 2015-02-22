@@ -16,10 +16,10 @@
 
 #include "name_service.h"
 
-#include "../node_manager/node_manager.h"
-#include "../dist_manager/distribution_manager.h"
-#include "../../include/inter_include.h"
-#include "../../rpc/rpc_server.h"
+#include "node_manager/node_manager.h"
+#include "dist_manager/distribution_manager.h"
+#include "include/inter_include.h"
+#include "rpc/rpc_server.h"
 
 namespace dist_storage {
 

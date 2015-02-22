@@ -21,7 +21,7 @@
 #define  __NAME_SERVICE_H_
 
 #include "thread.h"
-#include "../../proto/name_serv.pb.h"
+#include "proto/name_serv.pb.h"
 
 namespace dist_storage {
 

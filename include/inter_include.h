@@ -22,8 +22,8 @@
 
 
 
-#include "../config/config_manager.h"
-#include "../log/ds_log.h"
+#include "config/config_manager.h"
+#include "log/ds_log.h"
 
 
 

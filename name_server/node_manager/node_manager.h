@@ -33,7 +33,7 @@
 #include "pthread_rwlock.h"
 #include "disallow_copy_and_assign.h"
 #include "node_status_updater.h"
-#include "../common/name_service.h"
+#include "server/name_service.h"
 
 namespace dist_storage {
 

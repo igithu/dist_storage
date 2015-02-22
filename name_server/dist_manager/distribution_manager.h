@@ -23,7 +23,7 @@
 #include "distribute_alg.h"
 #include "pthread_mutex.h"
 #include "disallow_copy_and_assign.h"
-#include "../../proto/name_serv.pb.h"
+#include "proto/name_serv.pb.h"
 
 namespace dist_storage {
 

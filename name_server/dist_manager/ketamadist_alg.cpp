@@ -18,9 +18,9 @@
 #include "ketamadist_alg.h"
 
 #include "tools.h"
-#include "../../include/inter_include.h"
-#include "../../util/crytocpp.h"
-#include "../../util/dist_hash.h"
+#include "include/inter_include.h"
+#include "util/crytocpp.h"
+#include "util/dist_hash.h"
 
 namespace dist_storage {    
 

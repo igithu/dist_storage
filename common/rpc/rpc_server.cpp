@@ -24,7 +24,7 @@
 
 #include "socket_util.h"
 #include "rpc_util.h"
-#include "../log/ds_log.h"
+#include "log/ds_log.h"
 
 namespace dist_storage {
 

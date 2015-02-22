@@ -21,8 +21,8 @@
 #define  __ENGINE_SERVICE_H_
 
 
-#include "../../proto/data_serv.pb.h"
-#include "../storage/common_db.h"
+#include "proto/data_serv.pb.h"
+#include "storage/common_db.h"
 
 namespace dist_storage {
 

@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <leveldb/c.h>
 
-#include "../../include/inter_include.h"
-#include "../../include/ext_include.h"
+#include "include/inter_include.h"
+#include "include/ext_include.h"
 
 namespace dist_storage {
 

@@ -27,7 +27,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "pthread_rwlock.h"
-#include "../../util/dist_hash.h"
+#include "util/dist_hash.h"
 
 namespace dist_storage {
 

@@ -19,8 +19,8 @@
 #include <stdio.h>
 #include <string>
 
-#include "../storage/level_db.h"
-#include "../../include/inter_include.h"
+#include "storage/level_db.h"
+#include "include/inter_include.h"
 
 namespace dist_storage {
 

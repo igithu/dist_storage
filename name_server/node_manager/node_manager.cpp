@@ -19,8 +19,8 @@
 #include <time.h>
 
 #include "tools.h"
-#include "../../include/inter_include.h"
-#include "../../proto/name_serv.pb.h"
+#include "include/inter_include.h"
+#include "proto/name_serv.pb.h"
 
 namespace dist_storage {
 
