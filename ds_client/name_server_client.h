@@ -7,9 +7,9 @@
  
  
 /**
- * @file data_server_client.h
+ * @file name_server_client.h
  * @author aishuyu(asy5178@163.com)
- * @date 2015/02/21 22:19:08
+ * @date 2015/02/22 22:00:23
  * @brief 
  *  
  **/
@@ -17,30 +17,34 @@
 
 
 
-#ifndef  __DATA_SERVER_CLIENT_H_
-#define  __DATA_SERVER_CLIENT_H_
+#ifndef  __NAME_SERVER_CLIENT_H_
+#define  __NAME_SERVER_CLIENT_H_
+
 
 #include <string>
+#include <map>
+#include <vector>
+
+#include <boost/shared_ptr.hpp>
 
 #include "rpc/rpc_channel.h"
-#include "proto/data_serv.pb.h"
+#include "proto/name_serv.pb.h"
 
 namespace dist_storage {
 
 namespace ds_client {
 
-class DataServerClient {
+typedef std::vector<std::string> NODE_LIST;
+typedef boost::shared_ptr<NODE_LIST> NODE_LIST_PTR;
+
+class NameServerClient {
     public:
-        DataServerClient();
+        NameServerClient();
 
-        ~DataServerClient();
+        ~NameServerClient();
 
-        // api to exchange data
-        bool Put(const char* key, const char* value);
-
-        bool Get(const char* key, std::string& value);
-
-        bool Delete(const char* key);
+        // get info from name server
+        bool GetBuketList(std::map<int64_t, NODE_LIST_PTR>& bucket_node_map);
 
     private:
         // get init paramters
@@ -71,6 +75,8 @@ class DataServerClient {
 
 
 
-#endif  //__DATA_SERVER_CLIENT_H_
+
+
+#endif  //__NAME_SERVER_CLIENT_H_
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */
