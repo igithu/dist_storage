@@ -49,11 +49,12 @@ void protobuf_AssignDesc_name_5fserv_2eproto() {
       "name_serv.proto");
   GOOGLE_CHECK(file != NULL);
   HBRequest_descriptor_ = file->message_type(0);
-  static const int HBRequest_offsets_[5] = {
+  static const int HBRequest_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, host_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, action_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, updated_time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, avail_space_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, disk_space_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, mem_space_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HBRequest, visit_flow_),
   };
   HBRequest_reflection_ =
@@ -179,22 +180,23 @@ void protobuf_AddDesc_name_5fserv_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\017name_serv.proto\022\014dist_storage\"\222\001\n\tHBRe"
+    "\n\017name_serv.proto\022\014dist_storage\"\247\001\n\tHBRe"
     "quest\022\016\n\004host\030\001 \001(\t:\000\022-\n\006action\030\002 \001(\0162\030."
     "dist_storage.NodeAction:\003NUL\022\027\n\014updated_"
-    "time\030\003 \001(\003:\0010\022\026\n\013avail_space\030\004 \001(\003:\0010\022\025\n"
-    "\nvisit_flow\030\005 \001(\003:\0010\"5\n\nHBResponse\022\'\n\004co"
-    "de\030\001 \001(\0162\024.dist_storage.DSCode:\003SUC\"+\n\006B"
-    "ucket\022\016\n\006number\030\001 \002(\004\022\021\n\tnode_list\030\002 \003(\t"
-    "\"&\n\nCNSRequest\022\030\n\010dist_alg\030\001 \001(\t:\006ketama"
-    "\"Q\n\013CNSResponse\022\027\n\010ret_code\030\001 \001(\010:\005false"
-    "\022)\n\013bucket_list\030\002 \003(\0132\024.dist_storage.Buc"
-    "ket*\032\n\006DSCode\022\007\n\003SUC\020\000\022\007\n\003ERR\020\001*3\n\nNodeA"
-    "ction\022\007\n\003Reg\020\000\022\t\n\005UnReg\020\001\022\010\n\004Beat\020\002\022\007\n\003N"
-    "UL\020\0032\221\001\n\nNameSevice\022>\n\tHeartBeat\022\027.dist_"
-    "storage.HBRequest\032\030.dist_storage.HBRespo"
-    "nse\022C\n\014GetBuketList\022\030.dist_storage.CNSRe"
-    "quest\032\031.dist_storage.CNSResponseB\003\200\001\001", 637);
+    "time\030\003 \001(\003:\0010\022\025\n\ndisk_space\030\004 \001(\003:\0010\022\024\n\t"
+    "mem_space\030\005 \001(\003:\0010\022\025\n\nvisit_flow\030\006 \001(\003:\001"
+    "0\"5\n\nHBResponse\022\'\n\004code\030\001 \001(\0162\024.dist_sto"
+    "rage.DSCode:\003SUC\"+\n\006Bucket\022\016\n\006number\030\001 \002"
+    "(\004\022\021\n\tnode_list\030\002 \003(\t\"&\n\nCNSRequest\022\030\n\010d"
+    "ist_alg\030\001 \001(\t:\006ketama\"Q\n\013CNSResponse\022\027\n\010"
+    "ret_code\030\001 \001(\010:\005false\022)\n\013bucket_list\030\002 \003"
+    "(\0132\024.dist_storage.Bucket*\032\n\006DSCode\022\007\n\003SU"
+    "C\020\000\022\007\n\003ERR\020\001*3\n\nNodeAction\022\007\n\003Reg\020\000\022\t\n\005U"
+    "nReg\020\001\022\010\n\004Beat\020\002\022\007\n\003NUL\020\0032\221\001\n\nNameSevice"
+    "\022>\n\tHeartBeat\022\027.dist_storage.HBRequest\032\030"
+    ".dist_storage.HBResponse\022C\n\014GetBuketList"
+    "\022\030.dist_storage.CNSRequest\032\031.dist_storag"
+    "e.CNSResponseB\003\200\001\001", 658);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "name_serv.proto", &protobuf_RegisterTypes);
   HBRequest::default_instance_ = new HBRequest();
@@ -255,7 +257,8 @@ bool NodeAction_IsValid(int value) {
 const int HBRequest::kHostFieldNumber;
 const int HBRequest::kActionFieldNumber;
 const int HBRequest::kUpdatedTimeFieldNumber;
-const int HBRequest::kAvailSpaceFieldNumber;
+const int HBRequest::kDiskSpaceFieldNumber;
+const int HBRequest::kMemSpaceFieldNumber;
 const int HBRequest::kVisitFlowFieldNumber;
 #endif  // !_MSC_VER
 
@@ -281,7 +284,8 @@ void HBRequest::SharedCtor() {
   host_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   action_ = 3;
   updated_time_ = GOOGLE_LONGLONG(0);
-  avail_space_ = GOOGLE_LONGLONG(0);
+  disk_space_ = GOOGLE_LONGLONG(0);
+  mem_space_ = GOOGLE_LONGLONG(0);
   visit_flow_ = GOOGLE_LONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -331,7 +335,7 @@ void HBRequest::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
+  if (_has_bits_[0 / 32] & 63) {
     ZR_(updated_time_, visit_flow_);
     if (has_host()) {
       if (host_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -405,28 +409,43 @@ bool HBRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_avail_space;
+        if (input->ExpectTag(32)) goto parse_disk_space;
         break;
       }
 
-      // optional int64 avail_space = 4 [default = 0];
+      // optional int64 disk_space = 4 [default = 0];
       case 4: {
         if (tag == 32) {
-         parse_avail_space:
+         parse_disk_space:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &avail_space_)));
-          set_has_avail_space();
+                 input, &disk_space_)));
+          set_has_disk_space();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_visit_flow;
+        if (input->ExpectTag(40)) goto parse_mem_space;
         break;
       }
 
-      // optional int64 visit_flow = 5 [default = 0];
+      // optional int64 mem_space = 5 [default = 0];
       case 5: {
         if (tag == 40) {
+         parse_mem_space:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &mem_space_)));
+          set_has_mem_space();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_visit_flow;
+        break;
+      }
+
+      // optional int64 visit_flow = 6 [default = 0];
+      case 6: {
+        if (tag == 48) {
          parse_visit_flow:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -485,14 +504,19 @@ void HBRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->updated_time(), output);
   }
 
-  // optional int64 avail_space = 4 [default = 0];
-  if (has_avail_space()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->avail_space(), output);
+  // optional int64 disk_space = 4 [default = 0];
+  if (has_disk_space()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->disk_space(), output);
   }
 
-  // optional int64 visit_flow = 5 [default = 0];
+  // optional int64 mem_space = 5 [default = 0];
+  if (has_mem_space()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->mem_space(), output);
+  }
+
+  // optional int64 visit_flow = 6 [default = 0];
   if (has_visit_flow()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->visit_flow(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(6, this->visit_flow(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -527,14 +551,19 @@ void HBRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(3, this->updated_time(), target);
   }
 
-  // optional int64 avail_space = 4 [default = 0];
-  if (has_avail_space()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->avail_space(), target);
+  // optional int64 disk_space = 4 [default = 0];
+  if (has_disk_space()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->disk_space(), target);
   }
 
-  // optional int64 visit_flow = 5 [default = 0];
+  // optional int64 mem_space = 5 [default = 0];
+  if (has_mem_space()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(5, this->mem_space(), target);
+  }
+
+  // optional int64 visit_flow = 6 [default = 0];
   if (has_visit_flow()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(5, this->visit_flow(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(6, this->visit_flow(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -569,14 +598,21 @@ int HBRequest::ByteSize() const {
           this->updated_time());
     }
 
-    // optional int64 avail_space = 4 [default = 0];
-    if (has_avail_space()) {
+    // optional int64 disk_space = 4 [default = 0];
+    if (has_disk_space()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->avail_space());
+          this->disk_space());
     }
 
-    // optional int64 visit_flow = 5 [default = 0];
+    // optional int64 mem_space = 5 [default = 0];
+    if (has_mem_space()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->mem_space());
+    }
+
+    // optional int64 visit_flow = 6 [default = 0];
     if (has_visit_flow()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
@@ -619,8 +655,11 @@ void HBRequest::MergeFrom(const HBRequest& from) {
     if (from.has_updated_time()) {
       set_updated_time(from.updated_time());
     }
-    if (from.has_avail_space()) {
-      set_avail_space(from.avail_space());
+    if (from.has_disk_space()) {
+      set_disk_space(from.disk_space());
+    }
+    if (from.has_mem_space()) {
+      set_mem_space(from.mem_space());
     }
     if (from.has_visit_flow()) {
       set_visit_flow(from.visit_flow());
@@ -651,7 +690,8 @@ void HBRequest::Swap(HBRequest* other) {
     std::swap(host_, other->host_);
     std::swap(action_, other->action_);
     std::swap(updated_time_, other->updated_time_);
-    std::swap(avail_space_, other->avail_space_);
+    std::swap(disk_space_, other->disk_space_);
+    std::swap(mem_space_, other->mem_space_);
     std::swap(visit_flow_, other->visit_flow_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);

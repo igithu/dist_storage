@@ -32,8 +32,8 @@ IOThread::IOThread(const char* addr, const char* port) {
 }
 
 IOThread::~IOThread() {
-    delete addr_;
-    delete port_;
+    free(addr_);
+    free(port_);
 }
 
 void IOThread::Run() {

@@ -29,12 +29,11 @@ namespace dist_storage {
 IOThread::IOThread(const char* addr, const char* port) {
     strcpy(addr_ = (char*)malloc(strlen(addr) + 1), addr);
     strcpy(port_ = (char*)malloc(strlen(port) + 1), port);
-    printf("Test %s, %s", addr_, port_);
 }
 
 IOThread::~IOThread() {
-    delete addr_;
-    delete port_;
+    free(addr_);
+    free(port_);
 }
 
 void IOThread::Run() {

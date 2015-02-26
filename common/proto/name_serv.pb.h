@@ -162,17 +162,24 @@ class HBRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::int64 updated_time() const;
   inline void set_updated_time(::google::protobuf::int64 value);
 
-  // optional int64 avail_space = 4 [default = 0];
-  inline bool has_avail_space() const;
-  inline void clear_avail_space();
-  static const int kAvailSpaceFieldNumber = 4;
-  inline ::google::protobuf::int64 avail_space() const;
-  inline void set_avail_space(::google::protobuf::int64 value);
+  // optional int64 disk_space = 4 [default = 0];
+  inline bool has_disk_space() const;
+  inline void clear_disk_space();
+  static const int kDiskSpaceFieldNumber = 4;
+  inline ::google::protobuf::int64 disk_space() const;
+  inline void set_disk_space(::google::protobuf::int64 value);
 
-  // optional int64 visit_flow = 5 [default = 0];
+  // optional int64 mem_space = 5 [default = 0];
+  inline bool has_mem_space() const;
+  inline void clear_mem_space();
+  static const int kMemSpaceFieldNumber = 5;
+  inline ::google::protobuf::int64 mem_space() const;
+  inline void set_mem_space(::google::protobuf::int64 value);
+
+  // optional int64 visit_flow = 6 [default = 0];
   inline bool has_visit_flow() const;
   inline void clear_visit_flow();
-  static const int kVisitFlowFieldNumber = 5;
+  static const int kVisitFlowFieldNumber = 6;
   inline ::google::protobuf::int64 visit_flow() const;
   inline void set_visit_flow(::google::protobuf::int64 value);
 
@@ -184,8 +191,10 @@ class HBRequest : public ::google::protobuf::Message {
   inline void clear_has_action();
   inline void set_has_updated_time();
   inline void clear_has_updated_time();
-  inline void set_has_avail_space();
-  inline void clear_has_avail_space();
+  inline void set_has_disk_space();
+  inline void clear_has_disk_space();
+  inline void set_has_mem_space();
+  inline void clear_has_mem_space();
   inline void set_has_visit_flow();
   inline void clear_has_visit_flow();
 
@@ -195,7 +204,8 @@ class HBRequest : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::std::string* host_;
   ::google::protobuf::int64 updated_time_;
-  ::google::protobuf::int64 avail_space_;
+  ::google::protobuf::int64 disk_space_;
+  ::google::protobuf::int64 mem_space_;
   ::google::protobuf::int64 visit_flow_;
   int action_;
   friend void  protobuf_AddDesc_name_5fserv_2eproto();
@@ -756,39 +766,63 @@ inline void HBRequest::set_updated_time(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:dist_storage.HBRequest.updated_time)
 }
 
-// optional int64 avail_space = 4 [default = 0];
-inline bool HBRequest::has_avail_space() const {
+// optional int64 disk_space = 4 [default = 0];
+inline bool HBRequest::has_disk_space() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void HBRequest::set_has_avail_space() {
+inline void HBRequest::set_has_disk_space() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void HBRequest::clear_has_avail_space() {
+inline void HBRequest::clear_has_disk_space() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void HBRequest::clear_avail_space() {
-  avail_space_ = GOOGLE_LONGLONG(0);
-  clear_has_avail_space();
+inline void HBRequest::clear_disk_space() {
+  disk_space_ = GOOGLE_LONGLONG(0);
+  clear_has_disk_space();
 }
-inline ::google::protobuf::int64 HBRequest::avail_space() const {
-  // @@protoc_insertion_point(field_get:dist_storage.HBRequest.avail_space)
-  return avail_space_;
+inline ::google::protobuf::int64 HBRequest::disk_space() const {
+  // @@protoc_insertion_point(field_get:dist_storage.HBRequest.disk_space)
+  return disk_space_;
 }
-inline void HBRequest::set_avail_space(::google::protobuf::int64 value) {
-  set_has_avail_space();
-  avail_space_ = value;
-  // @@protoc_insertion_point(field_set:dist_storage.HBRequest.avail_space)
+inline void HBRequest::set_disk_space(::google::protobuf::int64 value) {
+  set_has_disk_space();
+  disk_space_ = value;
+  // @@protoc_insertion_point(field_set:dist_storage.HBRequest.disk_space)
 }
 
-// optional int64 visit_flow = 5 [default = 0];
-inline bool HBRequest::has_visit_flow() const {
+// optional int64 mem_space = 5 [default = 0];
+inline bool HBRequest::has_mem_space() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void HBRequest::set_has_visit_flow() {
+inline void HBRequest::set_has_mem_space() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void HBRequest::clear_has_visit_flow() {
+inline void HBRequest::clear_has_mem_space() {
   _has_bits_[0] &= ~0x00000010u;
+}
+inline void HBRequest::clear_mem_space() {
+  mem_space_ = GOOGLE_LONGLONG(0);
+  clear_has_mem_space();
+}
+inline ::google::protobuf::int64 HBRequest::mem_space() const {
+  // @@protoc_insertion_point(field_get:dist_storage.HBRequest.mem_space)
+  return mem_space_;
+}
+inline void HBRequest::set_mem_space(::google::protobuf::int64 value) {
+  set_has_mem_space();
+  mem_space_ = value;
+  // @@protoc_insertion_point(field_set:dist_storage.HBRequest.mem_space)
+}
+
+// optional int64 visit_flow = 6 [default = 0];
+inline bool HBRequest::has_visit_flow() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void HBRequest::set_has_visit_flow() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void HBRequest::clear_has_visit_flow() {
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void HBRequest::clear_visit_flow() {
   visit_flow_ = GOOGLE_LONGLONG(0);

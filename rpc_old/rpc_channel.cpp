@@ -33,9 +33,8 @@ Channel::Channel(const char* addr, const char* port) {
 }
 
 Channel::~Channel() {
-    //close(connect_fd_);
-    delete addr_;
-    delete port_;
+    free(addr_);
+    free(port_);
 }
 
 // used by CallMethod

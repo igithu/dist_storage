@@ -42,11 +42,11 @@
 
 
 #define DS_SYS_CONF dist_storage::ConfigManager::GetInstance()
+#define MAX_HOST_LEN 128;
 
 namespace dist_storage {
 
 class ConfigManager;
-
 typedef std::auto_ptr<ConfigManager> CMSmartPtr;
 
 class ConfigManager {
@@ -67,6 +67,11 @@ class ConfigManager {
 
         bool IniGetBool(const std::string& sec_key);
 
+        const char *IniGetLocalIPAddr();
+
+        const char *IniGetLocalHostName();
+
+
     private:
         ConfigManager();
 
@@ -80,6 +85,10 @@ class ConfigManager {
         static PUBLIC_UTIL::Mutex instance_mutex_;
 
         dictionary* dict_ini_;
+
+        char localhost_name_[MAX_HOST_LEN];
+
+        char localip_addr_[MAX_HOST_LEN];
 
         //ConfigManager instance_ptr_;
 };

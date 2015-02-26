@@ -20,6 +20,7 @@
 
 #include "data_service.h"
 #include "rpc/rpc_server.h"
+#include "client/name_server_client.h"
 #include "include/inter_include.h"
 #include "include/ext_include.h"
 
@@ -71,10 +72,10 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    int32_t thread_num = DS_SYS_CONF.IniGetInt("thread:num");
-    const char* addr = DS_SYS_CONF.IniGetString("host:addr");
-    const char* port = DS_SYS_CONF.IniGetString("host:port");
-    const char* log_dir = DS_SYS_CONF.IniGetString("log:dir");
+    int32_t thread_num = DS_SYS_CONF.IniGetInt("data_service:threadpool_num");
+    const char* port = DS_SYS_CONF.IniGetString("data_service:port");
+    const char* log_dir = DS_SYS_CONF.IniGetString("data_service:log_dir");
+    const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
 
     if (!CreateDir(log_dir)) {
         DS_LOG(ERROR, "create log dir: %s faied!", log_dir);
@@ -90,9 +91,14 @@ int main(int argc, char* argv[]) {
     DataServiceImpl service;
     rpc_server.RegisteService(&service);
     DS_LOG(INFO, "Start the rpc sevice....");
-
     rpc_server.Start(thread_num, addr, port);
 
+    DS_LOG(INFO, "Init heart beat thread");
+    HeartBeatThread hb_thread;
+    DS_LOG(INFO, "Start heart beat thread");
+    hb_thread.Start();
+
+    hb_thread.Wait();
     rpc_server.Wait();
 
     return 0;

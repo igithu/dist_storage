@@ -16,6 +16,12 @@
 
 #include "include/inter_include.h"
 
+#include <arpa/inet.h> 
+#include <sys/socket.h>  
+#include <ifaddrs.h>  
+#include <netdb.h>
+#include <unistd.h>
+
 
 namespace dist_storage {
 
@@ -26,7 +32,9 @@ PUBLIC_UTIL::Mutex ConfigManager::instance_mutex_;
 PUBLIC_UTIL::ATOMIC_BOOL ConfigManager::is_init_(false);
 CMSmartPtr ConfigManager::config_manager_ptr_(NULL);
 
-ConfigManager::ConfigManager() : dict_ini_(NULL) {
+ConfigManager::ConfigManager() : dict_ini_(NULL){
+    memset(localhost_name_, 0, MAX_HOST_LEN);
+    memset(localip_addr_, 0, MAX_HOST_LEN);
     DS_LOG(INFO, "ConfigManager init.");
 }
 
@@ -47,11 +55,42 @@ ConfigManager& ConfigManager::GetInstance() {
 
 bool ConfigManager::ConfigInit(const char* conf_file) {
     dict_ini_ = iniparser_load(conf_file);
-    // dict_ini_ = iniparser_load("../conf/data_serv.ini");
     if (NULL == dict_ini_) {
         DS_LOG(ERROR, "iniparser_load failed!")
         return false;
     }
+
+    struct ifaddrs *ifaddr = NULL;
+    if (getifaddrs(&ifaddr) == -1) {
+        DS_LOG(ERROR, "Call getifaddrs error");
+        return false;
+    }
+
+    for (struct ifaddrs *ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+        int32_t family = ifa->ifa_addr->sa_family;
+        if (family == AF_INET || family == AF_INET6) {
+            int32_t ret_code = getnameinfo(ifa->ifa_addr, 
+                    (family == AF_INET) ? sizeof(struct sockaddr_in) :
+                    sizeof(struct sockaddr_in6),
+                    localip_addr_, MAX_HOST_LEN, NULL, 0, NI_NUMERICHOST);
+            if (ret_code != 0) {
+                DS_LOG(ERROR, "Call getnameinfo failed!");
+                return false;
+            }
+            if (strcmp(localip_addr_, "127.0.0.1") == 0) {
+                memset(localip_addr_, 0, MAX_HOST_LEN);
+            } else {
+                break;
+            }
+        }
+    }
+
+    gethostname(localhost_name_, MAX_HOST_LEN);
+
+    if (NULL != ifaddr) {
+        freeifaddrs(ifaddr);
+    }
+
     is_init_ = true;
     return true;
 }
@@ -98,6 +137,14 @@ bool ConfigManager::IniGetBool(const string& sec_key) {
         DS_LOG(WARNING, "get the bool sec_key : %s failed!" , sec_key.c_str());
     }
     return ret;
+}
+
+const char *ConfigManager::IniGetLocalIPAddr() {
+    return localip_addr_;
+}
+
+const char *ConfigManager::IniGetLocalHostName() {
+    return localhost_name_;
 }
 
 

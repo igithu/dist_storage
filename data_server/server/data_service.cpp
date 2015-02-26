@@ -41,15 +41,15 @@ DataServiceImpl::~DataServiceImpl() {
 
 bool DataServiceImpl::EngineServiceInit() {
     const char* db_path = DS_SYS_CONF.IniGetString(
-            "db_storage:storage_path");
+            "data_service:storage_path");
     common_ds_ptr_ = new LeveDB(db_path);
     return true;
 }
 
 void DataServiceImpl::Put(RpcController* controller,
-                            const DSRequest* request,
-                            DSResponse* response,
-                            Closure* done) {
+                          const DSRequest* request,
+                          DSResponse* response,
+                          Closure* done) {
     const string& key = request->ds_key();
     const string& value = request->ds_value();
     if ("" == key || "" == value) {
@@ -64,9 +64,9 @@ void DataServiceImpl::Put(RpcController* controller,
 }
 
 void DataServiceImpl::Get(RpcController* controller,
-                            const DSRequest* request,
-                            DSResponse* response,
-                            Closure* done) {
+                          const DSRequest* request,
+                          DSResponse* response,
+                          Closure* done) {
     const string& key = request->ds_key();
     if ("" == key) {
         return;
@@ -85,9 +85,9 @@ void DataServiceImpl::Get(RpcController* controller,
 }
 
 void DataServiceImpl::Delete(RpcController* controller,
-                               const DSRequest* request,
-                               DSResponse* response,
-                               Closure* done) {
+                             const DSRequest* request,
+                             DSResponse* response,
+                             Closure* done) {
     const string& key = request->ds_key();
     if ("" == key) {
         return;

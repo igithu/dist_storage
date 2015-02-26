@@ -72,7 +72,7 @@ bool NodeManager::InitNM() {
         if (nsi_iter == node_info_map_.end()) {
             NI_PTR cur_ni_ptr(new NodeInfo()); 
             cur_ni_ptr->updated_time = 0;
-            cur_ni_ptr->avail_space = 0;
+            cur_ni_ptr->disk_space = 0;
             cur_ni_ptr->visit_flow = 0;
 
             NS_PTR cur_nsi_ptr(new NodeStatus()); 

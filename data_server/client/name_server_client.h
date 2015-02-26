@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2015 aishuyu, Inc. All Rights Reserved
+ * Copyright (c) 2015 Baidu.com, Inc. All Rights Reserved
  * 
  **************************************************************************/
  
@@ -8,8 +8,8 @@
  
 /**
  * @file name_server_client.h
- * @author aishuyu(asy5178@163.com)
- * @date 2015/02/22 22:00:23
+ * @author aishuyu(com@baidu.com)
+ * @date 2015/02/25 10:12:19
  * @brief 
  *  
  **/
@@ -21,21 +21,12 @@
 #define  __NAME_SERVER_CLIENT_H_
 
 
-#include <string>
-#include <map>
-#include <vector>
-
-#include <boost/shared_ptr.hpp>
-
 #include "rpc/rpc_channel.h"
 #include "proto/name_serv.pb.h"
 
 namespace dist_storage {
 
-namespace ds_client {
-
-typedef std::vector<std::string> NODE_LIST;
-typedef boost::shared_ptr<NODE_LIST> NODE_LIST_PTR;
+namespace data_server {
 
 class NameServerClient {
     public:
@@ -43,27 +34,21 @@ class NameServerClient {
 
         ~NameServerClient();
 
-        // get info from name server
-        bool GetBuketList(std::map<int64_t, NODE_LIST_PTR>& bucket_node_map);
+        bool SendHeartBeat();
 
     private:
-        // get init paramters
         bool ClientInit();
-        
-    private:
-         Channel* rpc_channel_ptr_;
 
-         NameService::Stub* serveice_stub_ptr_;
+    private:
+        Channel* rpc_channel_ptr_;
+  
+        NameService::Stub* serveice_stub_ptr_;
 
 };
 
-}  // end of namespace ds_client
+}
 
 }  // end of namespace dist_storage
-
-
-
-
 
 
 

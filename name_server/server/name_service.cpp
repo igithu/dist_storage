@@ -41,7 +41,7 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
     NI_PTR hb_ni_ptr(new NodeInfo());
 
     hb_ni_ptr->updated_time = hb_request->updated_time();
-    hb_ni_ptr->avail_space = hb_request->avail_space();
+    hb_ni_ptr->disk_space = hb_request->disk_space();
     hb_ni_ptr->visit_flow = hb_request->visit_flow();
 
     if ((NodeAction)UnReg == hb_request->action()) {
@@ -66,8 +66,8 @@ void NameServiceThread::Run() {
     rpc_server.RegisteService(&name_service);
 
     int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
-    const char* addr = DS_SYS_CONF.IniGetString("name_service:addr");
     const char* port = DS_SYS_CONF.IniGetString("name_service:port");
+    const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
 
     rpc_server.Start(thread_num, addr, port);
     rpc_server.Wait();

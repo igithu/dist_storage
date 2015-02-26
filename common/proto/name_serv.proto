@@ -19,8 +19,10 @@ message HBRequest {
     optional string host = 1 [default = ""];
     optional NodeAction action = 2 [default = NUL];
     optional int64 updated_time = 3 [default = 0];
-    optional int64 avail_space = 4 [default = 0];
-    optional int64 visit_flow = 5 [default = 0];
+    // in KB!
+    optional int64 disk_space = 4 [default = 0];
+    optional int64 mem_space = 5 [default = 0];
+    optional int64 visit_flow = 6 [default = 0];
 }
 
 message HBResponse {

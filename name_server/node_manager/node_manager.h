@@ -53,7 +53,7 @@ typedef struct NodeInfo_t {
     // current node latest update time
     time_t updated_time;
     // node available space
-    int64_t avail_space;
+    int64_t disk_space;
     // current flow
     int64_t visit_flow; 
 } NodeInfo;
