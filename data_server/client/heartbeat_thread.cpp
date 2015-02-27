@@ -17,6 +17,8 @@
 
 #include "heartbeat_thread.h"
 
+#include "config/config_manager.h"
+
 namespace dist_storage {
 
 namespace data_server {

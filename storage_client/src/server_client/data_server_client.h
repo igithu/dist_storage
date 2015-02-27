@@ -27,7 +27,7 @@
 
 namespace dist_storage {
 
-namespace ds_client {
+namespace storage_client {
 
 class DataServerClient {
     public:
@@ -53,7 +53,7 @@ class DataServerClient {
 
 };
 
-}  // end of namespace ds_client
+}  // end of namespace storage_client
 
 }  // end of namespace dist_storage
 

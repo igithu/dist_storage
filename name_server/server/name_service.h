@@ -29,7 +29,7 @@ namespace name_server {
 
 using namespace google::protobuf;
 
-class NameServiceImpl : public NameSevice {
+class NameServiceImpl : public NameService {
     public:
         // ctor
         NameServiceImpl();

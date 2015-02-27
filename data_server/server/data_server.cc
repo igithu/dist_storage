@@ -19,10 +19,11 @@
 #include <fcntl.h>
 
 #include "data_service.h"
+#include "tools.h"
 #include "rpc/rpc_server.h"
-#include "client/name_server_client.h"
-#include "include/inter_include.h"
-#include "include/ext_include.h"
+#include "client/heartbeat_thread.h"
+#include "config/config_manager.h"
+#include "log/ds_log.h"
 
 using namespace dist_storage;
 using namespace dist_storage::data_server;

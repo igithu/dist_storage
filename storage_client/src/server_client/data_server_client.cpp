@@ -18,7 +18,7 @@
 
 namespace dist_storage { 
 
-namespace ds_client {
+namespace storage_client {
 
 DataServerClient::DataServerClient() {
 }
@@ -43,7 +43,7 @@ bool DataServerClient:L::Delete(const char* key) {
 }
 
 
-}  // end of namespace ds_client
+}  // end of namespace storage_client
 
 }  // end of namespace dist_storage 
 

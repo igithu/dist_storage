@@ -41,24 +41,24 @@ class Bucket;
 class CNSRequest;
 class CNSResponse;
 
-enum DSCode {
-  SUC = 0,
-  ERR = 1
+enum NSCode {
+  NS_SUC = 0,
+  NS_ERR = 1
 };
-bool DSCode_IsValid(int value);
-const DSCode DSCode_MIN = SUC;
-const DSCode DSCode_MAX = ERR;
-const int DSCode_ARRAYSIZE = DSCode_MAX + 1;
+bool NSCode_IsValid(int value);
+const NSCode NSCode_MIN = NS_SUC;
+const NSCode NSCode_MAX = NS_ERR;
+const int NSCode_ARRAYSIZE = NSCode_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* DSCode_descriptor();
-inline const ::std::string& DSCode_Name(DSCode value) {
+const ::google::protobuf::EnumDescriptor* NSCode_descriptor();
+inline const ::std::string& NSCode_Name(NSCode value) {
   return ::google::protobuf::internal::NameOfEnum(
-    DSCode_descriptor(), value);
+    NSCode_descriptor(), value);
 }
-inline bool DSCode_Parse(
-    const ::std::string& name, DSCode* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<DSCode>(
-    DSCode_descriptor(), name, value);
+inline bool NSCode_Parse(
+    const ::std::string& name, NSCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<NSCode>(
+    NSCode_descriptor(), name, value);
 }
 enum NodeAction {
   Reg = 0,
@@ -270,12 +270,12 @@ class HBResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.NSCode code = 1 [default = NS_SUC];
   inline bool has_code() const;
   inline void clear_code();
   static const int kCodeFieldNumber = 1;
-  inline ::dist_storage::DSCode code() const;
-  inline void set_code(::dist_storage::DSCode value);
+  inline ::dist_storage::NSCode code() const;
+  inline void set_code(::dist_storage::NSCode value);
 
   // @@protoc_insertion_point(class_scope:dist_storage.HBResponse)
  private:
@@ -569,16 +569,16 @@ class CNSResponse : public ::google::protobuf::Message {
 };
 // ===================================================================
 
-class NameSevice_Stub;
+class NameService_Stub;
 
-class NameSevice : public ::google::protobuf::Service {
+class NameService : public ::google::protobuf::Service {
  protected:
   // This class should be treated as an abstract interface.
-  inline NameSevice() {};
+  inline NameService() {};
  public:
-  virtual ~NameSevice();
+  virtual ~NameService();
 
-  typedef NameSevice_Stub Stub;
+  typedef NameService_Stub Stub;
 
   static const ::google::protobuf::ServiceDescriptor* descriptor();
 
@@ -605,19 +605,19 @@ class NameSevice : public ::google::protobuf::Service {
     const ::google::protobuf::MethodDescriptor* method) const;
 
  private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(NameSevice);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(NameService);
 };
 
-class NameSevice_Stub : public NameSevice {
+class NameService_Stub : public NameService {
  public:
-  NameSevice_Stub(::google::protobuf::RpcChannel* channel);
-  NameSevice_Stub(::google::protobuf::RpcChannel* channel,
+  NameService_Stub(::google::protobuf::RpcChannel* channel);
+  NameService_Stub(::google::protobuf::RpcChannel* channel,
                    ::google::protobuf::Service::ChannelOwnership ownership);
-  ~NameSevice_Stub();
+  ~NameService_Stub();
 
   inline ::google::protobuf::RpcChannel* channel() { return channel_; }
 
-  // implements NameSevice ------------------------------------------
+  // implements NameService ------------------------------------------
 
   void HeartBeat(::google::protobuf::RpcController* controller,
                        const ::dist_storage::HBRequest* request,
@@ -630,7 +630,7 @@ class NameSevice_Stub : public NameSevice {
  private:
   ::google::protobuf::RpcChannel* channel_;
   bool owns_channel_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(NameSevice_Stub);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(NameService_Stub);
 };
 
 
@@ -842,7 +842,7 @@ inline void HBRequest::set_visit_flow(::google::protobuf::int64 value) {
 
 // HBResponse
 
-// optional .dist_storage.DSCode code = 1 [default = SUC];
+// optional .dist_storage.NSCode code = 1 [default = NS_SUC];
 inline bool HBResponse::has_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -856,12 +856,12 @@ inline void HBResponse::clear_code() {
   code_ = 0;
   clear_has_code();
 }
-inline ::dist_storage::DSCode HBResponse::code() const {
+inline ::dist_storage::NSCode HBResponse::code() const {
   // @@protoc_insertion_point(field_get:dist_storage.HBResponse.code)
-  return static_cast< ::dist_storage::DSCode >(code_);
+  return static_cast< ::dist_storage::NSCode >(code_);
 }
-inline void HBResponse::set_code(::dist_storage::DSCode value) {
-  assert(::dist_storage::DSCode_IsValid(value));
+inline void HBResponse::set_code(::dist_storage::NSCode value) {
+  assert(::dist_storage::NSCode_IsValid(value));
   set_has_code();
   code_ = value;
   // @@protoc_insertion_point(field_set:dist_storage.HBResponse.code)
@@ -1096,10 +1096,10 @@ CNSResponse::mutable_bucket_list() {
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::dist_storage::DSCode> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::dist_storage::NSCode> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::dist_storage::DSCode>() {
-  return ::dist_storage::DSCode_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::dist_storage::NSCode>() {
+  return ::dist_storage::NSCode_descriptor();
 }
 template <> struct is_proto_enum< ::dist_storage::NodeAction> : ::google::protobuf::internal::true_type {};
 template <>

@@ -19,9 +19,9 @@
 
 namespace dist_storage { 
 
-namespace ds_client {
+namespace storage_client {
 
-using std::map;
+using namespace name_server;
 
 NameServerClient::NameServerClient() {
 }
@@ -33,11 +33,11 @@ bool NameServerClient::ClientInit() {
     return true;
 }
 
-bool NameServerClient::GetBuketList(map<int64_t, NODE_LIST_PTR>& bucket_node_map) {
+bool NameServerClient::GetBuketList(BUCKET_NODE_MAP& bucket_node_map) {
     return true;
 }
 
-}  // end of namespace ds_client
+}  // end of namespace storage_client
 
 }  // end of namespace dist_storage 
 

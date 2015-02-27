@@ -2,9 +2,9 @@ package dist_storage;
 
 option cc_generic_services = true; 
 
-enum DSCode {
-     SUC = 0;
-     ERR = 1;
+enum NSCode {
+     NS_SUC = 0;
+     NS_ERR = 1;
 }
 
 enum NodeAction {
@@ -26,7 +26,7 @@ message HBRequest {
 }
 
 message HBResponse {
-    optional DSCode code = 1 [default = SUC];
+    optional NSCode code = 1 [default = NS_SUC];
 }
 
 // Bucket, CNSRequest, CNSResponse is used to make client get dist node list 
@@ -46,7 +46,7 @@ message CNSResponse {
 }
 
 
-service NameSevice {
+service NameService {
     rpc HeartBeat(HBRequest) returns (HBResponse);
     rpc GetBuketList(CNSRequest) returns (CNSResponse);
 }

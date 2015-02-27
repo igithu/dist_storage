@@ -35,9 +35,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CNSResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CNSResponse_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* DSCode_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* NSCode_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* NodeAction_descriptor_ = NULL;
-const ::google::protobuf::ServiceDescriptor* NameSevice_descriptor_ = NULL;
+const ::google::protobuf::ServiceDescriptor* NameService_descriptor_ = NULL;
 
 }  // namespace
 
@@ -130,9 +130,9 @@ void protobuf_AssignDesc_name_5fserv_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(CNSResponse));
-  DSCode_descriptor_ = file->enum_type(0);
+  NSCode_descriptor_ = file->enum_type(0);
   NodeAction_descriptor_ = file->enum_type(1);
-  NameSevice_descriptor_ = file->service(0);
+  NameService_descriptor_ = file->service(0);
 }
 
 namespace {
@@ -185,18 +185,18 @@ void protobuf_AddDesc_name_5fserv_2eproto() {
     "dist_storage.NodeAction:\003NUL\022\027\n\014updated_"
     "time\030\003 \001(\003:\0010\022\025\n\ndisk_space\030\004 \001(\003:\0010\022\024\n\t"
     "mem_space\030\005 \001(\003:\0010\022\025\n\nvisit_flow\030\006 \001(\003:\001"
-    "0\"5\n\nHBResponse\022\'\n\004code\030\001 \001(\0162\024.dist_sto"
-    "rage.DSCode:\003SUC\"+\n\006Bucket\022\016\n\006number\030\001 \002"
-    "(\004\022\021\n\tnode_list\030\002 \003(\t\"&\n\nCNSRequest\022\030\n\010d"
-    "ist_alg\030\001 \001(\t:\006ketama\"Q\n\013CNSResponse\022\027\n\010"
-    "ret_code\030\001 \001(\010:\005false\022)\n\013bucket_list\030\002 \003"
-    "(\0132\024.dist_storage.Bucket*\032\n\006DSCode\022\007\n\003SU"
-    "C\020\000\022\007\n\003ERR\020\001*3\n\nNodeAction\022\007\n\003Reg\020\000\022\t\n\005U"
-    "nReg\020\001\022\010\n\004Beat\020\002\022\007\n\003NUL\020\0032\221\001\n\nNameSevice"
-    "\022>\n\tHeartBeat\022\027.dist_storage.HBRequest\032\030"
-    ".dist_storage.HBResponse\022C\n\014GetBuketList"
-    "\022\030.dist_storage.CNSRequest\032\031.dist_storag"
-    "e.CNSResponseB\003\200\001\001", 658);
+    "0\"8\n\nHBResponse\022*\n\004code\030\001 \001(\0162\024.dist_sto"
+    "rage.NSCode:\006NS_SUC\"+\n\006Bucket\022\016\n\006number\030"
+    "\001 \002(\004\022\021\n\tnode_list\030\002 \003(\t\"&\n\nCNSRequest\022\030"
+    "\n\010dist_alg\030\001 \001(\t:\006ketama\"Q\n\013CNSResponse\022"
+    "\027\n\010ret_code\030\001 \001(\010:\005false\022)\n\013bucket_list\030"
+    "\002 \003(\0132\024.dist_storage.Bucket* \n\006NSCode\022\n\n"
+    "\006NS_SUC\020\000\022\n\n\006NS_ERR\020\001*3\n\nNodeAction\022\007\n\003R"
+    "eg\020\000\022\t\n\005UnReg\020\001\022\010\n\004Beat\020\002\022\007\n\003NUL\020\0032\222\001\n\013N"
+    "ameService\022>\n\tHeartBeat\022\027.dist_storage.H"
+    "BRequest\032\030.dist_storage.HBResponse\022C\n\014Ge"
+    "tBuketList\022\030.dist_storage.CNSRequest\032\031.d"
+    "ist_storage.CNSResponseB\003\200\001\001", 668);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "name_serv.proto", &protobuf_RegisterTypes);
   HBRequest::default_instance_ = new HBRequest();
@@ -220,11 +220,11 @@ struct StaticDescriptorInitializer_name_5fserv_2eproto {
     protobuf_AddDesc_name_5fserv_2eproto();
   }
 } static_descriptor_initializer_name_5fserv_2eproto_;
-const ::google::protobuf::EnumDescriptor* DSCode_descriptor() {
+const ::google::protobuf::EnumDescriptor* NSCode_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return DSCode_descriptor_;
+  return NSCode_descriptor_;
 }
-bool DSCode_IsValid(int value) {
+bool NSCode_IsValid(int value) {
   switch(value) {
     case 0:
     case 1:
@@ -783,15 +783,15 @@ bool HBResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .dist_storage.DSCode code = 1 [default = SUC];
+      // optional .dist_storage.NSCode code = 1 [default = NS_SUC];
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::dist_storage::DSCode_IsValid(value)) {
-            set_code(static_cast< ::dist_storage::DSCode >(value));
+          if (::dist_storage::NSCode_IsValid(value)) {
+            set_code(static_cast< ::dist_storage::NSCode >(value));
           } else {
             mutable_unknown_fields()->AddVarint(1, value);
           }
@@ -827,7 +827,7 @@ failure:
 void HBResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:dist_storage.HBResponse)
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.NSCode code = 1 [default = NS_SUC];
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->code(), output);
@@ -843,7 +843,7 @@ void HBResponse::SerializeWithCachedSizes(
 ::google::protobuf::uint8* HBResponse::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:dist_storage.HBResponse)
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.NSCode code = 1 [default = NS_SUC];
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->code(), target);
@@ -861,7 +861,7 @@ int HBResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .dist_storage.DSCode code = 1 [default = SUC];
+    // optional .dist_storage.NSCode code = 1 [default = NS_SUC];
     if (has_code()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->code());
@@ -1716,19 +1716,19 @@ void CNSResponse::Swap(CNSResponse* other) {
 
 // ===================================================================
 
-NameSevice::~NameSevice() {}
+NameService::~NameService() {}
 
-const ::google::protobuf::ServiceDescriptor* NameSevice::descriptor() {
+const ::google::protobuf::ServiceDescriptor* NameService::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return NameSevice_descriptor_;
+  return NameService_descriptor_;
 }
 
-const ::google::protobuf::ServiceDescriptor* NameSevice::GetDescriptor() {
+const ::google::protobuf::ServiceDescriptor* NameService::GetDescriptor() {
   protobuf_AssignDescriptorsOnce();
-  return NameSevice_descriptor_;
+  return NameService_descriptor_;
 }
 
-void NameSevice::HeartBeat(::google::protobuf::RpcController* controller,
+void NameService::HeartBeat(::google::protobuf::RpcController* controller,
                          const ::dist_storage::HBRequest*,
                          ::dist_storage::HBResponse*,
                          ::google::protobuf::Closure* done) {
@@ -1736,7 +1736,7 @@ void NameSevice::HeartBeat(::google::protobuf::RpcController* controller,
   done->Run();
 }
 
-void NameSevice::GetBuketList(::google::protobuf::RpcController* controller,
+void NameService::GetBuketList(::google::protobuf::RpcController* controller,
                          const ::dist_storage::CNSRequest*,
                          ::dist_storage::CNSResponse*,
                          ::google::protobuf::Closure* done) {
@@ -1744,12 +1744,12 @@ void NameSevice::GetBuketList(::google::protobuf::RpcController* controller,
   done->Run();
 }
 
-void NameSevice::CallMethod(const ::google::protobuf::MethodDescriptor* method,
+void NameService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
                              ::google::protobuf::RpcController* controller,
                              const ::google::protobuf::Message* request,
                              ::google::protobuf::Message* response,
                              ::google::protobuf::Closure* done) {
-  GOOGLE_DCHECK_EQ(method->service(), NameSevice_descriptor_);
+  GOOGLE_DCHECK_EQ(method->service(), NameService_descriptor_);
   switch(method->index()) {
     case 0:
       HeartBeat(controller,
@@ -1769,7 +1769,7 @@ void NameSevice::CallMethod(const ::google::protobuf::MethodDescriptor* method,
   }
 }
 
-const ::google::protobuf::Message& NameSevice::GetRequestPrototype(
+const ::google::protobuf::Message& NameService::GetRequestPrototype(
     const ::google::protobuf::MethodDescriptor* method) const {
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
@@ -1783,7 +1783,7 @@ const ::google::protobuf::Message& NameSevice::GetRequestPrototype(
   }
 }
 
-const ::google::protobuf::Message& NameSevice::GetResponsePrototype(
+const ::google::protobuf::Message& NameService::GetResponsePrototype(
     const ::google::protobuf::MethodDescriptor* method) const {
   GOOGLE_DCHECK_EQ(method->service(), descriptor());
   switch(method->index()) {
@@ -1797,25 +1797,25 @@ const ::google::protobuf::Message& NameSevice::GetResponsePrototype(
   }
 }
 
-NameSevice_Stub::NameSevice_Stub(::google::protobuf::RpcChannel* channel)
+NameService_Stub::NameService_Stub(::google::protobuf::RpcChannel* channel)
   : channel_(channel), owns_channel_(false) {}
-NameSevice_Stub::NameSevice_Stub(
+NameService_Stub::NameService_Stub(
     ::google::protobuf::RpcChannel* channel,
     ::google::protobuf::Service::ChannelOwnership ownership)
   : channel_(channel),
     owns_channel_(ownership == ::google::protobuf::Service::STUB_OWNS_CHANNEL) {}
-NameSevice_Stub::~NameSevice_Stub() {
+NameService_Stub::~NameService_Stub() {
   if (owns_channel_) delete channel_;
 }
 
-void NameSevice_Stub::HeartBeat(::google::protobuf::RpcController* controller,
+void NameService_Stub::HeartBeat(::google::protobuf::RpcController* controller,
                               const ::dist_storage::HBRequest* request,
                               ::dist_storage::HBResponse* response,
                               ::google::protobuf::Closure* done) {
   channel_->CallMethod(descriptor()->method(0),
                        controller, request, response, done);
 }
-void NameSevice_Stub::GetBuketList(::google::protobuf::RpcController* controller,
+void NameService_Stub::GetBuketList(::google::protobuf::RpcController* controller,
                               const ::dist_storage::CNSRequest* request,
                               ::dist_storage::CNSResponse* response,
                               ::google::protobuf::Closure* done) {

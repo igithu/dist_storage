@@ -29,13 +29,12 @@
 
 #include "rpc/rpc_channel.h"
 #include "proto/name_serv.pb.h"
+#include "name_server/dist_manager/distribute_alg.h"
+#include "name_server/dist_manager/ketamadist_alg.h"
 
 namespace dist_storage {
 
-namespace ds_client {
-
-typedef std::vector<std::string> NODE_LIST;
-typedef boost::shared_ptr<NODE_LIST> NODE_LIST_PTR;
+namespace storage_client {
 
 class NameServerClient {
     public:
@@ -44,7 +43,7 @@ class NameServerClient {
         ~NameServerClient();
 
         // get info from name server
-        bool GetBuketList(std::map<int64_t, NODE_LIST_PTR>& bucket_node_map);
+        bool GetBuketList(name_server::BUCKET_NODE_MAP& bucket_node_map);
 
     private:
         // get init paramters
@@ -57,7 +56,7 @@ class NameServerClient {
 
 };
 
-}  // end of namespace ds_client
+}  // end of namespace storage_client
 
 }  // end of namespace dist_storage
 

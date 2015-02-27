@@ -20,7 +20,8 @@
 #include <string>
 
 #include "storage/level_db.h"
-#include "include/inter_include.h"
+#include "config/config_manager.h"
+#include "log/ds_log.h"
 
 namespace dist_storage {
 

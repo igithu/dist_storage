@@ -45,10 +45,10 @@ NameServerClient::~NameServerClient() {
 }
 
 bool NameServerClient::ClientInit() {
-    const char* ns_host = DS_SYS_CONF.IniGetInt("name_service:host");
-    const char* ns_port = DS_SYS_CONF.IniGetInt("name_service:port");
-    rpc_channel_ptr_ = new Channel(ns_addr, ns_port);
-    serveice_stub_ptr_ = new NameServerClient::Stub(rpc_channel_ptr_);
+    const char* ns_host = DS_SYS_CONF.IniGetString("name_service:host");
+    const char* ns_port = DS_SYS_CONF.IniGetString("name_service:port");
+    rpc_channel_ptr_ = new Channel(ns_host, ns_port);
+    serveice_stub_ptr_ = new NameService::Stub(rpc_channel_ptr_);
 
     return true;
 }
@@ -59,7 +59,6 @@ bool NameServerClient::SendHeartBeat() {
         DS_LOG(ERROR, "The serveice_stub_ptr_ is NULL!");
         return false;
     }
-
     const char* st_path = DS_SYS_CONF.IniGetString("data_service:storage_path");
     struct statfs disk_info;
     if (statfs(st_path, &disk_info) == -1) {
@@ -69,13 +68,13 @@ bool NameServerClient::SendHeartBeat() {
 
     int64_t disk_space = disk_info.f_blocks * disk_info.f_bsize;
     // in KB
-    disk_space >>= 10
+    disk_space >>= 10;
 
     HBRequest hb_request;
 
-    const char* ip_addr = DS_SYS_CONF.IniGetLocalIPAddr() 
+    const char* ip_addr = DS_SYS_CONF.IniGetLocalIPAddr();
     hb_request.set_host(ip_addr);
-    hb_request.set_NodeAction(Beat);
+    hb_request.set_action(Beat);
     hb_request.set_updated_time(time(NULL));
     hb_request.set_disk_space(disk_space);
 

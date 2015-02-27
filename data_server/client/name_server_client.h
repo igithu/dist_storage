@@ -21,8 +21,8 @@
 #define  __NAME_SERVER_CLIENT_H_
 
 
-#include "rpc/rpc_channel.h"
 #include "proto/name_serv.pb.h"
+#include "rpc/rpc_channel.h"
 
 namespace dist_storage {
 
@@ -46,7 +46,7 @@ class NameServerClient {
 
 };
 
-}
+}  // end of namespace data_server
 
 }  // end of namespace dist_storage
 

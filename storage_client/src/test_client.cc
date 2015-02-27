@@ -7,9 +7,9 @@
  
  
 /**
- * @file ext_include.h
+ * @file client.cc
  * @author aishuyu(asy5178@163.com)
- * @date 2015/01/09 16:36:04
+ * @date 2015/02/22 22:31:33
  * @brief 
  *  
  **/
@@ -17,19 +17,25 @@
 
 
 
-#ifndef  __EXT_INCLUDE_H_
-#define  __EXT_INCLUDE_H_
 
 
-
-#include "../../pub_util/tools/tools.h"
-
-
-
+int main() {
+    return 0;
+}
 
 
 
 
-#endif  //__EXT_INCLUDE_H_
+
+
+
+
+
+
+
+
+
+
+
 
 /* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */

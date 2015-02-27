@@ -25,8 +25,8 @@
 
 #include "atomic.h"
 #include "iniparser.h"
-#include "disallow_copy_and_assign.h"
 #include "pthread_mutex.h"
+#include "disallow_copy_and_assign.h"
 
 #define NOT_EXIST_INT -1
 #define INI_ERROR_INT -2
@@ -42,7 +42,7 @@
 
 
 #define DS_SYS_CONF dist_storage::ConfigManager::GetInstance()
-#define MAX_HOST_LEN 128;
+#define MAX_HOST_LEN 128
 
 namespace dist_storage {
 
