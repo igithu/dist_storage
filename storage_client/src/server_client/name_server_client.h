@@ -43,7 +43,9 @@ class NameServerClient {
         ~NameServerClient();
 
         // get info from name server
-        bool GetBuketList(name_server::BUCKET_NODE_MAP& bucket_node_map);
+        bool GetBucketInfo(name_server::BUCKET_NODE_MAP& bucket_node_map);
+
+        bool GetNodeInfo(std::vector<std::string>& node_list, std::string& ds_port);
 
     private:
         // get init paramters
@@ -52,21 +54,13 @@ class NameServerClient {
     private:
          Channel* rpc_channel_ptr_;
 
-         NameService::Stub* serveice_stub_ptr_;
+         NameService::Stub* service_stub_ptr_;
 
 };
 
 }  // end of namespace storage_client
 
 }  // end of namespace dist_storage
-
-
-
-
-
-
-
-
 
 
 

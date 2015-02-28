@@ -22,8 +22,9 @@
 #include <fcntl.h>
 
 #include "name_service.h"
-#include "include/inter_include.h"
-#include "include/ext_include.h"
+#include "tools.h"
+#include "log/ds_log.h"
+#include "config/config_manager.h"
 #include "node_manager/node_manager.h"
 
 using namespace dist_storage;

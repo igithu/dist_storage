@@ -17,7 +17,8 @@
 #include "node_status_updater.h"
 
 #include "node_manager.h"
-#include "include/inter_include.h"
+#include "log/ds_log.h"
+#include "config/config_manager.h"
 
 namespace dist_storage {
 

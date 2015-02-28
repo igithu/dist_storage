@@ -18,7 +18,8 @@
 #include "ketamadist_alg.h"
 
 #include "tools.h"
-#include "include/inter_include.h"
+#include "log/ds_log.h"
+#include "config/config_manager.h"
 #include "util/crytocpp.h"
 #include "util/dist_hash.h"
 
@@ -30,7 +31,7 @@ using std::vector;
 using std::string;
 using namespace PUBLIC_UTIL;
 
-bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) {
+bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_map) {
 
     int32_t buckt_num = 100;
     int32_t group_num = buckt_num / 4;
@@ -52,10 +53,10 @@ bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) {
                 BI_PTR bi_ptr(new BucketInfo());
                 bi_ptr->number = m;
                 bi_ptr->bnode_list_ptr->push_back(server_str);
-                if (bi_hash_map.find(m) != bi_hash_map.end()) {
-                    bi_hash_map[m] = bi_ptr;
+                if (bi_map.find(m) != bi_map.end()) {
+                    bi_map[m] = bi_ptr;
                 } else {
-                    bi_hash_map.insert(std::make_pair(m, bi_ptr));
+                    bi_map.insert(std::make_pair(m, bi_ptr));
                 }
             }
         }
@@ -64,10 +65,10 @@ bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) {
     return true;
 }
 
-bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
+bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_map,
                                 const string& key, 
                                 string& host) {
-    if (bi_hash_map.size() == 0) {
+    if (bi_map.size() == 0) {
         return false;
     }
     unsigned char md5_str[key.size()];
@@ -77,8 +78,8 @@ bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
     MD5(md5_str, digest);
     Long m = KetamaHash(digest, 0);
 
-    BUCKET_NODE_MAP::const_iterator bi_itr = bi_hash_map.find(m);
-    if (bi_itr != bi_hash_map.end()) {
+    BUCKET_NODE_MAP::const_iterator bi_itr = bi_map.find(m);
+    if (bi_itr != bi_map.end()) {
         const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
         if (bi_list.size() == 0) {
             return false;
@@ -86,8 +87,8 @@ bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
         host = bi_list[0];
     } else {
         do {
-            bi_itr = bi_hash_map.lower_bound(m);
-            if (bi_itr != bi_hash_map.end()) {
+            bi_itr = bi_map.lower_bound(m);
+            if (bi_itr != bi_map.end()) {
                 const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
                 if (bi_list.size() == 0) {
                     return false;

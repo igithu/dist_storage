@@ -19,7 +19,8 @@
 #include <time.h>
 
 #include "tools.h"
-#include "include/inter_include.h"
+#include "log/ds_log.h"
+#include "config/config_manager.h"
 #include "proto/name_serv.pb.h"
 
 namespace dist_storage {
@@ -41,11 +42,10 @@ NodeManager::~NodeManager() {
    if (NULL != nse_thread_ptr_) {
        delete nse_thread_ptr_;
    }
-
-    if (NULL != nsu_thread_ptr_) {
-        delete nsu_thread_ptr_;
-    }
-
+   
+   if (NULL != nsu_thread_ptr_) {
+       delete nsu_thread_ptr_;
+   }
 }
 
 NodeManager& NodeManager::GetInstance() {
@@ -226,7 +226,7 @@ bool NodeManager::UpdateNodeList() {
     return true;
 }
 
-bool NodeManager::GetAliveNodes(vector<string> node_list) {
+bool NodeManager::GetAliveNodes(::google::protobuf::RepeatedPtrField<string>& node_list) {
     NODE_LIST_PTR nl_ptr;
     {
         WriteLockGuard wguard();
@@ -239,7 +239,7 @@ bool NodeManager::GetAliveNodes(vector<string> node_list) {
     }
 
     for (NODE_LIST::iterator niter = nl_ptr->begin(); niter != nl_ptr->end(); ++niter) {
-        node_list.push_back(*niter);
+        *(node_list.Add()) = *niter;
     }
     return true;
 }
@@ -247,18 +247,6 @@ bool NodeManager::GetAliveNodes(vector<string> node_list) {
 }  // end of namespace namespace
 
 }  // end of namespace dist_storage
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

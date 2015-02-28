@@ -61,14 +61,14 @@ inline bool NSCode_Parse(
     NSCode_descriptor(), name, value);
 }
 enum NodeAction {
-  Reg = 0,
-  UnReg = 1,
-  Beat = 2,
-  NUL = 3
+  NA_NUL = 0,
+  Reg = 1,
+  UnReg = 2,
+  Beat = 3
 };
 bool NodeAction_IsValid(int value);
-const NodeAction NodeAction_MIN = Reg;
-const NodeAction NodeAction_MAX = NUL;
+const NodeAction NodeAction_MIN = NA_NUL;
+const NodeAction NodeAction_MAX = Beat;
 const int NodeAction_ARRAYSIZE = NodeAction_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* NodeAction_descriptor();
@@ -80,6 +80,26 @@ inline bool NodeAction_Parse(
     const ::std::string& name, NodeAction* value) {
   return ::google::protobuf::internal::ParseNamedEnum<NodeAction>(
     NodeAction_descriptor(), name, value);
+}
+enum CNSRequestType {
+  CNS_NUL = 0,
+  BUKETS = 1,
+  NODES = 2
+};
+bool CNSRequestType_IsValid(int value);
+const CNSRequestType CNSRequestType_MIN = CNS_NUL;
+const CNSRequestType CNSRequestType_MAX = NODES;
+const int CNSRequestType_ARRAYSIZE = CNSRequestType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* CNSRequestType_descriptor();
+inline const ::std::string& CNSRequestType_Name(CNSRequestType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    CNSRequestType_descriptor(), value);
+}
+inline bool CNSRequestType_Parse(
+    const ::std::string& name, CNSRequestType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<CNSRequestType>(
+    CNSRequestType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -148,7 +168,7 @@ class HBRequest : public ::google::protobuf::Message {
   inline ::std::string* release_host();
   inline void set_allocated_host(::std::string* host);
 
-  // optional .dist_storage.NodeAction action = 2 [default = NUL];
+  // optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
   inline bool has_action() const;
   inline void clear_action();
   static const int kActionFieldNumber = 2;
@@ -445,29 +465,23 @@ class CNSRequest : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string dist_alg = 1 [default = "ketama"];
-  inline bool has_dist_alg() const;
-  inline void clear_dist_alg();
-  static const int kDistAlgFieldNumber = 1;
-  inline const ::std::string& dist_alg() const;
-  inline void set_dist_alg(const ::std::string& value);
-  inline void set_dist_alg(const char* value);
-  inline void set_dist_alg(const char* value, size_t size);
-  inline ::std::string* mutable_dist_alg();
-  inline ::std::string* release_dist_alg();
-  inline void set_allocated_dist_alg(::std::string* dist_alg);
+  // optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
+  inline bool has_req_type() const;
+  inline void clear_req_type();
+  static const int kReqTypeFieldNumber = 1;
+  inline ::dist_storage::CNSRequestType req_type() const;
+  inline void set_req_type(::dist_storage::CNSRequestType value);
 
   // @@protoc_insertion_point(class_scope:dist_storage.CNSRequest)
  private:
-  inline void set_has_dist_alg();
-  inline void clear_has_dist_alg();
+  inline void set_has_req_type();
+  inline void clear_has_req_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  static ::std::string* _default_dist_alg_;
-  ::std::string* dist_alg_;
+  int req_type_;
   friend void  protobuf_AddDesc_name_5fserv_2eproto();
   friend void protobuf_AssignDesc_name_5fserv_2eproto();
   friend void protobuf_ShutdownFile_name_5fserv_2eproto();
@@ -530,17 +544,41 @@ class CNSResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional bool ret_code = 1 [default = false];
+  // optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
   inline bool has_ret_code() const;
   inline void clear_ret_code();
   static const int kRetCodeFieldNumber = 1;
-  inline bool ret_code() const;
-  inline void set_ret_code(bool value);
+  inline ::dist_storage::NSCode ret_code() const;
+  inline void set_ret_code(::dist_storage::NSCode value);
 
-  // repeated .dist_storage.Bucket bucket_list = 2;
+  // optional string dist_alg = 2 [default = ""];
+  inline bool has_dist_alg() const;
+  inline void clear_dist_alg();
+  static const int kDistAlgFieldNumber = 2;
+  inline const ::std::string& dist_alg() const;
+  inline void set_dist_alg(const ::std::string& value);
+  inline void set_dist_alg(const char* value);
+  inline void set_dist_alg(const char* value, size_t size);
+  inline ::std::string* mutable_dist_alg();
+  inline ::std::string* release_dist_alg();
+  inline void set_allocated_dist_alg(::std::string* dist_alg);
+
+  // optional string ds_port = 3 [default = "9998"];
+  inline bool has_ds_port() const;
+  inline void clear_ds_port();
+  static const int kDsPortFieldNumber = 3;
+  inline const ::std::string& ds_port() const;
+  inline void set_ds_port(const ::std::string& value);
+  inline void set_ds_port(const char* value);
+  inline void set_ds_port(const char* value, size_t size);
+  inline ::std::string* mutable_ds_port();
+  inline ::std::string* release_ds_port();
+  inline void set_allocated_ds_port(::std::string* ds_port);
+
+  // repeated .dist_storage.Bucket bucket_list = 4;
   inline int bucket_list_size() const;
   inline void clear_bucket_list();
-  static const int kBucketListFieldNumber = 2;
+  static const int kBucketListFieldNumber = 4;
   inline const ::dist_storage::Bucket& bucket_list(int index) const;
   inline ::dist_storage::Bucket* mutable_bucket_list(int index);
   inline ::dist_storage::Bucket* add_bucket_list();
@@ -549,17 +587,41 @@ class CNSResponse : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket >*
       mutable_bucket_list();
 
+  // repeated string node_list = 5;
+  inline int node_list_size() const;
+  inline void clear_node_list();
+  static const int kNodeListFieldNumber = 5;
+  inline const ::std::string& node_list(int index) const;
+  inline ::std::string* mutable_node_list(int index);
+  inline void set_node_list(int index, const ::std::string& value);
+  inline void set_node_list(int index, const char* value);
+  inline void set_node_list(int index, const char* value, size_t size);
+  inline ::std::string* add_node_list();
+  inline void add_node_list(const ::std::string& value);
+  inline void add_node_list(const char* value);
+  inline void add_node_list(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& node_list() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_node_list();
+
   // @@protoc_insertion_point(class_scope:dist_storage.CNSResponse)
  private:
   inline void set_has_ret_code();
   inline void clear_has_ret_code();
+  inline void set_has_dist_alg();
+  inline void clear_has_dist_alg();
+  inline void set_has_ds_port();
+  inline void clear_has_ds_port();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* dist_alg_;
+  static ::std::string* _default_ds_port_;
+  ::std::string* ds_port_;
   ::google::protobuf::RepeatedPtrField< ::dist_storage::Bucket > bucket_list_;
-  bool ret_code_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> node_list_;
+  int ret_code_;
   friend void  protobuf_AddDesc_name_5fserv_2eproto();
   friend void protobuf_AssignDesc_name_5fserv_2eproto();
   friend void protobuf_ShutdownFile_name_5fserv_2eproto();
@@ -586,7 +648,11 @@ class NameService : public ::google::protobuf::Service {
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
                        ::google::protobuf::Closure* done);
-  virtual void GetBuketList(::google::protobuf::RpcController* controller,
+  virtual void GetBucketInfo(::google::protobuf::RpcController* controller,
+                       const ::dist_storage::CNSRequest* request,
+                       ::dist_storage::CNSResponse* response,
+                       ::google::protobuf::Closure* done);
+  virtual void GetNodeInfo(::google::protobuf::RpcController* controller,
                        const ::dist_storage::CNSRequest* request,
                        ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
@@ -623,7 +689,11 @@ class NameService_Stub : public NameService {
                        const ::dist_storage::HBRequest* request,
                        ::dist_storage::HBResponse* response,
                        ::google::protobuf::Closure* done);
-  void GetBuketList(::google::protobuf::RpcController* controller,
+  void GetBucketInfo(::google::protobuf::RpcController* controller,
+                       const ::dist_storage::CNSRequest* request,
+                       ::dist_storage::CNSResponse* response,
+                       ::google::protobuf::Closure* done);
+  void GetNodeInfo(::google::protobuf::RpcController* controller,
                        const ::dist_storage::CNSRequest* request,
                        ::dist_storage::CNSResponse* response,
                        ::google::protobuf::Closure* done);
@@ -717,7 +787,7 @@ inline void HBRequest::set_allocated_host(::std::string* host) {
   // @@protoc_insertion_point(field_set_allocated:dist_storage.HBRequest.host)
 }
 
-// optional .dist_storage.NodeAction action = 2 [default = NUL];
+// optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
 inline bool HBRequest::has_action() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -728,7 +798,7 @@ inline void HBRequest::clear_has_action() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void HBRequest::clear_action() {
-  action_ = 3;
+  action_ = 0;
   clear_has_action();
 }
 inline ::dist_storage::NodeAction HBRequest::action() const {
@@ -953,87 +1023,36 @@ Bucket::mutable_node_list() {
 
 // CNSRequest
 
-// optional string dist_alg = 1 [default = "ketama"];
-inline bool CNSRequest::has_dist_alg() const {
+// optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
+inline bool CNSRequest::has_req_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void CNSRequest::set_has_dist_alg() {
+inline void CNSRequest::set_has_req_type() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void CNSRequest::clear_has_dist_alg() {
+inline void CNSRequest::clear_has_req_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void CNSRequest::clear_dist_alg() {
-  if (dist_alg_ != _default_dist_alg_) {
-    dist_alg_->assign(*_default_dist_alg_);
-  }
-  clear_has_dist_alg();
+inline void CNSRequest::clear_req_type() {
+  req_type_ = 0;
+  clear_has_req_type();
 }
-inline const ::std::string& CNSRequest::dist_alg() const {
-  // @@protoc_insertion_point(field_get:dist_storage.CNSRequest.dist_alg)
-  return *dist_alg_;
+inline ::dist_storage::CNSRequestType CNSRequest::req_type() const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSRequest.req_type)
+  return static_cast< ::dist_storage::CNSRequestType >(req_type_);
 }
-inline void CNSRequest::set_dist_alg(const ::std::string& value) {
-  set_has_dist_alg();
-  if (dist_alg_ == _default_dist_alg_) {
-    dist_alg_ = new ::std::string;
-  }
-  dist_alg_->assign(value);
-  // @@protoc_insertion_point(field_set:dist_storage.CNSRequest.dist_alg)
-}
-inline void CNSRequest::set_dist_alg(const char* value) {
-  set_has_dist_alg();
-  if (dist_alg_ == _default_dist_alg_) {
-    dist_alg_ = new ::std::string;
-  }
-  dist_alg_->assign(value);
-  // @@protoc_insertion_point(field_set_char:dist_storage.CNSRequest.dist_alg)
-}
-inline void CNSRequest::set_dist_alg(const char* value, size_t size) {
-  set_has_dist_alg();
-  if (dist_alg_ == _default_dist_alg_) {
-    dist_alg_ = new ::std::string;
-  }
-  dist_alg_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:dist_storage.CNSRequest.dist_alg)
-}
-inline ::std::string* CNSRequest::mutable_dist_alg() {
-  set_has_dist_alg();
-  if (dist_alg_ == _default_dist_alg_) {
-    dist_alg_ = new ::std::string(*_default_dist_alg_);
-  }
-  // @@protoc_insertion_point(field_mutable:dist_storage.CNSRequest.dist_alg)
-  return dist_alg_;
-}
-inline ::std::string* CNSRequest::release_dist_alg() {
-  clear_has_dist_alg();
-  if (dist_alg_ == _default_dist_alg_) {
-    return NULL;
-  } else {
-    ::std::string* temp = dist_alg_;
-    dist_alg_ = const_cast< ::std::string*>(_default_dist_alg_);
-    return temp;
-  }
-}
-inline void CNSRequest::set_allocated_dist_alg(::std::string* dist_alg) {
-  if (dist_alg_ != _default_dist_alg_) {
-    delete dist_alg_;
-  }
-  if (dist_alg) {
-    set_has_dist_alg();
-    dist_alg_ = dist_alg;
-  } else {
-    clear_has_dist_alg();
-    dist_alg_ = const_cast< ::std::string*>(_default_dist_alg_);
-  }
-  // @@protoc_insertion_point(field_set_allocated:dist_storage.CNSRequest.dist_alg)
+inline void CNSRequest::set_req_type(::dist_storage::CNSRequestType value) {
+  assert(::dist_storage::CNSRequestType_IsValid(value));
+  set_has_req_type();
+  req_type_ = value;
+  // @@protoc_insertion_point(field_set:dist_storage.CNSRequest.req_type)
 }
 
 // -------------------------------------------------------------------
 
 // CNSResponse
 
-// optional bool ret_code = 1 [default = false];
+// optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
 inline bool CNSResponse::has_ret_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1044,20 +1063,173 @@ inline void CNSResponse::clear_has_ret_code() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CNSResponse::clear_ret_code() {
-  ret_code_ = false;
+  ret_code_ = 0;
   clear_has_ret_code();
 }
-inline bool CNSResponse::ret_code() const {
+inline ::dist_storage::NSCode CNSResponse::ret_code() const {
   // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.ret_code)
-  return ret_code_;
+  return static_cast< ::dist_storage::NSCode >(ret_code_);
 }
-inline void CNSResponse::set_ret_code(bool value) {
+inline void CNSResponse::set_ret_code(::dist_storage::NSCode value) {
+  assert(::dist_storage::NSCode_IsValid(value));
   set_has_ret_code();
   ret_code_ = value;
   // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.ret_code)
 }
 
-// repeated .dist_storage.Bucket bucket_list = 2;
+// optional string dist_alg = 2 [default = ""];
+inline bool CNSResponse::has_dist_alg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CNSResponse::set_has_dist_alg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CNSResponse::clear_has_dist_alg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CNSResponse::clear_dist_alg() {
+  if (dist_alg_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dist_alg_->clear();
+  }
+  clear_has_dist_alg();
+}
+inline const ::std::string& CNSResponse::dist_alg() const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.dist_alg)
+  return *dist_alg_;
+}
+inline void CNSResponse::set_dist_alg(const ::std::string& value) {
+  set_has_dist_alg();
+  if (dist_alg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(value);
+  // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.dist_alg)
+}
+inline void CNSResponse::set_dist_alg(const char* value) {
+  set_has_dist_alg();
+  if (dist_alg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(value);
+  // @@protoc_insertion_point(field_set_char:dist_storage.CNSResponse.dist_alg)
+}
+inline void CNSResponse::set_dist_alg(const char* value, size_t size) {
+  set_has_dist_alg();
+  if (dist_alg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dist_alg_ = new ::std::string;
+  }
+  dist_alg_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dist_storage.CNSResponse.dist_alg)
+}
+inline ::std::string* CNSResponse::mutable_dist_alg() {
+  set_has_dist_alg();
+  if (dist_alg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dist_alg_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSResponse.dist_alg)
+  return dist_alg_;
+}
+inline ::std::string* CNSResponse::release_dist_alg() {
+  clear_has_dist_alg();
+  if (dist_alg_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = dist_alg_;
+    dist_alg_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void CNSResponse::set_allocated_dist_alg(::std::string* dist_alg) {
+  if (dist_alg_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dist_alg_;
+  }
+  if (dist_alg) {
+    set_has_dist_alg();
+    dist_alg_ = dist_alg;
+  } else {
+    clear_has_dist_alg();
+    dist_alg_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:dist_storage.CNSResponse.dist_alg)
+}
+
+// optional string ds_port = 3 [default = "9998"];
+inline bool CNSResponse::has_ds_port() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void CNSResponse::set_has_ds_port() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void CNSResponse::clear_has_ds_port() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void CNSResponse::clear_ds_port() {
+  if (ds_port_ != _default_ds_port_) {
+    ds_port_->assign(*_default_ds_port_);
+  }
+  clear_has_ds_port();
+}
+inline const ::std::string& CNSResponse::ds_port() const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.ds_port)
+  return *ds_port_;
+}
+inline void CNSResponse::set_ds_port(const ::std::string& value) {
+  set_has_ds_port();
+  if (ds_port_ == _default_ds_port_) {
+    ds_port_ = new ::std::string;
+  }
+  ds_port_->assign(value);
+  // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.ds_port)
+}
+inline void CNSResponse::set_ds_port(const char* value) {
+  set_has_ds_port();
+  if (ds_port_ == _default_ds_port_) {
+    ds_port_ = new ::std::string;
+  }
+  ds_port_->assign(value);
+  // @@protoc_insertion_point(field_set_char:dist_storage.CNSResponse.ds_port)
+}
+inline void CNSResponse::set_ds_port(const char* value, size_t size) {
+  set_has_ds_port();
+  if (ds_port_ == _default_ds_port_) {
+    ds_port_ = new ::std::string;
+  }
+  ds_port_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dist_storage.CNSResponse.ds_port)
+}
+inline ::std::string* CNSResponse::mutable_ds_port() {
+  set_has_ds_port();
+  if (ds_port_ == _default_ds_port_) {
+    ds_port_ = new ::std::string(*_default_ds_port_);
+  }
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSResponse.ds_port)
+  return ds_port_;
+}
+inline ::std::string* CNSResponse::release_ds_port() {
+  clear_has_ds_port();
+  if (ds_port_ == _default_ds_port_) {
+    return NULL;
+  } else {
+    ::std::string* temp = ds_port_;
+    ds_port_ = const_cast< ::std::string*>(_default_ds_port_);
+    return temp;
+  }
+}
+inline void CNSResponse::set_allocated_ds_port(::std::string* ds_port) {
+  if (ds_port_ != _default_ds_port_) {
+    delete ds_port_;
+  }
+  if (ds_port) {
+    set_has_ds_port();
+    ds_port_ = ds_port;
+  } else {
+    clear_has_ds_port();
+    ds_port_ = const_cast< ::std::string*>(_default_ds_port_);
+  }
+  // @@protoc_insertion_point(field_set_allocated:dist_storage.CNSResponse.ds_port)
+}
+
+// repeated .dist_storage.Bucket bucket_list = 4;
 inline int CNSResponse::bucket_list_size() const {
   return bucket_list_.size();
 }
@@ -1087,6 +1259,60 @@ CNSResponse::mutable_bucket_list() {
   return &bucket_list_;
 }
 
+// repeated string node_list = 5;
+inline int CNSResponse::node_list_size() const {
+  return node_list_.size();
+}
+inline void CNSResponse::clear_node_list() {
+  node_list_.Clear();
+}
+inline const ::std::string& CNSResponse::node_list(int index) const {
+  // @@protoc_insertion_point(field_get:dist_storage.CNSResponse.node_list)
+  return node_list_.Get(index);
+}
+inline ::std::string* CNSResponse::mutable_node_list(int index) {
+  // @@protoc_insertion_point(field_mutable:dist_storage.CNSResponse.node_list)
+  return node_list_.Mutable(index);
+}
+inline void CNSResponse::set_node_list(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:dist_storage.CNSResponse.node_list)
+  node_list_.Mutable(index)->assign(value);
+}
+inline void CNSResponse::set_node_list(int index, const char* value) {
+  node_list_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:dist_storage.CNSResponse.node_list)
+}
+inline void CNSResponse::set_node_list(int index, const char* value, size_t size) {
+  node_list_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:dist_storage.CNSResponse.node_list)
+}
+inline ::std::string* CNSResponse::add_node_list() {
+  return node_list_.Add();
+}
+inline void CNSResponse::add_node_list(const ::std::string& value) {
+  node_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:dist_storage.CNSResponse.node_list)
+}
+inline void CNSResponse::add_node_list(const char* value) {
+  node_list_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:dist_storage.CNSResponse.node_list)
+}
+inline void CNSResponse::add_node_list(const char* value, size_t size) {
+  node_list_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:dist_storage.CNSResponse.node_list)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+CNSResponse::node_list() const {
+  // @@protoc_insertion_point(field_list:dist_storage.CNSResponse.node_list)
+  return node_list_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+CNSResponse::mutable_node_list() {
+  // @@protoc_insertion_point(field_mutable_list:dist_storage.CNSResponse.node_list)
+  return &node_list_;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -1105,6 +1331,11 @@ template <> struct is_proto_enum< ::dist_storage::NodeAction> : ::google::protob
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::dist_storage::NodeAction>() {
   return ::dist_storage::NodeAction_descriptor();
+}
+template <> struct is_proto_enum< ::dist_storage::CNSRequestType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::dist_storage::CNSRequestType>() {
+  return ::dist_storage::CNSRequestType_descriptor();
 }
 
 }  // namespace google

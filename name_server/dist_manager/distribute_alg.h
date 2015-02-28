@@ -54,6 +54,7 @@ typedef struct BucketInfo_t {
 
 typedef boost::shared_ptr<BucketInfo> BI_PTR;
 typedef std::map<Long, BI_PTR> BUCKET_NODE_MAP;
+typedef boost::shared_ptr<BUCKET_NODE_MAP> BUCKET_NODE_MAP_PTR;
 
 class DistributeAlg {
     public:

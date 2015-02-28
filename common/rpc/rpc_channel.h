@@ -34,6 +34,10 @@ class Channel : public RpcChannel {
 
         virtual ~Channel();
 
+        bool ResetHost(const char* addr);
+
+        bool ResetPort(const char* port);
+
         virtual void CallMethod(const MethodDescriptor* method,
                                 RpcController* controll,
                                 const Message* request,

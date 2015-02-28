@@ -7,17 +7,19 @@ enum NSCode {
      NS_ERR = 1;
 }
 
+//--------------------data-name server heartbeat  request and response-------------
+
 enum NodeAction {
-    Reg = 0;
-    UnReg = 1;
-    Beat = 2;
-    NUL = 3;
+    NA_NUL = 0;
+    Reg = 1;
+    UnReg = 2;
+    Beat = 3;
 } 
 
 // HBRequest HBResponse is used by heartbeat 
 message HBRequest {
     optional string host = 1 [default = ""];
-    optional NodeAction action = 2 [default = NUL];
+    optional NodeAction action = 2 [default = NA_NUL];
     optional int64 updated_time = 3 [default = 0];
     // in KB!
     optional int64 disk_space = 4 [default = 0];
@@ -29,6 +31,15 @@ message HBResponse {
     optional NSCode code = 1 [default = NS_SUC];
 }
 
+
+//--------------------client-name_server request and response----------------------
+
+enum CNSRequestType {
+    CNS_NUL = 0;
+    BUKETS = 1;
+    NODES = 2;
+} 
+
 // Bucket, CNSRequest, CNSResponse is used to make client get dist node list 
 message Bucket {
     required uint64 number = 1;
@@ -36,17 +47,21 @@ message Bucket {
 }
 
 message CNSRequest {
-    //optional bool is_suc = 1 [default = false];
-    optional string dist_alg = 1 [default = "ketama"];
+    optional CNSRequestType req_type = 1 [default = CNS_NUL];
 }
 
 message CNSResponse {
-    optional bool ret_code = 1 [default = false];
-    repeated Bucket bucket_list = 2; 
+    optional NSCode ret_code = 1 [default = NS_SUC];
+    optional string dist_alg = 2 [default = ""];
+    // data server port
+    optional string ds_port = 3 [default = "9998"];
+    repeated Bucket bucket_list = 4; 
+    // get alive nodes from name server
+    repeated string node_list = 5;
 }
-
 
 service NameService {
     rpc HeartBeat(HBRequest) returns (HBResponse);
-    rpc GetBuketList(CNSRequest) returns (CNSResponse);
+    rpc GetBucketInfo(CNSRequest) returns (CNSResponse);
+    rpc GetNodeInfo(CNSRequest) returns (CNSResponse);
 }

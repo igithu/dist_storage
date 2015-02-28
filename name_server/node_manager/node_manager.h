@@ -27,6 +27,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/unordered_set.hpp>
+#include <google/protobuf/repeated_field.h>
 
 #include "atomic.h"
 #include "pthread_mutex.h"
@@ -121,7 +122,7 @@ class NodeManager {
         bool UpdateNodeList();
 
         // get the all alive nodes
-        bool GetAliveNodes(std::vector<std::string> node_list);
+        bool GetAliveNodes(::google::protobuf::RepeatedPtrField<std::string>& node_list);
 
     private:
         NodeManager();

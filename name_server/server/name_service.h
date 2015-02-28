@@ -42,13 +42,16 @@ class NameServiceImpl : public NameService {
                                HBResponse* hb_reponse,
                                Closure* done);
 
-        virtual void GetBucketList(RpcController* controller,
+        virtual void GetBucketInfo(RpcController* controller,
                                    const CNSRequest* request,
                                    CNSResponse* response,
                                    Closure* done);
 
+        virtual void GetNodeInfo(RpcController* controller,
+                                 const CNSRequest* request,
+                                 CNSResponse* response,
+                                 Closure* done);
 
-    private:
 };
 
 class NameServiceThread : public PUBLIC_UTIL::Thread {
@@ -67,16 +70,6 @@ class NameServiceThread : public PUBLIC_UTIL::Thread {
 }  // end of namespace name_server
 
 }  // end of namespace dist_storage
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -32,10 +32,10 @@ namespace name_server {
 class KetamaDistAlg : public DistributeAlg {
     public:
         // use ketema hash to build virtual nodes number (bucket number)
-        virtual bool BuildDistTable(BUCKET_NODE_MAP& bi_hash_map); 
+        virtual bool BuildDistTable(BUCKET_NODE_MAP& bi_map); 
 
         // use ketema hash to get real node host 
-        virtual bool GetDistNode(const BUCKET_NODE_MAP& bi_hash_map, 
+        virtual bool GetDistNode(const BUCKET_NODE_MAP& bi_map, 
                                  const std::string& key, 
                                  std::string& host); 
 };

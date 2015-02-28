@@ -37,6 +37,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
   CNSResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* NSCode_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* NodeAction_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* CNSRequestType_descriptor_ = NULL;
 const ::google::protobuf::ServiceDescriptor* NameService_descriptor_ = NULL;
 
 }  // namespace
@@ -101,7 +102,7 @@ void protobuf_AssignDesc_name_5fserv_2eproto() {
       sizeof(Bucket));
   CNSRequest_descriptor_ = file->message_type(3);
   static const int CNSRequest_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSRequest, dist_alg_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSRequest, req_type_),
   };
   CNSRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -115,9 +116,12 @@ void protobuf_AssignDesc_name_5fserv_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(CNSRequest));
   CNSResponse_descriptor_ = file->message_type(4);
-  static const int CNSResponse_offsets_[2] = {
+  static const int CNSResponse_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSResponse, ret_code_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSResponse, dist_alg_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSResponse, ds_port_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSResponse, bucket_list_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CNSResponse, node_list_),
   };
   CNSResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -132,6 +136,7 @@ void protobuf_AssignDesc_name_5fserv_2eproto() {
       sizeof(CNSResponse));
   NSCode_descriptor_ = file->enum_type(0);
   NodeAction_descriptor_ = file->enum_type(1);
+  CNSRequestType_descriptor_ = file->enum_type(2);
   NameService_descriptor_ = file->service(0);
 }
 
@@ -168,9 +173,9 @@ void protobuf_ShutdownFile_name_5fserv_2eproto() {
   delete Bucket_reflection_;
   delete CNSRequest::default_instance_;
   delete CNSRequest_reflection_;
-  delete CNSRequest::_default_dist_alg_;
   delete CNSResponse::default_instance_;
   delete CNSResponse_reflection_;
+  delete CNSResponse::_default_ds_port_;
 }
 
 void protobuf_AddDesc_name_5fserv_2eproto() {
@@ -180,31 +185,37 @@ void protobuf_AddDesc_name_5fserv_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\017name_serv.proto\022\014dist_storage\"\247\001\n\tHBRe"
-    "quest\022\016\n\004host\030\001 \001(\t:\000\022-\n\006action\030\002 \001(\0162\030."
-    "dist_storage.NodeAction:\003NUL\022\027\n\014updated_"
-    "time\030\003 \001(\003:\0010\022\025\n\ndisk_space\030\004 \001(\003:\0010\022\024\n\t"
-    "mem_space\030\005 \001(\003:\0010\022\025\n\nvisit_flow\030\006 \001(\003:\001"
-    "0\"8\n\nHBResponse\022*\n\004code\030\001 \001(\0162\024.dist_sto"
-    "rage.NSCode:\006NS_SUC\"+\n\006Bucket\022\016\n\006number\030"
-    "\001 \002(\004\022\021\n\tnode_list\030\002 \003(\t\"&\n\nCNSRequest\022\030"
-    "\n\010dist_alg\030\001 \001(\t:\006ketama\"Q\n\013CNSResponse\022"
-    "\027\n\010ret_code\030\001 \001(\010:\005false\022)\n\013bucket_list\030"
-    "\002 \003(\0132\024.dist_storage.Bucket* \n\006NSCode\022\n\n"
-    "\006NS_SUC\020\000\022\n\n\006NS_ERR\020\001*3\n\nNodeAction\022\007\n\003R"
-    "eg\020\000\022\t\n\005UnReg\020\001\022\010\n\004Beat\020\002\022\007\n\003NUL\020\0032\222\001\n\013N"
-    "ameService\022>\n\tHeartBeat\022\027.dist_storage.H"
-    "BRequest\032\030.dist_storage.HBResponse\022C\n\014Ge"
-    "tBuketList\022\030.dist_storage.CNSRequest\032\031.d"
-    "ist_storage.CNSResponseB\003\200\001\001", 668);
+    "\n\017name_serv.proto\022\014dist_storage\"\252\001\n\tHBRe"
+    "quest\022\016\n\004host\030\001 \001(\t:\000\0220\n\006action\030\002 \001(\0162\030."
+    "dist_storage.NodeAction:\006NA_NUL\022\027\n\014updat"
+    "ed_time\030\003 \001(\003:\0010\022\025\n\ndisk_space\030\004 \001(\003:\0010\022"
+    "\024\n\tmem_space\030\005 \001(\003:\0010\022\025\n\nvisit_flow\030\006 \001("
+    "\003:\0010\"8\n\nHBResponse\022*\n\004code\030\001 \001(\0162\024.dist_"
+    "storage.NSCode:\006NS_SUC\"+\n\006Bucket\022\016\n\006numb"
+    "er\030\001 \002(\004\022\021\n\tnode_list\030\002 \003(\t\"E\n\nCNSReques"
+    "t\0227\n\010req_type\030\001 \001(\0162\034.dist_storage.CNSRe"
+    "questType:\007CNS_NUL\"\246\001\n\013CNSResponse\022.\n\010re"
+    "t_code\030\001 \001(\0162\024.dist_storage.NSCode:\006NS_S"
+    "UC\022\022\n\010dist_alg\030\002 \001(\t:\000\022\025\n\007ds_port\030\003 \001(\t:"
+    "\0049998\022)\n\013bucket_list\030\004 \003(\0132\024.dist_storag"
+    "e.Bucket\022\021\n\tnode_list\030\005 \003(\t* \n\006NSCode\022\n\n"
+    "\006NS_SUC\020\000\022\n\n\006NS_ERR\020\001*6\n\nNodeAction\022\n\n\006N"
+    "A_NUL\020\000\022\007\n\003Reg\020\001\022\t\n\005UnReg\020\002\022\010\n\004Beat\020\003*4\n"
+    "\016CNSRequestType\022\013\n\007CNS_NUL\020\000\022\n\n\006BUKETS\020\001"
+    "\022\t\n\005NODES\020\0022\327\001\n\013NameService\022>\n\tHeartBeat"
+    "\022\027.dist_storage.HBRequest\032\030.dist_storage"
+    ".HBResponse\022D\n\rGetBucketInfo\022\030.dist_stor"
+    "age.CNSRequest\032\031.dist_storage.CNSRespons"
+    "e\022B\n\013GetNodeInfo\022\030.dist_storage.CNSReque"
+    "st\032\031.dist_storage.CNSResponseB\003\200\001\001", 914);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "name_serv.proto", &protobuf_RegisterTypes);
   HBRequest::default_instance_ = new HBRequest();
   HBResponse::default_instance_ = new HBResponse();
   Bucket::default_instance_ = new Bucket();
-  CNSRequest::_default_dist_alg_ =
-      new ::std::string("ketama", 6);
   CNSRequest::default_instance_ = new CNSRequest();
+  CNSResponse::_default_ds_port_ =
+      new ::std::string("9998", 4);
   CNSResponse::default_instance_ = new CNSResponse();
   HBRequest::default_instance_->InitAsDefaultInstance();
   HBResponse::default_instance_->InitAsDefaultInstance();
@@ -250,6 +261,21 @@ bool NodeAction_IsValid(int value) {
   }
 }
 
+const ::google::protobuf::EnumDescriptor* CNSRequestType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CNSRequestType_descriptor_;
+}
+bool CNSRequestType_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -282,7 +308,7 @@ void HBRequest::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   host_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  action_ = 3;
+  action_ = 0;
   updated_time_ = GOOGLE_LONGLONG(0);
   disk_space_ = GOOGLE_LONGLONG(0);
   mem_space_ = GOOGLE_LONGLONG(0);
@@ -336,13 +362,12 @@ void HBRequest::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 63) {
-    ZR_(updated_time_, visit_flow_);
+    ZR_(updated_time_, action_);
     if (has_host()) {
       if (host_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         host_->clear();
       }
     }
-    action_ = 3;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -378,7 +403,7 @@ bool HBRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .dist_storage.NodeAction action = 2 [default = NUL];
+      // optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
       case 2: {
         if (tag == 16) {
          parse_action:
@@ -493,7 +518,7 @@ void HBRequest::SerializeWithCachedSizes(
       1, this->host(), output);
   }
 
-  // optional .dist_storage.NodeAction action = 2 [default = NUL];
+  // optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
   if (has_action()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->action(), output);
@@ -540,7 +565,7 @@ void HBRequest::SerializeWithCachedSizes(
         1, this->host(), target);
   }
 
-  // optional .dist_storage.NodeAction action = 2 [default = NUL];
+  // optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
   if (has_action()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->action(), target);
@@ -585,7 +610,7 @@ int HBRequest::ByteSize() const {
           this->host());
     }
 
-    // optional .dist_storage.NodeAction action = 2 [default = NUL];
+    // optional .dist_storage.NodeAction action = 2 [default = NA_NUL];
     if (has_action()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->action());
@@ -1212,9 +1237,8 @@ void Bucket::Swap(Bucket* other) {
 
 // ===================================================================
 
-::std::string* CNSRequest::_default_dist_alg_ = NULL;
 #ifndef _MSC_VER
-const int CNSRequest::kDistAlgFieldNumber;
+const int CNSRequest::kReqTypeFieldNumber;
 #endif  // !_MSC_VER
 
 CNSRequest::CNSRequest()
@@ -1234,9 +1258,8 @@ CNSRequest::CNSRequest(const CNSRequest& from)
 }
 
 void CNSRequest::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  dist_alg_ = const_cast< ::std::string*>(_default_dist_alg_);
+  req_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1246,9 +1269,6 @@ CNSRequest::~CNSRequest() {
 }
 
 void CNSRequest::SharedDtor() {
-  if (dist_alg_ != _default_dist_alg_) {
-    delete dist_alg_;
-  }
   if (this != default_instance_) {
   }
 }
@@ -1275,11 +1295,7 @@ CNSRequest* CNSRequest::New() const {
 }
 
 void CNSRequest::Clear() {
-  if (has_dist_alg()) {
-    if (dist_alg_ != _default_dist_alg_) {
-      dist_alg_->assign(*_default_dist_alg_);
-    }
-  }
+  req_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1294,15 +1310,18 @@ bool CNSRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string dist_alg = 1 [default = "ketama"];
+      // optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
       case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_dist_alg()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->dist_alg().data(), this->dist_alg().length(),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "dist_alg");
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::dist_storage::CNSRequestType_IsValid(value)) {
+            set_req_type(static_cast< ::dist_storage::CNSRequestType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(1, value);
+          }
         } else {
           goto handle_unusual;
         }
@@ -1335,14 +1354,10 @@ failure:
 void CNSRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:dist_storage.CNSRequest)
-  // optional string dist_alg = 1 [default = "ketama"];
-  if (has_dist_alg()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->dist_alg().data(), this->dist_alg().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dist_alg");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->dist_alg(), output);
+  // optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
+  if (has_req_type()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->req_type(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1355,15 +1370,10 @@ void CNSRequest::SerializeWithCachedSizes(
 ::google::protobuf::uint8* CNSRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:dist_storage.CNSRequest)
-  // optional string dist_alg = 1 [default = "ketama"];
-  if (has_dist_alg()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->dist_alg().data(), this->dist_alg().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dist_alg");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->dist_alg(), target);
+  // optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
+  if (has_req_type()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->req_type(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1378,11 +1388,10 @@ int CNSRequest::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string dist_alg = 1 [default = "ketama"];
-    if (has_dist_alg()) {
+    // optional .dist_storage.CNSRequestType req_type = 1 [default = CNS_NUL];
+    if (has_req_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->dist_alg());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->req_type());
     }
 
   }
@@ -1412,8 +1421,8 @@ void CNSRequest::MergeFrom(const ::google::protobuf::Message& from) {
 void CNSRequest::MergeFrom(const CNSRequest& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_dist_alg()) {
-      set_dist_alg(from.dist_alg());
+    if (from.has_req_type()) {
+      set_req_type(from.req_type());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1438,7 +1447,7 @@ bool CNSRequest::IsInitialized() const {
 
 void CNSRequest::Swap(CNSRequest* other) {
   if (other != this) {
-    std::swap(dist_alg_, other->dist_alg_);
+    std::swap(req_type_, other->req_type_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1456,9 +1465,13 @@ void CNSRequest::Swap(CNSRequest* other) {
 
 // ===================================================================
 
+::std::string* CNSResponse::_default_ds_port_ = NULL;
 #ifndef _MSC_VER
 const int CNSResponse::kRetCodeFieldNumber;
+const int CNSResponse::kDistAlgFieldNumber;
+const int CNSResponse::kDsPortFieldNumber;
 const int CNSResponse::kBucketListFieldNumber;
+const int CNSResponse::kNodeListFieldNumber;
 #endif  // !_MSC_VER
 
 CNSResponse::CNSResponse()
@@ -1478,8 +1491,11 @@ CNSResponse::CNSResponse(const CNSResponse& from)
 }
 
 void CNSResponse::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ret_code_ = false;
+  ret_code_ = 0;
+  dist_alg_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ds_port_ = const_cast< ::std::string*>(_default_ds_port_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1489,6 +1505,12 @@ CNSResponse::~CNSResponse() {
 }
 
 void CNSResponse::SharedDtor() {
+  if (dist_alg_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dist_alg_;
+  }
+  if (ds_port_ != _default_ds_port_) {
+    delete ds_port_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -1515,8 +1537,21 @@ CNSResponse* CNSResponse::New() const {
 }
 
 void CNSResponse::Clear() {
-  ret_code_ = false;
+  if (_has_bits_[0 / 32] & 7) {
+    ret_code_ = 0;
+    if (has_dist_alg()) {
+      if (dist_alg_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        dist_alg_->clear();
+      }
+    }
+    if (has_ds_port()) {
+      if (ds_port_ != _default_ds_port_) {
+        ds_port_->assign(*_default_ds_port_);
+      }
+    }
+  }
   bucket_list_.Clear();
+  node_list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -1531,30 +1566,88 @@ bool CNSResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional bool ret_code = 1 [default = false];
+      // optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &ret_code_)));
-          set_has_ret_code();
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::dist_storage::NSCode_IsValid(value)) {
+            set_ret_code(static_cast< ::dist_storage::NSCode >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(1, value);
+          }
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_bucket_list;
+        if (input->ExpectTag(18)) goto parse_dist_alg;
         break;
       }
 
-      // repeated .dist_storage.Bucket bucket_list = 2;
+      // optional string dist_alg = 2 [default = ""];
       case 2: {
         if (tag == 18) {
+         parse_dist_alg:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_dist_alg()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->dist_alg().data(), this->dist_alg().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "dist_alg");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_ds_port;
+        break;
+      }
+
+      // optional string ds_port = 3 [default = "9998"];
+      case 3: {
+        if (tag == 26) {
+         parse_ds_port:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ds_port()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->ds_port().data(), this->ds_port().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "ds_port");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_bucket_list;
+        break;
+      }
+
+      // repeated .dist_storage.Bucket bucket_list = 4;
+      case 4: {
+        if (tag == 34) {
          parse_bucket_list:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_bucket_list()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_bucket_list;
+        if (input->ExpectTag(34)) goto parse_bucket_list;
+        if (input->ExpectTag(42)) goto parse_node_list;
+        break;
+      }
+
+      // repeated string node_list = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_node_list:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->add_node_list()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->node_list(this->node_list_size() - 1).data(),
+            this->node_list(this->node_list_size() - 1).length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "node_list");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_node_list;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1584,15 +1677,46 @@ failure:
 void CNSResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:dist_storage.CNSResponse)
-  // optional bool ret_code = 1 [default = false];
+  // optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
   if (has_ret_code()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->ret_code(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->ret_code(), output);
   }
 
-  // repeated .dist_storage.Bucket bucket_list = 2;
+  // optional string dist_alg = 2 [default = ""];
+  if (has_dist_alg()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dist_alg().data(), this->dist_alg().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dist_alg");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->dist_alg(), output);
+  }
+
+  // optional string ds_port = 3 [default = "9998"];
+  if (has_ds_port()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->ds_port().data(), this->ds_port().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "ds_port");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->ds_port(), output);
+  }
+
+  // repeated .dist_storage.Bucket bucket_list = 4;
   for (int i = 0; i < this->bucket_list_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->bucket_list(i), output);
+      4, this->bucket_list(i), output);
+  }
+
+  // repeated string node_list = 5;
+  for (int i = 0; i < this->node_list_size(); i++) {
+  ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+    this->node_list(i).data(), this->node_list(i).length(),
+    ::google::protobuf::internal::WireFormat::SERIALIZE,
+    "node_list");
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      5, this->node_list(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1605,16 +1729,49 @@ void CNSResponse::SerializeWithCachedSizes(
 ::google::protobuf::uint8* CNSResponse::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:dist_storage.CNSResponse)
-  // optional bool ret_code = 1 [default = false];
+  // optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
   if (has_ret_code()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->ret_code(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->ret_code(), target);
   }
 
-  // repeated .dist_storage.Bucket bucket_list = 2;
+  // optional string dist_alg = 2 [default = ""];
+  if (has_dist_alg()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dist_alg().data(), this->dist_alg().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dist_alg");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->dist_alg(), target);
+  }
+
+  // optional string ds_port = 3 [default = "9998"];
+  if (has_ds_port()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->ds_port().data(), this->ds_port().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "ds_port");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->ds_port(), target);
+  }
+
+  // repeated .dist_storage.Bucket bucket_list = 4;
   for (int i = 0; i < this->bucket_list_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->bucket_list(i), target);
+        4, this->bucket_list(i), target);
+  }
+
+  // repeated string node_list = 5;
+  for (int i = 0; i < this->node_list_size(); i++) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->node_list(i).data(), this->node_list(i).length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "node_list");
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteStringToArray(5, this->node_list(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1629,18 +1786,40 @@ int CNSResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional bool ret_code = 1 [default = false];
+    // optional .dist_storage.NSCode ret_code = 1 [default = NS_SUC];
     if (has_ret_code()) {
-      total_size += 1 + 1;
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->ret_code());
+    }
+
+    // optional string dist_alg = 2 [default = ""];
+    if (has_dist_alg()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->dist_alg());
+    }
+
+    // optional string ds_port = 3 [default = "9998"];
+    if (has_ds_port()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->ds_port());
     }
 
   }
-  // repeated .dist_storage.Bucket bucket_list = 2;
+  // repeated .dist_storage.Bucket bucket_list = 4;
   total_size += 1 * this->bucket_list_size();
   for (int i = 0; i < this->bucket_list_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->bucket_list(i));
+  }
+
+  // repeated string node_list = 5;
+  total_size += 1 * this->node_list_size();
+  for (int i = 0; i < this->node_list_size(); i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+      this->node_list(i));
   }
 
   if (!unknown_fields().empty()) {
@@ -1669,9 +1848,16 @@ void CNSResponse::MergeFrom(const ::google::protobuf::Message& from) {
 void CNSResponse::MergeFrom(const CNSResponse& from) {
   GOOGLE_CHECK_NE(&from, this);
   bucket_list_.MergeFrom(from.bucket_list_);
+  node_list_.MergeFrom(from.node_list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_ret_code()) {
       set_ret_code(from.ret_code());
+    }
+    if (from.has_dist_alg()) {
+      set_dist_alg(from.dist_alg());
+    }
+    if (from.has_ds_port()) {
+      set_ds_port(from.ds_port());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1698,7 +1884,10 @@ bool CNSResponse::IsInitialized() const {
 void CNSResponse::Swap(CNSResponse* other) {
   if (other != this) {
     std::swap(ret_code_, other->ret_code_);
+    std::swap(dist_alg_, other->dist_alg_);
+    std::swap(ds_port_, other->ds_port_);
     bucket_list_.Swap(&other->bucket_list_);
+    node_list_.Swap(&other->node_list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -1736,11 +1925,19 @@ void NameService::HeartBeat(::google::protobuf::RpcController* controller,
   done->Run();
 }
 
-void NameService::GetBuketList(::google::protobuf::RpcController* controller,
+void NameService::GetBucketInfo(::google::protobuf::RpcController* controller,
                          const ::dist_storage::CNSRequest*,
                          ::dist_storage::CNSResponse*,
                          ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method GetBuketList() not implemented.");
+  controller->SetFailed("Method GetBucketInfo() not implemented.");
+  done->Run();
+}
+
+void NameService::GetNodeInfo(::google::protobuf::RpcController* controller,
+                         const ::dist_storage::CNSRequest*,
+                         ::dist_storage::CNSResponse*,
+                         ::google::protobuf::Closure* done) {
+  controller->SetFailed("Method GetNodeInfo() not implemented.");
   done->Run();
 }
 
@@ -1758,7 +1955,13 @@ void NameService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
              done);
       break;
     case 1:
-      GetBuketList(controller,
+      GetBucketInfo(controller,
+             ::google::protobuf::down_cast<const ::dist_storage::CNSRequest*>(request),
+             ::google::protobuf::down_cast< ::dist_storage::CNSResponse*>(response),
+             done);
+      break;
+    case 2:
+      GetNodeInfo(controller,
              ::google::protobuf::down_cast<const ::dist_storage::CNSRequest*>(request),
              ::google::protobuf::down_cast< ::dist_storage::CNSResponse*>(response),
              done);
@@ -1777,6 +1980,8 @@ const ::google::protobuf::Message& NameService::GetRequestPrototype(
       return ::dist_storage::HBRequest::default_instance();
     case 1:
       return ::dist_storage::CNSRequest::default_instance();
+    case 2:
+      return ::dist_storage::CNSRequest::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
@@ -1790,6 +1995,8 @@ const ::google::protobuf::Message& NameService::GetResponsePrototype(
     case 0:
       return ::dist_storage::HBResponse::default_instance();
     case 1:
+      return ::dist_storage::CNSResponse::default_instance();
+    case 2:
       return ::dist_storage::CNSResponse::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
@@ -1815,11 +2022,18 @@ void NameService_Stub::HeartBeat(::google::protobuf::RpcController* controller,
   channel_->CallMethod(descriptor()->method(0),
                        controller, request, response, done);
 }
-void NameService_Stub::GetBuketList(::google::protobuf::RpcController* controller,
+void NameService_Stub::GetBucketInfo(::google::protobuf::RpcController* controller,
                               const ::dist_storage::CNSRequest* request,
                               ::dist_storage::CNSResponse* response,
                               ::google::protobuf::Closure* done) {
   channel_->CallMethod(descriptor()->method(1),
+                       controller, request, response, done);
+}
+void NameService_Stub::GetNodeInfo(::google::protobuf::RpcController* controller,
+                              const ::dist_storage::CNSRequest* request,
+                              ::dist_storage::CNSResponse* response,
+                              ::google::protobuf::Closure* done) {
+  channel_->CallMethod(descriptor()->method(2),
                        controller, request, response, done);
 }
 

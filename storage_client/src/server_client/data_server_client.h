@@ -49,7 +49,7 @@ class DataServerClient {
     private:
          Channel* rpc_channel_ptr_;
 
-         DataService::Stub* serveice_stub_ptr_;
+         DataService::Stub* service_stub_ptr_;
 
 };
 

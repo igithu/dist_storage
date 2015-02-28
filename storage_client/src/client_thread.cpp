@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2015 Baidu.com, Inc. All Rights Reserved
+ * Copyright (c) 2015 aishuyu, Inc. All Rights Reserved
  * 
  **************************************************************************/
  
@@ -8,7 +8,7 @@
  
 /**
  * @file client_thread.cpp
- * @author aishuyu(com@baidu.com)
+ * @author aishuyu(asy5178@163.com)
  * @date 2015/02/26 14:28:36
  * @brief 
  *  
@@ -36,7 +36,7 @@ void DistStorageClientThread::Run() {
         DistStorageClientDriver::GetInstance();
     while (true) {
         BN_MAP_PTR bn_map_ptr(new BN_MAP());
-        ns_client_.GetBuketList(*bn_map_ptr);
+        ns_client_.GetBucketInfo(*bn_map_ptr);
         dsc_driver.UpdateBucketNodeMap(bn_map_ptr);
         sleep(60 * 30);
     }

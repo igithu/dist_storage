@@ -39,6 +39,16 @@ Channel::~Channel() {
     free(port_);
 }
 
+bool Channel::ResetHost(const char* addr) {
+    // todo
+    return true;
+}
+
+bool Channel::ResetPort(const char* port) {
+    // todo
+    return true;
+}
+
 // used by CallMethod
 bool FormatSendMsg(
         const MethodDescriptor* method, const Message* request, string& send_str);

@@ -16,10 +16,11 @@
 
 #include "name_service.h"
 
+#include "rpc/rpc_server.h"
+#include "log/ds_log.h"
+#include "config/config_manager.h"
 #include "node_manager/node_manager.h"
 #include "dist_manager/distribution_manager.h"
-#include "include/inter_include.h"
-#include "rpc/rpc_server.h"
 
 namespace dist_storage {
 
@@ -52,12 +53,20 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
     //GlobalNM.UpdateNodeList();
 }
 
-void NameServiceImpl::GetBucketList(RpcController* controller,
+void NameServiceImpl::GetBucketInfo(RpcController* controller,
                                     const CNSRequest* request,
                                     CNSResponse* response,
                                     Closure* done) {
-    GlobalDM.GetBucketList(*response->mutable_bucket_list());
-    response->set_ret_code(true);
+    GlobalDM.GetBucketInfo(*response->mutable_bucket_list());
+}
+
+void NameServiceImpl::GetNodeInfo(RpcController* controller,
+                                  const CNSRequest* request,
+                                  CNSResponse* response,
+                                  Closure* done) {
+    GlobalNM.GetAliveNodes(*response->mutable_node_list());
+    const char* ds_port = DS_SYS_CONF.IniGetString("data_service:port");
+    response->set_ds_port(ds_port);
 }
 
 void NameServiceThread::Run() {

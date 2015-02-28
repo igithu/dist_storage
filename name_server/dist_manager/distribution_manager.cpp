@@ -64,7 +64,7 @@ bool DistributionManager::BuildDistTable() {
     return true;
 }
 
-bool DistributionManager::GetBucketList(
+bool DistributionManager::GetBucketInfo(
         ::google::protobuf::RepeatedPtrField<Bucket>& bucket_list) {
     for (BUCKET_NODE_MAP::iterator bn_iter = bucket_node_map_.end();
          bn_iter != bucket_node_map_.end();
