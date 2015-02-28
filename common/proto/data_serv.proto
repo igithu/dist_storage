@@ -3,9 +3,9 @@ package dist_storage;
 option cc_generic_services = true;    
 
 enum DSCode {
-    SUC = 0;
-    ERR = 1;
-    NOFOUND = 2;
+    DS_SUC = 0;
+    DS_ERR = 1;
+    DS_NOFOUND = 2;
 }
 
 message DSRequest {
@@ -14,7 +14,7 @@ message DSRequest {
 }
 
 message DSResponse {
-    optional DSCode code = 1 [default = SUC];
+    optional DSCode code = 1 [default = DS_SUC];
     optional string ds_res = 2 [default = "NULL"];
 }
 

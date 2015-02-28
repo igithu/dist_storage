@@ -33,14 +33,16 @@ namespace dist_storage {
 
 namespace storage_client {
 
-// because the bn_map_ptr_ is write and read by different threads
-typedef boost::shared_ptr<BN_MAP> BN_MAP_PTR; 
+typedef std::vector<std::string> NODE_LIST;
+typedef boost::shared_ptr<NODE_LIST> NODE_LIST_PTR;
+typedef std::map<uint64_t, NODE_LIST_PTR> BUCKET_NODE_MAP;
+typedef boost::shared_ptr<BUCKET_NODE_MAP> BN_MAP_PTR; 
 
 class DistributeAlg {
     public:
-        virtual bool GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
-                                 const std::string& key,
-                                 std::string& host) = 0;
+        virtual bool GetNodeHashKey(const BUCKET_NODE_MAP& bi_hash_map,
+                                    const char* key,
+                                    uint64_t& hash_key) = 0;
 };
 
 }  // end of namespace storage_client

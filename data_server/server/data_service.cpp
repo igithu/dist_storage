@@ -59,7 +59,7 @@ void DataServiceImpl::Put(RpcController* controller,
     if (NULL == common_ds_ptr_ || !common_ds_ptr_->Put(key.c_str(), value.c_str())) {
         DS_LOG(ERROR, "EngineService put the key : %s, value: %s failed!",
                key.c_str(), value.c_str());
-        response->set_code(ERR);
+        response->set_code(DS_ERR);
     }
     //response->set_db_res("null");
 }
@@ -75,11 +75,11 @@ void DataServiceImpl::Get(RpcController* controller,
     string value;
     if (!common_ds_ptr_->Get(key.c_str(), value)) {
         DS_LOG(ERROR, "EngineService get the key : %s failed!", key.c_str());
-        response->set_code(ERR);
+        response->set_code(DS_ERR);
     }
 
     if ("" == value) {
-        response->set_code(NOFOUND);
+        response->set_code(DS_NOFOUND);
         return;
     }
     response->set_ds_res(value);
@@ -95,7 +95,7 @@ void DataServiceImpl::Delete(RpcController* controller,
     }
     if (!common_ds_ptr_->Delete(key.c_str())) {
         DS_LOG(ERROR, "EngineService del the key : %s failed!", key.c_str());
-        response->set_code(ERR);
+        response->set_code(DS_ERR);
     }
 }
 

@@ -16,10 +16,24 @@
 
 
 
+#include "client_thread.h"
+#include "client_driver.h"
 
-
+using namespace dist_storage;
+using namespace storage_client;
 
 int main() {
+
+    GlobalDSClient.Start();
+    
+    if (!GlobalDSClient.Set("Test", "Testvalue")) {
+        printf("set key failed");
+    }
+    
+    GlobalDSClient.Wait();
+
+    GlobalDSClient.Stop();
+
     return 0;
 }
 

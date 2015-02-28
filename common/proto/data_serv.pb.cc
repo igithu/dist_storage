@@ -109,14 +109,15 @@ void protobuf_AddDesc_data_5fserv_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017data_serv.proto\022\014dist_storage\"1\n\tDSReq"
     "uest\022\020\n\006ds_key\030\001 \001(\t:\000\022\022\n\010ds_value\030\002 \001(\t"
-    ":\000\"K\n\nDSResponse\022\'\n\004code\030\001 \001(\0162\024.dist_st"
-    "orage.DSCode:\003SUC\022\024\n\006ds_res\030\002 \001(\t:\004NULL*"
-    "\'\n\006DSCode\022\007\n\003SUC\020\000\022\007\n\003ERR\020\001\022\013\n\007NOFOUND\020\002"
-    "2\276\001\n\013DataService\0228\n\003Put\022\027.dist_storage.D"
-    "SRequest\032\030.dist_storage.DSResponse\0228\n\003Ge"
-    "t\022\027.dist_storage.DSRequest\032\030.dist_storag"
-    "e.DSResponse\022;\n\006Delete\022\027.dist_storage.DS"
-    "Request\032\030.dist_storage.DSResponseB\003\200\001\001", 398);
+    ":\000\"N\n\nDSResponse\022*\n\004code\030\001 \001(\0162\024.dist_st"
+    "orage.DSCode:\006DS_SUC\022\024\n\006ds_res\030\002 \001(\t:\004NU"
+    "LL*0\n\006DSCode\022\n\n\006DS_SUC\020\000\022\n\n\006DS_ERR\020\001\022\016\n\n"
+    "DS_NOFOUND\020\0022\276\001\n\013DataService\0228\n\003Put\022\027.di"
+    "st_storage.DSRequest\032\030.dist_storage.DSRe"
+    "sponse\0228\n\003Get\022\027.dist_storage.DSRequest\032\030"
+    ".dist_storage.DSResponse\022;\n\006Delete\022\027.dis"
+    "t_storage.DSRequest\032\030.dist_storage.DSRes"
+    "ponseB\003\200\001\001", 410);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "data_serv.proto", &protobuf_RegisterTypes);
   DSRequest::default_instance_ = new DSRequest();
@@ -543,7 +544,7 @@ bool DSResponse::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .dist_storage.DSCode code = 1 [default = SUC];
+      // optional .dist_storage.DSCode code = 1 [default = DS_SUC];
       case 1: {
         if (tag == 8) {
           int value;
@@ -604,7 +605,7 @@ failure:
 void DSResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:dist_storage.DSResponse)
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.DSCode code = 1 [default = DS_SUC];
   if (has_code()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->code(), output);
@@ -630,7 +631,7 @@ void DSResponse::SerializeWithCachedSizes(
 ::google::protobuf::uint8* DSResponse::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:dist_storage.DSResponse)
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.DSCode code = 1 [default = DS_SUC];
   if (has_code()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->code(), target);
@@ -659,7 +660,7 @@ int DSResponse::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .dist_storage.DSCode code = 1 [default = SUC];
+    // optional .dist_storage.DSCode code = 1 [default = DS_SUC];
     if (has_code()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->code());

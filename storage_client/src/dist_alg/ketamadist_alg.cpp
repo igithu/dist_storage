@@ -18,7 +18,6 @@
 #include "ketamadist_alg.h"
 
 #include "tools.h"
-#include "include/inter_include.h"
 #include "util/crytocpp.h"
 #include "util/dist_hash.h"
 
@@ -30,48 +29,15 @@ using std::vector;
 using std::string;
 using namespace PUBLIC_UTIL;
 
-bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_hash_map) {
 
-    int32_t buckt_num = 100;
-    int32_t group_num = buckt_num / 4;
-    
-    const char* server_list_str = DS_SYS_CONF.IniGetString("server:data_server");
-    vector<string> data_node_list;
-    Split(server_list_str, ",", data_node_list);
-    for (vector<string>::iterator ser_iter = data_node_list.begin();
-         ser_iter != data_node_list.end();
-         ++ser_iter) {
-        const string& server_str = *ser_iter;
-        for (int32_t i = 0; i < group_num; ++i) {
-            unsigned char md5_str[server_str.size() + 2];
-            sprintf((char*)md5_str, "%s%c", server_str.c_str(), static_cast<char>(i));
-            unsigned char digest[16];
-            MD5(md5_str, digest);
-            for (int j = 0; j < 4; ++j) {
-                Long m = KetamaHash(digest, j);
-                BI_PTR bi_ptr(new BucketInfo());
-                bi_ptr->number = m;
-                bi_ptr->bnode_list_ptr->push_back(server_str);
-                if (bi_hash_map.find(m) != bi_hash_map.end()) {
-                    bi_hash_map[m] = bi_ptr;
-                } else {
-                    bi_hash_map.insert(std::make_pair(m, bi_ptr));
-                }
-            }
-        }
-    }
-
-    return true;
-}
-
-bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
-                                const string& key, 
-                                string& host) {
+bool KetamaDistAlg::GetNodeHashKey(const BUCKET_NODE_MAP& bi_hash_map,
+                                   const char* key, 
+                                   uint64_t& hash_key) {
     if (bi_hash_map.size() == 0) {
         return false;
     }
-    unsigned char md5_str[key.size()];
-    sprintf((char*)md5_str, "%s", key.c_str());
+    unsigned char md5_str[strlen(key)];
+    sprintf((char*)md5_str, "%s", key);
 
     unsigned char digest[16];
     MD5(md5_str, digest);
@@ -79,20 +45,19 @@ bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_hash_map,
 
     BUCKET_NODE_MAP::const_iterator bi_itr = bi_hash_map.find(m);
     if (bi_itr != bi_hash_map.end()) {
-        const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
+        const NODE_LIST& bi_list = *(bi_itr->second);
         if (bi_list.size() == 0) {
             return false;
         }
-        host = bi_list[0];
+        hash_key = m;
     } else {
         do {
             bi_itr = bi_hash_map.lower_bound(m);
             if (bi_itr != bi_hash_map.end()) {
-                const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
-                if (bi_list.size() == 0) {
+                if (!bi_itr->second || bi_itr->second->size() == 0) {
                     return false;
                 }
-                host = bi_list[0];
+                hash_key = bi_itr->first;
                 break;
             }
             m = 0;

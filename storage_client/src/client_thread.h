@@ -22,7 +22,6 @@
 
 
 #include "thread.h"
-#include "server_client/name_server_client.h"
 
 namespace dist_storage {
 
@@ -37,9 +36,6 @@ class DistStorageClientThread : public PUBLIC_UTIL::Thread {
         ~DistStorageClientThread();
 
         virtual void Run();
-
-    private:
-        NameServerClient ns_client_;
 };
 
 

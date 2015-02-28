@@ -39,13 +39,13 @@ class DSRequest;
 class DSResponse;
 
 enum DSCode {
-  SUC = 0,
-  ERR = 1,
-  NOFOUND = 2
+  DS_SUC = 0,
+  DS_ERR = 1,
+  DS_NOFOUND = 2
 };
 bool DSCode_IsValid(int value);
-const DSCode DSCode_MIN = SUC;
-const DSCode DSCode_MAX = NOFOUND;
+const DSCode DSCode_MIN = DS_SUC;
+const DSCode DSCode_MAX = DS_NOFOUND;
 const int DSCode_ARRAYSIZE = DSCode_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* DSCode_descriptor();
@@ -212,7 +212,7 @@ class DSResponse : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .dist_storage.DSCode code = 1 [default = SUC];
+  // optional .dist_storage.DSCode code = 1 [default = DS_SUC];
   inline bool has_code() const;
   inline void clear_code();
   static const int kCodeFieldNumber = 1;
@@ -490,7 +490,7 @@ inline void DSRequest::set_allocated_ds_value(::std::string* ds_value) {
 
 // DSResponse
 
-// optional .dist_storage.DSCode code = 1 [default = SUC];
+// optional .dist_storage.DSCode code = 1 [default = DS_SUC];
 inline bool DSResponse::has_code() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }

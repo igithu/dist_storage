@@ -31,13 +31,10 @@ namespace storage_client {
 
 class KetamaDistAlg : public DistributeAlg {
     public:
-        // use ketema hash to build virtual nodes number (bucket number)
-        virtual bool BuildDistTable(BUCKET_NODE_MAP& bi_hash_map); 
-
-        // use ketema hash to get real node host 
-        virtual bool GetDistNode(const BUCKET_NODE_MAP& bi_hash_map, 
-                                 const std::string& key, 
-                                 std::string& host); 
+        // use ketema hash to get hash_key
+        virtual bool GetNodeHashKey(const BUCKET_NODE_MAP& bi_hash_map, 
+                                    const char* key, 
+                                    uint64_t& hash_key); 
 };
 
 }  // end of namespace storage_client

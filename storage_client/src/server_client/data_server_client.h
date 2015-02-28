@@ -31,7 +31,7 @@ namespace storage_client {
 
 class DataServerClient {
     public:
-        DataServerClient();
+        DataServerClient(const char* ds_host, const char* ds_port);
 
         ~DataServerClient();
 
@@ -44,7 +44,7 @@ class DataServerClient {
 
     private:
         // get init paramters
-        bool ClientInit();
+        bool ClientInit(const char* ds_host, const char* ds_port);
         
     private:
          Channel* rpc_channel_ptr_;

@@ -24,11 +24,10 @@ namespace dist_storage {
 
 namespace storage_client {
 
-using namespace name_server;
 using namespace google::protobuf;
 using std::string;
 
-NameServerClient::NameServerClient(),
+NameServerClient::NameServerClient():
    rpc_channel_ptr_(NULL), service_stub_ptr_(NULL) {
 }
 
@@ -55,6 +54,7 @@ bool NameServerClient::GetBucketInfo(BUCKET_NODE_MAP& bucket_node_map) {
     CNSRequest cns_request;
     CNSResponse cns_response;
 
+    // rpc call
     service_stub_ptr_->GetBucketInfo(NULL, &cns_request, &cns_response, NULL);
     if (NS_ERR == cns_response.ret_code()) {
         DS_LOG(ERROR, "Get bucket list failed!");
@@ -69,19 +69,18 @@ bool NameServerClient::GetBucketInfo(BUCKET_NODE_MAP& bucket_node_map) {
          bl_iter !=  bucket_list.end();
          ++bl_iter) {
 
-        Long bucket_num = bl_iter->number();
-        BI_PTR bi_ptr(new BucketInfo());
-        bi_ptr->number = bucket_num;
-        const NODE_LIST_TYPE* node_list = bl_iter->node_list()
-        for (BUCKET_LIST_TYPE::const_iterator nl_iter = node_list.begin();
+        uint64_t bucket_num = bl_iter->number();
+        NODE_LIST_PTR nl_ptr(new NODE_LIST());
+        const NODE_LIST_TYPE& node_list = bl_iter->node_list();
+        for (NODE_LIST_TYPE::const_iterator nl_iter = node_list.begin();
              nl_iter != node_list.end();
              ++nl_iter) {
-            bi_ptr->bnode_list_ptr->push_back(*nl_iter);
+            nl_ptr->push_back(*nl_iter);
         }
         if (bucket_node_map.find(bucket_num) != bucket_node_map.end()) {
-            bucket_node_map[bucket_num] = bi_ptr;
+            bucket_node_map[bucket_num] = nl_ptr;
         } else {
-            bucket_node_map.insert(std::make_pair(bucket_num, bi_ptr));
+            bucket_node_map.insert(std::make_pair(bucket_num, nl_ptr));
         } 
     }
 

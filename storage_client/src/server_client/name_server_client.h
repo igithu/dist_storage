@@ -29,8 +29,8 @@
 
 #include "rpc/rpc_channel.h"
 #include "proto/name_serv.pb.h"
-#include "name_server/dist_manager/distribute_alg.h"
-#include "name_server/dist_manager/ketamadist_alg.h"
+#include "dist_alg/distribute_alg.h"
+#include "dist_alg/ketamadist_alg.h"
 
 namespace dist_storage {
 
@@ -43,7 +43,7 @@ class NameServerClient {
         ~NameServerClient();
 
         // get info from name server
-        bool GetBucketInfo(name_server::BUCKET_NODE_MAP& bucket_node_map);
+        bool GetBucketInfo(BUCKET_NODE_MAP& bucket_node_map);
 
         bool GetNodeInfo(std::vector<std::string>& node_list, std::string& ds_port);
 

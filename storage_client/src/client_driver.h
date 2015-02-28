@@ -26,6 +26,8 @@
 
 #include <boost/unordered_map.hpp>
 
+#include "pthread_mutex.h"
+#include "pthread_rwlock.h"
 #include "disallow_copy_and_assign.h"
 #include "server_client/name_server_client.h"
 #include "server_client/data_server_client.h"
@@ -34,6 +36,8 @@
 namespace dist_storage {
 
 namespace storage_client {
+
+#define GlobalDSClient DistStorageClientDriver::GetInstance()
 
 typedef boost::shared_ptr<DataServerClient> DSC_PTR;
 typedef boost::unordered_map<string, DSC_PTR> DSCLINT_MAP;
@@ -62,7 +66,7 @@ class DistStorageClientDriver {
         bool Delete(const char* key);
 
         // update current map info
-        bool UpdateBucketNodeMap(name_server::BUCKET_NODE_MAP& bn_map_ptr);
+        bool UpdateBucketNodeMap();
 
         bool BuildDSClientMap();
 
@@ -70,7 +74,7 @@ class DistStorageClientDriver {
         // ctor
         DistStorageClientDriver();
 
-        bool GetNodeHost(std::string& node_host);
+        bool GetNodeClient(const char* key, DSC_PTR& dsc_ptr);
 
         DISALLOW_COPY_AND_ASSIGN(DistStorageClientDriver);
 
@@ -78,8 +82,11 @@ class DistStorageClientDriver {
         // threads
         DistStorageClientThread* client_thread_ptr_;
 
+        // dist hash alg
+        DistributeAlg* distribute_alg_ptr_;
+
         // map data
-        name_server::BUCKET_NODE_MAP_PTR bn_map_ptr_;
+        BN_MAP_PTR bn_map_ptr_;
         DSCLINT_MAP_PTR ds_client_map_ptr_;
 
         // rw lock
@@ -87,9 +94,7 @@ class DistStorageClientDriver {
         PUBLIC_UTIL::RWLock ds_client_rwlock_;
 
         // for name_server rpc call
-        NameService ns_client_;
-
-        name_server::DistributeAlg* distribute_alg_ptr_;
+        NameServerClient ns_client_;
 
         // for instance
         static DSCDSmartPtr client_driver_ptr_;
