@@ -20,9 +20,9 @@
 #include <stdlib.h>
 #include <leveldb/c.h>
 
-#include "tools.h"
 #include "config/config_manager.h"
 #include "common/ds_log.h"
+#include "common/tools.h"
 
 namespace dist_storage {
 
@@ -37,7 +37,7 @@ LeveDB::~LeveDB() {
 
 bool LeveDB::LeveDBInit(const char* db_path) {
     // create the storage dir
-    if (!PUBLIC_UTIL::CreateDir(db_path)) {
+    if (!CreateDir(db_path)) {
         DS_LOG(ERROR, "create the dir %s failed!", db_path);
         return false;
     }

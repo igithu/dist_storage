@@ -9,7 +9,7 @@ AM_CPPFLAGS=-I${top_srcdir}/src \
 			-I${third_dir}/iniparser/include/ \
 			-I${pub_dir}	
 
-AM_LDFLAGS=-lz -lrt
+AM_LDFLAGS=-lz -lrt -rdynamic
 
 LDADD=${third_dir}/boost/lib/*.a \
 	  ${third_dir}/glog/lib/*.a \

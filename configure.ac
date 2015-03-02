@@ -6,6 +6,7 @@ AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
 AC_CONFIG_SRCDIR([src/common/ds_log.cpp])
 
 # Checks for programs.
+AC_PROG_AWK
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -13,14 +14,23 @@ AC_PROG_MAKE_SET
 AC_PROG_CPP
 AM_INIT_AUTOMAKE
 AC_PROG_RANLIB
+#AC_LANG([C++])
+
+#AC_PROG_LIBTOOL
 
 # Checks for libraries.
+# FIXME: Replace `main' with a function in `-lcrypto':
+AC_CHECK_LIB([crypto], [main])
 # FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [main])
+# FIXME: Replace `main' with a function in `-lm':
+AC_CHECK_LIB([m], [main])
 # FIXME: Replace `main' with a function in `-lpthread':
 AC_CHECK_LIB([pthread], [main])
 # FIXME: Replace `main' with a function in `-lrt':
 AC_CHECK_LIB([rt], [main])
+# FIXME: Replace `main' with a function in `-lssl':
+AC_CHECK_LIB([ssl], [main])
 # FIXME: Replace `main' with a function in `-lz':
 AC_CHECK_LIB([z], [main])
 
@@ -50,9 +60,6 @@ AC_CONFIG_FILES([Makefile
                  src/name_server/Makefile
                  src/proto/Makefile
                  src/rpc/Makefile
-                 src/storage_client/Makefile])
-AC_CONFIG_SUBDIRS([src/data_server/build
-                   src/name_server/build
-                   src/storage_client/build
-                   src/test/build])
+                 src/storage_client/Makefile
+                 src/test/Makefile])
 AC_OUTPUT

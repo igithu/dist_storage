@@ -24,6 +24,7 @@
 #include <memory>
 
 #include "atomic.h"
+
 #include "iniparser.h"
 #include "pthread_mutex.h"
 #include "disallow_copy_and_assign.h"

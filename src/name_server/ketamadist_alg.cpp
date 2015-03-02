@@ -17,7 +17,7 @@
 
 #include "ketamadist_alg.h"
 
-#include "tools.h"
+#include "common/tools.h"
 #include "common/ds_log.h"
 #include "config/config_manager.h"
 #include "common/crytocpp.h"

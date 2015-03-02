@@ -23,7 +23,7 @@
 
 #include "node_manager.h"
 #include "name_service.h"
-#include "tools.h"
+#include "common/tools.h"
 #include "common/ds_log.h"
 #include "config/config_manager.h"
 

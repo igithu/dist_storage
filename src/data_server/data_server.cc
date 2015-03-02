@@ -19,11 +19,11 @@
 #include <fcntl.h>
 
 #include "data_service.h"
-#include "tools.h"
+#include "heartbeat_thread.h"
 #include "rpc/rpc_server.h"
-#include "client/heartbeat_thread.h"
 #include "config/config_manager.h"
 #include "common/ds_log.h"
+#include "common/tools.h"
 
 using namespace dist_storage;
 using namespace dist_storage::data_server;
@@ -61,7 +61,7 @@ inline void Daemonize() {
 }
 
 int main(int argc, char* argv[]) {
-
+/*
     InitSignal();
 
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
 
     hb_thread.Wait();
     rpc_server.Wait();
-
+*/
     return 0;
 }
 
