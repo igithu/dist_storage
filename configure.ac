@@ -57,9 +57,9 @@ AC_CONFIG_FILES([Makefile
                  src/config/Makefile
                  src/data_server/Makefile
                  src/data_server/test/build/Makefile
+                 src/dist_client/Makefile
                  src/name_server/Makefile
                  src/proto/Makefile
                  src/rpc/Makefile
-                 src/storage_client/Makefile
                  src/test/Makefile])
 AC_OUTPUT
