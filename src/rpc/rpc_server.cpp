@@ -22,6 +22,7 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/stubs/common.h>
 
+#include "pub_define.h"
 #include "socket_util.h"
 #include "rpc_util.h"
 #include "common/ds_log.h"
@@ -231,7 +232,7 @@ bool RpcServer::SendFormatStringMsg(int32_t event_fd, Message* response) {
     }
 
     RpcMessage send_rpc_msg;
-    send_rpc_msg.set_head_code(200);
+    send_rpc_msg.set_head_code(SER_RETURN_SUCCU);
     send_rpc_msg.set_body_msg(response_str);
     string send_str;
     if (!send_rpc_msg.SerializeToString(&send_str)) {
@@ -251,7 +252,7 @@ bool RpcServer::SendFormatStringMsg(int32_t event_fd, Message* response) {
 bool RpcServer::ErrorSendMsg(int32_t event_fd, const string& error_msg) {
     RpcMessage error_rpc_msg;
     // 500 means internal error
-    error_rpc_msg.set_head_code(500);
+    error_rpc_msg.set_head_code(SER_INTERNAL_ERROR);
     error_rpc_msg.set_body_msg(error_msg);
 
     string err_msg_str;

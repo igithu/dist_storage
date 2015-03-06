@@ -190,7 +190,7 @@ bool DistStorageClientDriver::Stop() {
 
 bool DistStorageClientDriver::UpdateBucketNodeMap() {
     BN_MAP_PTR bn_map_ptr(new BUCKET_NODE_MAP());
-    DS_LOG(INFO, "rpc call GetBucketInfo!");
+    DS_LOG(INFO, "Rpc call GetBucketInfo!");
     ns_client_.GetBucketInfo(*bn_map_ptr);
     if (NULL == bn_map_ptr) {
         DS_LOG(ERROR, "bn_map_ptr is NULL! update bn_map failed!");

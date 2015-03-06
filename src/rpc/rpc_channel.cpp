@@ -22,6 +22,7 @@
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 
+#include "pub_define.h"
 #include "rpc_util.h"
 #include "rpc_msg.pb.h"
 #include "socket_util.h"
@@ -68,7 +69,7 @@ void Channel::CallMethod(const MethodDescriptor* method,
 
     connect_fd_ = TcpConnect(addr_, port_);
     if (connect_fd_ < 0) {
-        DS_LOG(ERROR, "rpc connect server failed!");
+        DS_LOG(ERROR, "Rpc connect server failed!");
         return;
     }
 
@@ -79,18 +80,18 @@ void Channel::CallMethod(const MethodDescriptor* method,
     }
   
     if (SendMsg(connect_fd_, send_str) < 0) {
-        DS_LOG(ERROR, "send msg error!");
+        DS_LOG(ERROR, "Send msg error!");
         close(connect_fd_);
         return;
     }
 
     string recv_str;
     if (RecvMsg(connect_fd_, recv_str) < 0) {
-        DS_LOG(ERROR, "rcv msg error!");
+        DS_LOG(ERROR, "Rcv msg error!");
     }
-    DS_LOG(INFO, "recv msg over recv size is %d\n.", recv_str.size());
+    DS_LOG(INFO, "Rcv msg over recv size is %d\n.", recv_str.size());
     if (!FormatRecvMsg(recv_str, response)) {
-        DS_LOG(ERROR, "format recv msg failed!");
+        DS_LOG(ERROR, "Format recv msg failed!");
     }
     close(connect_fd_);
 }
@@ -104,13 +105,13 @@ bool FormatSendMsg(
     uint32_t hash_code = BKDRHash(method->full_name().c_str());
 
     if (NULL == request) {
-        DS_LOG(ERROR, "request is null ptr!");
+        DS_LOG(ERROR, "Request ptr is NULL!");
         return false;
     }
 
     string request_str;
     if (!request->SerializeToString(&request_str)) {
-        DS_LOG(ERROR, "request SerializeToString has failed!");
+        DS_LOG(ERROR, "Request SerializeToString has failed!");
         return false;
     }
 
@@ -124,7 +125,7 @@ bool FormatSendMsg(
 
 
     if (!rpc_msg.SerializeToString(&send_str)) {
-        DS_LOG(ERROR, "request SerializeToString has failed!");
+        DS_LOG(ERROR, "Request SerializeToString has failed!");
         return false;
     }
     return true;
@@ -141,21 +142,19 @@ bool FormatRecvMsg(const string& recv_str, Message* response) {
     //    return false;
     //}
     RpcMessage recv_rpc_msg;
-
-    try {
-        if (!recv_rpc_msg.ParseFromString(recv_str)) {
-            DS_LOG(ERROR, "parse recv msg error! %s", recv_str.c_str());
-            return false;
-        }
+    if (!recv_rpc_msg.ParseFromString(recv_str)) {
+        DS_LOG(ERROR, "Parse recv msg error! %s", recv_str.c_str());
+        return false;
+    }
         
 
-    if (500 == recv_rpc_msg.head_code()) {
-        DS_LOG(ERROR, "server internal error!");
+    if (SER_INTERNAL_ERROR == recv_rpc_msg.head_code()) {
+        DS_LOG(ERROR, "Server internal error!");
     }
 
     if ("0" != recv_rpc_msg.body_msg() && 
         !response->ParseFromString(recv_rpc_msg.body_msg())) {
-        DS_LOG(ERROR, "parse recv body msg error!");
+        DS_LOG(ERROR, "Parse recv body msg error!");
         return false;
     }
     return true;

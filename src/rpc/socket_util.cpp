@@ -30,6 +30,7 @@
 #include <netinet/tcp.h> 
 #include <netdb.h>
 
+#include "pub_define.h"
 #include "common/ds_log.h"
 
 namespace dist_storage {
@@ -181,7 +182,7 @@ int32_t Accept(int fd, struct sockaddr_in &sa, int32_t addrlen) {
 int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
     recv_msg_str = "";
 
-    const uint32_t MAXBUFLEN = 16;
+    const uint32_t MAXBUFLEN = MAX_INFO_LEN;
     char buf[MAXBUFLEN];
     memset(buf, 0, MAXBUFLEN);
 
@@ -213,8 +214,13 @@ int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
 
 int32_t SendMsg(int32_t fd, std::string& send_msg_str) {
     int32_t send_size = send_msg_str.size();
-    const char* send_ptr = send_msg_str.c_str();
 
+    if (MAX_INFO_LEN < send_size) {
+        DS_LOG(ERROR, "You send msg is too large, please redefine code!");
+        return -1;
+    }
+
+    const char* send_ptr = send_msg_str.c_str();
     do {
         int32_t buf_len = send(fd, send_ptr, send_size + 1, 0);
         if (buf_len < 0) {

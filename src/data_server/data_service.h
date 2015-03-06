@@ -32,7 +32,6 @@ using namespace google::protobuf;
 
 class DataServiceImpl : public DataService {
     public:
-
         DataServiceImpl();
 
         ~DataServiceImpl();
@@ -62,14 +61,6 @@ class DataServiceImpl : public DataService {
 }  // end of namespace data_server
 
 }  // end of namespace dist_storage
-
-
-
-
-
-
-
-
 
 
 

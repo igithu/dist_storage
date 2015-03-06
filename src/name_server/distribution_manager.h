@@ -48,6 +48,7 @@ class DistributionManager {
 
         bool BuildDistTable();
 
+        // for rpc call
         bool GetBucketInfo(::google::protobuf::RepeatedPtrField<Bucket>& bucket_list);
 
 

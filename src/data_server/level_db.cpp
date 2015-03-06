@@ -38,7 +38,7 @@ LeveDB::~LeveDB() {
 bool LeveDB::LeveDBInit(const char* db_path) {
     // create the storage dir
     if (!CreateDir(db_path)) {
-        DS_LOG(ERROR, "create the dir %s failed!", db_path);
+        DS_LOG(ERROR, "Create the dir %s failed!", db_path);
         return false;
     }
 
@@ -46,10 +46,10 @@ bool LeveDB::LeveDBInit(const char* db_path) {
     w_options_.sync = true;
     leveldb::DB::Open(options_, db_path, &db_ptr_);
     if (NULL == db_ptr_) {
-        DS_LOG(ERROR, "level_db init error! db_ptr_ is null!");
+        DS_LOG(ERROR, "The level_db init error! db_ptr_ is null!");
         return false;
     }
-    DS_LOG(INFO, "init success!");
+    DS_LOG(INFO, "Init success!");
     return true;
 }
 
@@ -59,12 +59,12 @@ bool LeveDB::Put(const char* key, const char* value) {
     //    return false;
     //}
     if (NULL == db_ptr_) {
-        DS_LOG(ERROR, "level_db put op error! db_ptr_ is null!");
+        DS_LOG(ERROR, "Level_db put op error! db_ptr_ is null!");
         return false;
     }
     leveldb::Status status = db_ptr_->Put(w_options_, key, value);
     if (!status.ok()) {
-        DS_LOG(ERROR, "put op failed!");
+        DS_LOG(ERROR, "Put op failed!");
         return false;
     }
     return true;
@@ -76,13 +76,13 @@ bool LeveDB::Get(const char* key, std::string& value) {
         return false;
     }
     if (NULL == db_ptr_) {
-        DS_LOG(ERROR, "level_db get op error! db_ptr_ is null!");
+        DS_LOG(ERROR, "Level_db get op error! db_ptr_ is null!");
         return false;
     }
 
     leveldb::Status status = db_ptr_->Get(leveldb::ReadOptions(), key, &value);
     if (!status.IsNotFound() && !status.ok()) {
-        DS_LOG(ERROR, "get op failed!");
+        DS_LOG(ERROR, "Get op failed!");
         return false;
     } else if (status.IsNotFound()) {
         value = "";
@@ -97,12 +97,12 @@ bool LeveDB::Delete(const char* key) {
         return false;
     }
     if (NULL == db_ptr_) {
-        DS_LOG(ERROR, "level_db delete op error! db_ptr_ is null!");
+        DS_LOG(ERROR, "The level_db delete op error! db_ptr_ is null!");
         return false;
     }
     leveldb::Status status = db_ptr_->Delete(w_options_, key);
     if (!status.ok()) {
-        DS_LOG(ERROR, "delete op failed!");
+        DS_LOG(ERROR, "Delete op failed!");
         return false;
     }
     return true;

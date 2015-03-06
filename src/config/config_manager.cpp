@@ -57,7 +57,7 @@ ConfigManager& ConfigManager::GetInstance() {
 bool ConfigManager::ConfigInit(const char* conf_file) {
     dict_ini_ = iniparser_load(conf_file);
     if (NULL == dict_ini_) {
-        DS_LOG(ERROR, "iniparser_load failed!")
+        DS_LOG(ERROR, "The iniparser_load failed!")
         return false;
     }
 
@@ -108,13 +108,13 @@ int32_t ConfigManager::GetSecKeysNum(const std::string& sec_key) {
 
 int32_t ConfigManager::IniGetInt(const string& sec_key) {
     if (NULL == dict_ini_) {
-        DS_LOG(ERROR, "dict_ini_ null ptr !");
+        DS_LOG(ERROR, "The dict_ini_ ptr is NULL!");
         return INI_NULL_INT; 
     }
     int32_t ret = iniparser_getint(dict_ini_, sec_key.c_str(), NOT_EXIST_INT);
 
     if (NOT_EXIST_INT == ret) {
-        DS_LOG(WARNING, "get the int sec_key : %s failed!" , sec_key.c_str());
+        DS_LOG(WARNING, "Get the int sec_key : %s failed!" , sec_key.c_str());
     }
     return ret;
 }
@@ -123,7 +123,7 @@ double ConfigManager::IniGetDouble(const string& sec_key) {
     double ret = iniparser_getdouble(dict_ini_, sec_key.c_str(), NOT_EXIST_DOU);
 
     if (NOT_EXIST_DOU == ret) {
-        DS_LOG(WARNING, "get the double sec_key : %s failed!" , sec_key.c_str());
+        DS_LOG(WARNING, "Get the double sec_key : %s failed!" , sec_key.c_str());
     }
     return ret;
 }
@@ -132,7 +132,7 @@ const char *ConfigManager::IniGetString(const string& sec_key) {
     char *ret = iniparser_getstring(dict_ini_, sec_key.c_str(), NOT_EXIST_STR);
 
     if (NOT_EXIST_STR == ret) {
-        DS_LOG(WARNING, "get the string sec_key : %s failed!" , sec_key.c_str());
+        DS_LOG(WARNING, "Get the string sec_key : %s failed!" , sec_key.c_str());
     }
     return ret;
 }
@@ -141,7 +141,7 @@ bool ConfigManager::IniGetBool(const string& sec_key) {
     int32_t ret = iniparser_getboolean(dict_ini_, sec_key.c_str(), NOT_EXIST_INT);
 
     if (NOT_EXIST_INT == ret) {
-        DS_LOG(WARNING, "get the bool sec_key : %s failed!" , sec_key.c_str());
+        DS_LOG(WARNING, "Get the bool sec_key : %s failed!" , sec_key.c_str());
     }
     return ret;
 }

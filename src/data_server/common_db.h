@@ -28,9 +28,7 @@ namespace data_server {
 
 // key-value db
 class CommonDS {
-
     public:
-
         CommonDS() {
         }
 

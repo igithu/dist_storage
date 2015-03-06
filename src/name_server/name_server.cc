@@ -65,18 +65,17 @@ inline void Daemonize() {
 int main(int argc, char* argv[]) {
     InitSignal();
 
-
     if (true) {
          Daemonize();
     }
     if (!DS_SYS_CONF.ConfigInit("../conf/name_server.ini")) {
-        DS_LOG(ERROR, "name server init the data server config failed!");
+        DS_LOG(ERROR, "Name server init the data server config failed!");
         return 0;
     }
     const char* log_dir = DS_SYS_CONF.IniGetString("log:path");
 
     if (!CreateDir(log_dir)) {
-        DS_LOG(ERROR, "name server create log dir: %s faied!", log_dir);
+        DS_LOG(ERROR, "Name server create log dir: %s faied!", log_dir);
         return 0;
     }
     if (false == DSLogInit(

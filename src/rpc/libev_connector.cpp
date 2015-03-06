@@ -39,7 +39,7 @@ LibevConnector::~LibevConnector() {
 bool LibevConnector::Initialize(const char *host, const char *port) {
     int32_t listenfd = TcpListen(host, port);
     if (listenfd < 0) {
-        DS_LOG(ERROR, "rpc server listen failed!")
+        DS_LOG(ERROR, "Rpc server listen failed!")
         return false;
     }
     
