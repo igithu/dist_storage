@@ -17,6 +17,7 @@
 
 #include "heartbeat_thread.h"
 
+#include "common/ds_log.h"
 #include "config/config_manager.h"
 
 namespace dist_storage {
@@ -39,6 +40,7 @@ void HeartBeatThread::Run() {
 
     while (true) {
         ns_client_.SendHeartBeat();
+        DS_LOG(INFO, "Send the heart beat!");
         sleep(hb_interval);
     }
 }

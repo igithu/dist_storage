@@ -40,7 +40,7 @@ bool SetNonBlock(int32_t sock) {
     int32_t opts = fcntl(sock, F_GETFL);
 
     if (opts < 0) {
-        DS_LOG(ERROR, "set non block failed! fcntl(sock,GETFL).");
+        DS_LOG(ERROR, "set non block failed! errno is %s.", strerror(errno));
         return false;
     }
 
@@ -61,40 +61,46 @@ int32_t Socket(int32_t family, int32_t type, int32_t protocol) {
     return fd;
 }
 
-int32_t TcpListen(const char *host, const char *port, int32_t family) {
-    int32_t listenfd;
-    struct addrinfo hints, *res, *ressave;
+int32_t TcpListen(const char *host, const char *port, int32_t family, bool is_block) {
+    struct addrinfo hints, *res = NULL, *ressave = NULL;
 
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_flags = AI_PASSIVE;
     hints.ai_family = family;
     hints.ai_socktype = SOCK_STREAM;
-
     if ((getaddrinfo(host, port, &hints, &res)) != 0) {  
         DS_LOG(ERROR, "tcp_connect error for %s, %s", host, port);
         return -1;
     }
 
     ressave = res;
+    int32_t listenfd;
     const int on = 1;
     do {
         if (NULL == res) {
+            DS_LOG(ERROR, "The res that getaddrinfo give is NULL!");
             return -1;
         }
         listenfd = Socket(res->ai_family, res->ai_socktype, res->ai_protocol);
         if (listenfd < 0) {
+            DS_LOG(ERROR, "Call socket failed!");
             continue;       /* error, try next one */
         }
-        
         if (setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) < 0) {
-            DS_LOG(ERROR, "setsockopt error listenfd %d", listenfd);
-            return -1;
+            DS_LOG(ERROR, "Setsockopt error listenfd %d.", listenfd);
+            continue;
         }
 
-        SetNonBlock(listenfd);
+        if (is_block && !SetNonBlock(listenfd)) {
+            DS_LOG(ERROR, "Set non block failed!");
+            continue;
+        }
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0) {
+            DS_LOG(INFO, "Bind successfully!");
             break;
         }
+        DS_LOG(WARNING, "Bind failed!, errno is: %s.", strerror(errno));
+        
         close(listenfd);    
     } while ((res = res->ai_next) != NULL);
 
@@ -103,10 +109,10 @@ int32_t TcpListen(const char *host, const char *port, int32_t family) {
     }
 
     if (listen(listenfd, 20/*LISTENQ*/) < 0) {
-        DS_LOG(ERROR, "listen error listenfd is %d\n", listenfd);
+        DS_LOG(ERROR, "listen error listenfd is %d.\n", listenfd);
+        freeaddrinfo(ressave);
         return -1;
     }
-
 
     // if (addrlenp) {
     //     *addrlenp = res->ai_addrlen;    /* return size of protocol address */
@@ -118,19 +124,19 @@ int32_t TcpListen(const char *host, const char *port, int32_t family) {
 }
 
 int32_t TcpConnect(const char *host, const char *port, int32_t family) {
-    int32_t  sockfd;
-    struct addrinfo hints, *res, *ressave;
+    struct addrinfo hints, *res = NULL, *ressave = NULL;
        
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_family = family;
     hints.ai_socktype = SOCK_STREAM;
 
     if ((getaddrinfo(host, port, &hints, &res)) != 0) {  
-        DS_LOG(ERROR,"tcp_connect error for %s, %s", host, port);
+        DS_LOG(ERROR,"tcp_connect error for %s, %s.", host, port);
         return -1;
     }
     
     ressave = res;
+    int32_t  sockfd;
     do {
         sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
         if (sockfd < 0) {
@@ -144,7 +150,8 @@ int32_t TcpConnect(const char *host, const char *port, int32_t family) {
     } while ((res = res->ai_next) != NULL);
     
     if (res == NULL) {    /* errno set from final connect() */
-        DS_LOG(ERROR, "tcp_connect error!");
+        DS_LOG(ERROR, "tcp_connect error! the errno is: %s.", strerror(errno));
+        freeaddrinfo(ressave);
         return -1;
     }
     freeaddrinfo(ressave);
@@ -156,7 +163,7 @@ int32_t Accept(int fd, struct sockaddr_in &sa, int32_t addrlen) {
     int32_t new_fd;
     do {
         new_fd = accept(fd, (struct sockaddr *) &sa, (socklen_t *) &addrlen);
-        SetNonBlock(new_fd);
+        //SetNonBlock(new_fd);
 
         if (new_fd < 0) {
 #ifdef  EPROTO
@@ -174,12 +181,13 @@ int32_t Accept(int fd, struct sockaddr_in &sa, int32_t addrlen) {
 int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
     recv_msg_str = "";
 
-    const uint32_t MAXBUFLEN = 512;
+    const uint32_t MAXBUFLEN = 16;
     char buf[MAXBUFLEN];
     memset(buf, 0, MAXBUFLEN);
 
     do {
         int32_t buf_len = recv(fd, buf, sizeof(buf) + 1, 0);
+        buf[buf_len] = '\0';
         if (buf_len < 0) {
             if (EAGAIN == errno || EINTR == errno) {
                 //DS_LOG(ERROR, "EAGAIN or EINTR in RecvMsg!");
@@ -191,14 +199,13 @@ int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
             break;
         }
 
-
         if (buf_len > 0) {
-            string new_buf(buf);
-            recv_msg_str.append(new_buf);
+            recv_msg_str.append(buf, strlen(buf));
             memset(buf, 0, MAXBUFLEN);
             continue;
         }
     } while (true);
+    DS_LOG(INFO, "Rev msg done! size is %d.", recv_msg_str.size());
 
     return 0;
 
@@ -212,7 +219,7 @@ int32_t SendMsg(int32_t fd, std::string& send_msg_str) {
         int32_t buf_len = send(fd, send_ptr, send_size + 1, 0);
         if (buf_len < 0) {
             if (EINTR == errno) {
-                DS_LOG(ERROR, "send error errno is EINTR");
+                DS_LOG(ERROR, "send error errno is EINTR.");
                 return -1;
             } 
             if (EAGAIN == errno) {

@@ -46,3 +46,4 @@ bin_PROGRAMS = name_server
 
 name_server_SOURCES=${NAMESERVER_SRC}
 
+SUBDIRS=test

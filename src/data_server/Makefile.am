@@ -32,7 +32,8 @@ LDADD=$(top_builddir)/src/rpc/librpc.a \
 	  ${third_dir}/iniparser/lib/*.a \
 	  ${third_dir}/leveldb/lib/*.a
 
-dataserver_LDADD=${LDADD}
+
+#dataserver_LDADD=${LDADD}
 
 
 DATASERVER_SRC=${dataserver_rootdir}/data_service.h \

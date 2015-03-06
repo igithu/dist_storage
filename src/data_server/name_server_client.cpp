@@ -47,6 +47,10 @@ NameServerClient::~NameServerClient() {
 bool NameServerClient::ClientInit() {
     const char* ns_host = DS_SYS_CONF.IniGetString("name_service:host");
     const char* ns_port = DS_SYS_CONF.IniGetString("name_service:port");
+
+    DS_LOG(INFO, "Init client set, the host is %s, the port is %s.", ns_host, ns_port);
+
+
     rpc_channel_ptr_ = new Channel(ns_host, ns_port);
     serveice_stub_ptr_ = new NameService::Stub(rpc_channel_ptr_);
 

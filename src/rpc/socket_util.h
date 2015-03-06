@@ -30,7 +30,7 @@ namespace dist_storage {
 //  wrapper socket, imitate the <Unix socket> code
 int32_t Socket(int32_t family = 0, int32_t type = 0, int32_t protocol = 0);
 
-int32_t TcpListen(const char *host, const char *port, int32_t family = AF_UNSPEC);
+int32_t TcpListen(const char *host, const char *port, int32_t family = AF_UNSPEC, bool is_block = true);
 
 int32_t TcpConnect(const char *host, const char *port, int32_t family = AF_UNSPEC);
 

@@ -92,7 +92,8 @@ typedef struct NodeStatusInfo_t {
 
 class NodeManager;
 
-typedef boost::unordered_map<std::string, NodeStatusInfo> NS_HASH_MAP;
+typedef boost::shared_ptr<NodeStatusInfo> NSI_PTR;
+typedef boost::unordered_map<std::string, NSI_PTR> NS_HASH_MAP;
 typedef boost::shared_ptr<NS_HASH_MAP> NS_HASH_MAP_PTR;
 typedef boost::unordered_set<std::string> NODE_LIST; 
 typedef boost::shared_ptr<boost::unordered_set<std::string> > NODE_LIST_PTR; 
@@ -111,6 +112,9 @@ class NodeManager {
 
         // block on all threads
         bool Wait();
+
+        // stop all
+        bool Stop();
         
         // api to node_info_map_
         bool UpdateNodeInfo(const string& server_str, NI_PTR& hb_ni_ptr);

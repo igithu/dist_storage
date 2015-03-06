@@ -39,6 +39,8 @@ void NameServiceImpl::HeartBeat(RpcController* controller,
                                 HBResponse* hb_reponse,
                                 Closure* done) {
 
+    DS_LOG(INFO, "Received the heart beat!");
+
     NI_PTR hb_ni_ptr(new NodeInfo());
 
     hb_ni_ptr->updated_time = hb_request->updated_time();
@@ -57,6 +59,7 @@ void NameServiceImpl::GetBucketInfo(RpcController* controller,
                                     const CNSRequest* request,
                                     CNSResponse* response,
                                     Closure* done) {
+    DS_LOG(INFO, "Name service rpc server GetBucketInfo call!");
     GlobalDM.GetBucketInfo(*response->mutable_bucket_list());
 }
 
@@ -65,6 +68,7 @@ void NameServiceImpl::GetNodeInfo(RpcController* controller,
                                   CNSResponse* response,
                                   Closure* done) {
     GlobalNM.GetAliveNodes(*response->mutable_node_list());
+    DS_LOG(INFO, "Get alive node list size is %d.", response->node_list_size())
     const char* ds_port = DS_SYS_CONF.IniGetString("data_service:port");
     response->set_ds_port(ds_port);
 }
@@ -77,6 +81,7 @@ void NameServiceThread::Run() {
     int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
     const char* port = DS_SYS_CONF.IniGetString("name_service:port");
     const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
+    DS_LOG(INFO, "Name service: the port is %s, addr is %s ", port, addr);
 
     rpc_server.Start(thread_num, addr, port);
     rpc_server.Wait();

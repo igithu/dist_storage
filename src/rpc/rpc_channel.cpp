@@ -18,6 +18,9 @@
 #include "rpc_channel.h"
 
 #include <string>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
+#include <google/protobuf/io/coded_stream.h>
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 
 #include "rpc_util.h"
 #include "rpc_msg.pb.h"
@@ -28,7 +31,8 @@ namespace dist_storage {
 
 using std::string;
 
-Channel::Channel(const char* addr, const char* port) {
+Channel::Channel(const char* addr, const char* port, bool allow_overlong) :
+   allow_overlong_(allow_overlong) {
     strcpy(addr_ = (char*)malloc(strlen(addr) + 1), addr);
     strcpy(port_ = (char*)malloc(strlen(port) + 1), port);
 }
@@ -70,22 +74,25 @@ void Channel::CallMethod(const MethodDescriptor* method,
 
     string send_str;
     if (!FormatSendMsg(method, request, send_str)) {
+        close(connect_fd_);
         return;
     }
   
     if (SendMsg(connect_fd_, send_str) < 0) {
         DS_LOG(ERROR, "send msg error!");
+        close(connect_fd_);
+        return;
     }
 
     string recv_str;
     if (RecvMsg(connect_fd_, recv_str) < 0) {
         DS_LOG(ERROR, "rcv msg error!");
     }
-    close(connect_fd_);
-
+    DS_LOG(INFO, "recv msg over recv size is %d\n.", recv_str.size());
     if (!FormatRecvMsg(recv_str, response)) {
         DS_LOG(ERROR, "format recv msg failed!");
     }
+    close(connect_fd_);
 }
 
 void Channel::Close() {
@@ -106,6 +113,11 @@ bool FormatSendMsg(
         DS_LOG(ERROR, "request SerializeToString has failed!");
         return false;
     }
+
+    if (0 == request_str.size()) {
+        request_str = "0";
+    }
+
     RpcMessage rpc_msg;
     rpc_msg.set_head_code(hash_code);
     rpc_msg.set_body_msg(request_str);
@@ -119,11 +131,23 @@ bool FormatSendMsg(
 }
 
 bool FormatRecvMsg(const string& recv_str, Message* response) {
+    //::google::protobuf::io::ArrayInputStream input(recv_str.data(), recv_str.size());
+    //io::CodedInputStream decoder(&input);
+    //decoder.SetTotalBytesLimit(1024*1024*1024, 64*1024*1024);
+
+    //bool success = recv_rpc_msg.ParseFromCodedStream(&decoder) && decoder.ConsumedEntireMessage();
+    //if (!success) {
+    //    DS_LOG(ERROR, "parse recv msg error! %s", recv_str.c_str());
+    //    return false;
+    //}
     RpcMessage recv_rpc_msg;
-    if (!recv_rpc_msg.ParseFromString(recv_str)) {
-        DS_LOG(ERROR, "parse recv msg error! %s", recv_str.c_str());
-        return false;
-    }
+
+    try {
+        if (!recv_rpc_msg.ParseFromString(recv_str)) {
+            DS_LOG(ERROR, "parse recv msg error! %s", recv_str.c_str());
+            return false;
+        }
+        
 
     if (500 == recv_rpc_msg.head_code()) {
         DS_LOG(ERROR, "server internal error!");

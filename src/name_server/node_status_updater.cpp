@@ -35,9 +35,14 @@ void NodeStatusUpdater::Run() {
         DS_SYS_CONF.IniGetInt("name_service:status_update_interval");
 
     while (true) {
+
         if (!GlobalNM.UpdateNodeList()) {
             DS_LOG(WARNING, "NodeStatusUpdater call update node list failed!");
         }
+        if (!GlobalNM.UpdateNodeStatus()) {
+            DS_LOG(WARNING, "NodeStatusUpdater call update node status failed!");
+        }
+
 
         sleep(updated_interval);
     }
@@ -48,21 +53,6 @@ void NodeStatusUpdater::Run() {
 }  // end of namespace name_server
 
 }  // end of namespace dist_storage
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

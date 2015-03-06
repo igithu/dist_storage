@@ -30,7 +30,7 @@ using namespace google::protobuf;
 
 class Channel : public RpcChannel {
     public:
-        Channel(const char* addr, const char* port);
+        Channel(const char* addr, const char* port, bool allow_overlong = false);
 
         virtual ~Channel();
 
@@ -45,6 +45,11 @@ class Channel : public RpcChannel {
                                 Closure* done);
 
         void Close();
+
+    private:
+        //FormatSendMsg();
+
+        //FormatRecvMsg();
     
     private:
         char* addr_;
@@ -52,6 +57,8 @@ class Channel : public RpcChannel {
         char* port_;
 
         int32_t connect_fd_;
+
+        bool allow_overlong_;
 
 };
 

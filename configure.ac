@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_INIT([dist_storage], [0.0.1], [asy5178@163.com])
 AC_CONFIG_SRCDIR([src/common/ds_log.cpp])
 
 # Checks for programs.
@@ -49,17 +49,18 @@ AC_TYPE_UINT64_T
 # Checks for library functions.
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([bzero dup2 gethostname memset socket])
+AC_CHECK_FUNCS([bzero dup2 gethostname memset socket strerror])
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/common/Makefile
                  src/config/Makefile
                  src/data_server/Makefile
-                 src/data_server/test/build/Makefile
                  src/dist_client/Makefile
                  src/name_server/Makefile
+                 src/name_server/test/Makefile
                  src/proto/Makefile
                  src/rpc/Makefile
+                 src/rpc/test/Makefile
                  src/test/Makefile])
 AC_OUTPUT

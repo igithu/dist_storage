@@ -19,6 +19,7 @@
 #include "distribution_manager.h"
 #include "pthread_rwlock.h"
 #include "ketamadist_alg.h" 
+#include "common/ds_log.h"
 
 namespace dist_storage {
 
@@ -31,6 +32,7 @@ DMSmartPtr DistributionManager::dist_manager_ptr_(NULL);
 
 DistributionManager::DistributionManager() :
    distribute_alg_ptr_(NULL) {
+       InitDistTable();
 }
 
 DistributionManager::~DistributionManager() {
@@ -49,14 +51,12 @@ DistributionManager& DistributionManager::GetInstance() {
 }
 
 bool DistributionManager::InitDistTable() {
-    if (NULL == distribute_alg_ptr_) {
-        return false;
-    }
     // for now only ketama hash alg
     distribute_alg_ptr_ = new KetamaDistAlg();
 
     // start to build dist mapping table
     distribute_alg_ptr_->BuildDistTable(bucket_node_map_);
+    DS_LOG(INFO, "Build dist table done! the size of table is %d.", bucket_node_map_.size());
     return true;
 }
 
@@ -66,7 +66,7 @@ bool DistributionManager::BuildDistTable() {
 
 bool DistributionManager::GetBucketInfo(
         ::google::protobuf::RepeatedPtrField<Bucket>& bucket_list) {
-    for (BUCKET_NODE_MAP::iterator bn_iter = bucket_node_map_.end();
+    for (BUCKET_NODE_MAP::iterator bn_iter = bucket_node_map_.begin();
          bn_iter != bucket_node_map_.end();
          ++bn_iter) {
         Bucket* bucket_ptr = bucket_list.Add();
@@ -87,8 +87,8 @@ bool DistributionManager::GetBucketInfo(
              ++bnl_iter) {
             bucket_ptr->add_node_list(*bnl_iter);
         }
-
     }
+    DS_LOG(INFO, "Return the bucket_list size is %d.", bucket_list.size());
     return true;
 }
 

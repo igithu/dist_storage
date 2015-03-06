@@ -58,10 +58,12 @@ DistStorageClientDriver& DistStorageClientDriver::GetInstance() {
 
 bool DistStorageClientDriver::Start() {
     // first get info from name server
+    DS_LOG(INFO, "Start first update bucket node info!");
     if (!UpdateBucketNodeMap()) {
         DS_LOG(ERROR, "First update bucket map error! Start failed");
         return false;
     }
+    DS_LOG(INFO, "Start build ds client map!");
     if (!BuildDSClientMap()) {
         DS_LOG(ERROR, "First build ds client map error! Start failed");
         return false;
@@ -188,6 +190,7 @@ bool DistStorageClientDriver::Stop() {
 
 bool DistStorageClientDriver::UpdateBucketNodeMap() {
     BN_MAP_PTR bn_map_ptr(new BUCKET_NODE_MAP());
+    DS_LOG(INFO, "rpc call GetBucketInfo!");
     ns_client_.GetBucketInfo(*bn_map_ptr);
     if (NULL == bn_map_ptr) {
         DS_LOG(ERROR, "bn_map_ptr is NULL! update bn_map failed!");
@@ -196,6 +199,7 @@ bool DistStorageClientDriver::UpdateBucketNodeMap() {
     WriteLockGuard wguard(bn_map_rwlock_);
     // refresh the ptr
     bn_map_ptr_.swap(bn_map_ptr);
+    DS_LOG(INFO, "New bn_map_ptr_ size is %d", bn_map_ptr_->size());
 
     return true;
 }

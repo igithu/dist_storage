@@ -42,7 +42,7 @@ enum CNSRequestType {
 
 // Bucket, CNSRequest, CNSResponse is used to make client get dist node list 
 message Bucket {
-    required uint64 number = 1;
+    optional uint64 number = 1 [default = 0];
     repeated string node_list = 2;  
 }
 

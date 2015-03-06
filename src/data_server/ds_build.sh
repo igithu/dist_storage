@@ -13,15 +13,6 @@ SERVER_CONF_PATH=$SERVER_PATH/conf
 CONF_PATH=$TOP_ROOT/share/conf
 CONF_FILE=$CONF_PATH/data_server.ini 
 
-echo $BUILD_ROOT
-echo $START_FILE
-echo $SERVER_PATH
-echo $SERVER_BIN_PATH
-echo $SERVER_CONF_PATH
-echo $CONF_PATH
-echo $CONF_FILE
-
-
 if [ ! -f $BUILD_ROOT/Makefile ]
 then
     echo "Please run the build.sh in top root path FIRST!"
@@ -81,7 +72,11 @@ then
     exit -1
 fi
 
+echo ""
+echo "*******************************************************"
 echo "build the data server successfully!!"
+echo "*******************************************************"
+echo ""
 
 make clean
 

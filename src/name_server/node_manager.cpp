@@ -34,14 +34,15 @@ PUBLIC_UTIL::Mutex NodeManager::instance_mutex_;
 NMSmartPtr NodeManager::node_manager_ptr_(NULL);
 
 NodeManager::NodeManager() :
-   nse_thread_ptr_(NULL),
+   //nse_thread_ptr_(NULL),
    nsu_thread_ptr_(NULL) {
+       InitNM();
 }
 
 NodeManager::~NodeManager() {
-   if (NULL != nse_thread_ptr_) {
-       delete nse_thread_ptr_;
-   }
+   //if (NULL != nse_thread_ptr_) {
+   //    delete nse_thread_ptr_;
+   //}
    
    if (NULL != nsu_thread_ptr_) {
        delete nsu_thread_ptr_;
@@ -58,7 +59,7 @@ NodeManager& NodeManager::GetInstance() {
 }
 
 bool NodeManager::InitNM() {
-    const char* server_list_str = DS_SYS_CONF.IniGetString("server:data_server");
+    const char* server_list_str = DS_SYS_CONF.IniGetString("service:data_server_list");
     vector<string> data_node_list;
     Split(server_list_str, ",", data_node_list);
 
@@ -77,25 +78,29 @@ bool NodeManager::InitNM() {
 
             NS_PTR cur_nsi_ptr(new NodeStatus()); 
             cur_nsi_ptr->status = UnReg;
+            //cur_nsi_ptr->status = Alive;
 
-            NodeStatusInfo nsi;
-            nsi.node_info_ptr.swap(cur_ni_ptr);
-            nsi.node_status_ptr.swap(cur_nsi_ptr);
+            NSI_PTR nsi_ptr(new NodeStatusInfo());
+            nsi_ptr->node_info_ptr.swap(cur_ni_ptr);
+            nsi_ptr->node_status_ptr.swap(cur_nsi_ptr);
+            nsi_ptr->host = server_str;
 
-            node_info_map_.insert(std::make_pair(server_str, nsi));
+            node_info_map_.insert(std::make_pair(server_str, nsi_ptr));
         } 
     }
     is_status_updated_ = true;
+    DS_LOG(INFO, "The first node_info_map_ size is %d.", node_info_map_.size());
+    UpdateNodeList();
 
     return true;
 }
 
 bool NodeManager::Start() {
 
-    nse_thread_ptr_ = new NameServiceThread();
+    //nse_thread_ptr_ = new NameServiceThread();
     nsu_thread_ptr_ = new NodeStatusUpdater();
     
-    nse_thread_ptr_->Start();
+    //nse_thread_ptr_->Start();
     nsu_thread_ptr_->Start();
 
     return true;
@@ -103,15 +108,22 @@ bool NodeManager::Start() {
 
 bool NodeManager::Wait() {
 
-    if (NULL != nse_thread_ptr_) {
-        nse_thread_ptr_->Wait();
-    }
+    //if (NULL != nse_thread_ptr_) {
+    //    nse_thread_ptr_->Wait();
+    //}
 
     if (NULL != nsu_thread_ptr_) {
         nsu_thread_ptr_->Wait();
     }
 }
 
+bool NodeManager::Stop() {
+    if (NULL != nsu_thread_ptr_) {
+        nsu_thread_ptr_->Stop();
+    }
+}
+
+// for rpc call
 bool NodeManager::UpdateNodeInfo(const string& server_str, NI_PTR& hb_ni_ptr) {
     if (NULL == hb_ni_ptr) {
         DS_LOG(ERROR, "update node info error!hb_ni_ptr is NULL!");
@@ -120,12 +132,12 @@ bool NodeManager::UpdateNodeInfo(const string& server_str, NI_PTR& hb_ni_ptr) {
 
     NS_HASH_MAP::iterator nsi_iter = node_info_map_.find(server_str);
     if (nsi_iter == node_info_map_.end()) {
-        DS_LOG(WARNING, "the host %s is not set in name_server config file! update exit now!",
-                server_str.c_str());
+        DS_LOG(WARNING, "the host [%s] is not set in name_server config file!\
+                update task exit now!", server_str.c_str());
         return false;
     }
 
-    NodeStatusInfo& nsi = nsi_iter->second;
+    NodeStatusInfo& nsi = *(nsi_iter->second);
     if (NULL == nsi.node_info_ptr) {
         DS_LOG(ERROR, "node_status_info update failed! info ptr is NULL!");
         return false;
@@ -143,8 +155,8 @@ bool NodeManager::UpdateNodeStatus() {
 
     int64_t now_time = time(NULL);
 
-    int64_t pend_time = DS_SYS_CONF.IniGetInt("name_service:pending_timeout");
-    int64_t dead_time = DS_SYS_CONF.IniGetInt("name_service:dead_timeout");
+    int64_t pend_time = DS_SYS_CONF.IniGetInt("name_service:dataserver_pendingtimeout");
+    int64_t dead_time = DS_SYS_CONF.IniGetInt("name_service:dataserver_deadtimeout");
 
     if (dead_time - pend_time < 30) {
         //DS_LOG(WARNING, "invalid pending_timeout and dead_timeout set! 
@@ -157,7 +169,7 @@ bool NodeManager::UpdateNodeStatus() {
     for (NS_HASH_MAP::iterator nsi_iter = node_info_map_.begin();
          nsi_iter != node_info_map_.end();
          ++nsi_iter) {
-        NodeStatusInfo& nsi = nsi_iter->second;
+        NodeStatusInfo& nsi = *(nsi_iter->second);
         NI_PTR& ni_ptr = nsi.node_info_ptr; 
         NS_PTR& ns_ptr = nsi.node_status_ptr;
         if (NULL == ni_ptr || NULL == ns_ptr) {
@@ -195,6 +207,7 @@ bool NodeManager::UpdateNodeStatus() {
     return true;
 }
 
+// give the alive node list
 bool NodeManager::UpdateNodeList() {
     NODE_LIST_PTR alive_list_ptr(new NODE_LIST());
     NODE_LIST_PTR unavailable_list_ptr(new NODE_LIST());
@@ -202,13 +215,15 @@ bool NodeManager::UpdateNodeList() {
     for (NS_HASH_MAP::iterator nsi_iter = node_info_map_.begin();
          nsi_iter != node_info_map_.end();
          ++nsi_iter) {
-        NodeStatusInfo& nsi = nsi_iter->second;
+        
+        NodeStatusInfo& nsi = *(nsi_iter->second);
+        const string& cur_host = nsi_iter->first;
         {
             ReadLockGuard rguard(nsi.status_rwlock);
             if (nsi.node_status_ptr->status == Alive ) {
-                alive_list_ptr->insert(nsi.host);
+                alive_list_ptr->insert(cur_host);
             } else {
-                unavailable_list_ptr->insert(nsi.host);
+                unavailable_list_ptr->insert(cur_host);
             }
         }
     }

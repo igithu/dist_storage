@@ -59,12 +59,10 @@ void LibevConnector::LibevLoop() {
     
     while (true) {
         ev_loop(epoller_, 0);
-        printf("TTest loop io\n");
     }
 }
 
 void LibevConnector::AcceptCb(struct ev_loop *loop, struct ev_io *watcher, int revents) {
-    printf("TTest accrpt\n");
     if (EV_ERROR & revents) {
         DS_LOG(ERROR, "ERROR event in accept callback! exit!");
         return;

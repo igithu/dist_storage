@@ -29,6 +29,7 @@ using std::string;
 
 NameServerClient::NameServerClient():
    rpc_channel_ptr_(NULL), service_stub_ptr_(NULL) {
+       ClientInit();
 }
 
 NameServerClient::~NameServerClient() {
@@ -41,8 +42,8 @@ NameServerClient::~NameServerClient() {
 }
 
 bool NameServerClient::ClientInit() {
-    const char* ns_host = DS_SYS_CONF.IniGetString("name_server:host");
-    const char* ns_port = DS_SYS_CONF.IniGetString("name_server:port");
+    const char* ns_host = DS_SYS_CONF.IniGetString("name_service:host");
+    const char* ns_port = DS_SYS_CONF.IniGetString("name_service:port");
 
     rpc_channel_ptr_ = new Channel(ns_host, ns_port);
     service_stub_ptr_ = new NameService::Stub(rpc_channel_ptr_);
@@ -50,6 +51,10 @@ bool NameServerClient::ClientInit() {
 }
 
 bool NameServerClient::GetBucketInfo(BUCKET_NODE_MAP& bucket_node_map) {
+    if (NULL == rpc_channel_ptr_ || NULL == service_stub_ptr_) {
+        DS_LOG(ERROR, "The client is initalized!");
+        return false;
+    }
 
     CNSRequest cns_request;
     CNSResponse cns_response;

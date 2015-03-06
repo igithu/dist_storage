@@ -36,7 +36,7 @@ bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_map) {
     int32_t buckt_num = 100;
     int32_t group_num = buckt_num / 4;
     
-    const char* server_list_str = DS_SYS_CONF.IniGetString("server:data_server");
+    const char* server_list_str = DS_SYS_CONF.IniGetString("service:data_server_list");
     vector<string> data_node_list;
     Split(server_list_str, ",", data_node_list);
     for (vector<string>::iterator ser_iter = data_node_list.begin();

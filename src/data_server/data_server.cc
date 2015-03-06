@@ -61,22 +61,18 @@ inline void Daemonize() {
 }
 
 int main(int argc, char* argv[]) {
-/*
     InitSignal();
 
 
     if (true) {
          Daemonize();
     }
-    if (!DS_SYS_CONF.ConfigInit("../conf/data_serv.ini")) {
+    if (!DS_SYS_CONF.ConfigInit("../conf/data_server.ini")) {
         DS_LOG(ERROR, "init the data server config failed!");
         return 0;
     }
 
-    int32_t thread_num = DS_SYS_CONF.IniGetInt("data_service:threadpool_num");
-    const char* port = DS_SYS_CONF.IniGetString("data_service:port");
-    const char* log_dir = DS_SYS_CONF.IniGetString("data_service:log_dir");
-    const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
+    const char* log_dir = DS_SYS_CONF.IniGetString("log:path");
 
     if (!CreateDir(log_dir)) {
         DS_LOG(ERROR, "create log dir: %s faied!", log_dir);
@@ -86,6 +82,10 @@ int main(int argc, char* argv[]) {
                 argc, argv, DS_SYS_CONF.IniGetString("log:level"), log_dir)) {
         return 0;
     }
+
+    const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
+    const char* port = DS_SYS_CONF.IniGetString("data_service:port");
+    int32_t thread_num = DS_SYS_CONF.IniGetInt("data_service:threadpool_num");
 
     DS_LOG(INFO, "get the rpc sever....");
     RpcServer& rpc_server = RpcServer::GetInstance();
@@ -101,7 +101,6 @@ int main(int argc, char* argv[]) {
 
     hb_thread.Wait();
     rpc_server.Wait();
-*/
     return 0;
 }
 

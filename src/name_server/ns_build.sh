@@ -72,7 +72,12 @@ then
     exit -1
 fi
 
+
+echo ""
+echo "*******************************************************"
 echo "build the name server successfully!!"
+echo "*******************************************************"
+echo ""
 
 make clean
 

@@ -71,8 +71,11 @@ then
     echo "build the name server bin failed"
     exit -1
 fi
-
-echo "build the name server successfully!!"
+echo ""
+echo "*******************************************************"
+echo "build the dist client successfully!!"
+echo "*******************************************************"
+echo ""
 
 make clean
 

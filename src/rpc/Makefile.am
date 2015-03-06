@@ -42,3 +42,4 @@ noinst_LIBRARIES=librpc.a
 
 librpc_a_SOURCES=${RPC_SRC}
 
+SUBDIRS=test

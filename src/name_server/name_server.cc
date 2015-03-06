@@ -69,14 +69,11 @@ int main(int argc, char* argv[]) {
     if (true) {
          Daemonize();
     }
-    if (!DS_SYS_CONF.ConfigInit("../conf/ds.ini")) {
+    if (!DS_SYS_CONF.ConfigInit("../conf/name_server.ini")) {
         DS_LOG(ERROR, "name server init the data server config failed!");
         return 0;
     }
-
-    int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
-    const char* port = DS_SYS_CONF.IniGetString("name_service:port");
-    const char* log_dir = DS_SYS_CONF.IniGetString("log:dir");
+    const char* log_dir = DS_SYS_CONF.IniGetString("log:path");
 
     if (!CreateDir(log_dir)) {
         DS_LOG(ERROR, "name server create log dir: %s faied!", log_dir);
@@ -86,7 +83,6 @@ int main(int argc, char* argv[]) {
                 argc, argv, DS_SYS_CONF.IniGetString("log:level"), log_dir)) {
         return 0;
     }
-
     GlobalNM.Start();
 
     NameServiceThread ns_thread;

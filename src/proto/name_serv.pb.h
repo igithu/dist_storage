@@ -369,7 +369,7 @@ class Bucket : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint64 number = 1;
+  // optional uint64 number = 1 [default = 0];
   inline bool has_number() const;
   inline void clear_number();
   static const int kNumberFieldNumber = 1;
@@ -941,7 +941,7 @@ inline void HBResponse::set_code(::dist_storage::NSCode value) {
 
 // Bucket
 
-// required uint64 number = 1;
+// optional uint64 number = 1 [default = 0];
 inline bool Bucket::has_number() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }

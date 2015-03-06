@@ -191,23 +191,23 @@ void protobuf_AddDesc_name_5fserv_2eproto() {
     "ed_time\030\003 \001(\003:\0010\022\025\n\ndisk_space\030\004 \001(\003:\0010\022"
     "\024\n\tmem_space\030\005 \001(\003:\0010\022\025\n\nvisit_flow\030\006 \001("
     "\003:\0010\"8\n\nHBResponse\022*\n\004code\030\001 \001(\0162\024.dist_"
-    "storage.NSCode:\006NS_SUC\"+\n\006Bucket\022\016\n\006numb"
-    "er\030\001 \002(\004\022\021\n\tnode_list\030\002 \003(\t\"E\n\nCNSReques"
-    "t\0227\n\010req_type\030\001 \001(\0162\034.dist_storage.CNSRe"
-    "questType:\007CNS_NUL\"\246\001\n\013CNSResponse\022.\n\010re"
-    "t_code\030\001 \001(\0162\024.dist_storage.NSCode:\006NS_S"
-    "UC\022\022\n\010dist_alg\030\002 \001(\t:\000\022\025\n\007ds_port\030\003 \001(\t:"
-    "\0049998\022)\n\013bucket_list\030\004 \003(\0132\024.dist_storag"
-    "e.Bucket\022\021\n\tnode_list\030\005 \003(\t* \n\006NSCode\022\n\n"
-    "\006NS_SUC\020\000\022\n\n\006NS_ERR\020\001*6\n\nNodeAction\022\n\n\006N"
-    "A_NUL\020\000\022\007\n\003Reg\020\001\022\t\n\005UnReg\020\002\022\010\n\004Beat\020\003*4\n"
-    "\016CNSRequestType\022\013\n\007CNS_NUL\020\000\022\n\n\006BUKETS\020\001"
-    "\022\t\n\005NODES\020\0022\327\001\n\013NameService\022>\n\tHeartBeat"
-    "\022\027.dist_storage.HBRequest\032\030.dist_storage"
-    ".HBResponse\022D\n\rGetBucketInfo\022\030.dist_stor"
-    "age.CNSRequest\032\031.dist_storage.CNSRespons"
-    "e\022B\n\013GetNodeInfo\022\030.dist_storage.CNSReque"
-    "st\032\031.dist_storage.CNSResponseB\003\200\001\001", 914);
+    "storage.NSCode:\006NS_SUC\".\n\006Bucket\022\021\n\006numb"
+    "er\030\001 \001(\004:\0010\022\021\n\tnode_list\030\002 \003(\t\"E\n\nCNSReq"
+    "uest\0227\n\010req_type\030\001 \001(\0162\034.dist_storage.CN"
+    "SRequestType:\007CNS_NUL\"\246\001\n\013CNSResponse\022.\n"
+    "\010ret_code\030\001 \001(\0162\024.dist_storage.NSCode:\006N"
+    "S_SUC\022\022\n\010dist_alg\030\002 \001(\t:\000\022\025\n\007ds_port\030\003 \001"
+    "(\t:\0049998\022)\n\013bucket_list\030\004 \003(\0132\024.dist_sto"
+    "rage.Bucket\022\021\n\tnode_list\030\005 \003(\t* \n\006NSCode"
+    "\022\n\n\006NS_SUC\020\000\022\n\n\006NS_ERR\020\001*6\n\nNodeAction\022\n"
+    "\n\006NA_NUL\020\000\022\007\n\003Reg\020\001\022\t\n\005UnReg\020\002\022\010\n\004Beat\020\003"
+    "*4\n\016CNSRequestType\022\013\n\007CNS_NUL\020\000\022\n\n\006BUKET"
+    "S\020\001\022\t\n\005NODES\020\0022\327\001\n\013NameService\022>\n\tHeartB"
+    "eat\022\027.dist_storage.HBRequest\032\030.dist_stor"
+    "age.HBResponse\022D\n\rGetBucketInfo\022\030.dist_s"
+    "torage.CNSRequest\032\031.dist_storage.CNSResp"
+    "onse\022B\n\013GetNodeInfo\022\030.dist_storage.CNSRe"
+    "quest\032\031.dist_storage.CNSResponseB\003\200\001\001", 917);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "name_serv.proto", &protobuf_RegisterTypes);
   HBRequest::default_instance_ = new HBRequest();
@@ -1039,7 +1039,7 @@ bool Bucket::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint64 number = 1;
+      // optional uint64 number = 1 [default = 0];
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -1097,7 +1097,7 @@ failure:
 void Bucket::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:dist_storage.Bucket)
-  // required uint64 number = 1;
+  // optional uint64 number = 1 [default = 0];
   if (has_number()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->number(), output);
   }
@@ -1122,7 +1122,7 @@ void Bucket::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Bucket::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:dist_storage.Bucket)
-  // required uint64 number = 1;
+  // optional uint64 number = 1 [default = 0];
   if (has_number()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->number(), target);
   }
@@ -1149,7 +1149,7 @@ int Bucket::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint64 number = 1;
+    // optional uint64 number = 1 [default = 0];
     if (has_number()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -1211,7 +1211,6 @@ void Bucket::CopyFrom(const Bucket& from) {
 }
 
 bool Bucket::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -1877,7 +1876,6 @@ void CNSResponse::CopyFrom(const CNSResponse& from) {
 
 bool CNSResponse::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->bucket_list())) return false;
   return true;
 }
 
