@@ -1,7 +1,7 @@
 
+top_dir=${top_srcdir}/..
 dataserver_rootdir = ${top_srcdir}/src/data_server
-top_dir=../../..
-third_dir=../../../third-64
+third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 
 #INCLUDES=-I${top_srcdir}/src -I${third_dir}/protobuf/include/ -I${third_dir}/iniparser/include/

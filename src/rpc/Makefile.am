@@ -1,5 +1,5 @@
-rpc_rootdir = ${top_srcdir}/src/rpc
-top_dir=../../..
+top_dir=${top_srcdir}/..
+rpc_rootdir=${top_srcdir}/src/rpc
 third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 

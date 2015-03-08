@@ -1,6 +1,6 @@
-
-common_rootdir = ${top_srcdir}/src/common
-third_dir=../../../third-64
+top_dir=${top_srcdir}/..
+common_rootdir=${top_srcdir}/src/common
+third_dir=${top_dir}/third-64
 
 AM_CPPFLAGS=-I${third_dir}/glog/include/ \
 			-I${third_dir}/crypto/include/

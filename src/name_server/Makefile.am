@@ -1,7 +1,7 @@
 
-nameserver_rootdir = ${top_srcdir}/src/name_server
-top_dir=../../..
-third_dir=../../../third-64
+top_dir=${top_srcdir}/..
+nameserver_rootdir=${top_srcdir}/src/name_server
+third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 
 AM_CPPFLAGS=-I${top_srcdir}/src \

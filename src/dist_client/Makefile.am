@@ -1,7 +1,7 @@
 
-distclient_rootdir = ${top_srcdir}/src/dist_client
-top_dir=../../..
-third_dir=../../../third-64
+top_dir=${top_srcdir}/..
+distclient_rootdir=${top_srcdir}/src/dist_client
+third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 
 AM_CPPFLAGS=-I${top_srcdir}/src \

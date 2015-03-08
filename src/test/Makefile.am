@@ -1,6 +1,6 @@
-test_rootdir = ${top_srcdir}/src/test
-top_dir=../../..
-third_dir=../../../third-64
+top_dir=${top_srcdir}/..
+test_rootdir=${top_srcdir}/src/test
+third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 config_dir=${top_srcdir}/src/config
 

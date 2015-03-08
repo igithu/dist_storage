@@ -1,5 +1,5 @@
+top_dir=${top_srcdir}/..
 config_rootdir = ${top_srcdir}/src/config
-top_dir=../../..
 third_dir=${top_dir}/third-64
 pub_dir=${top_dir}/pub_util
 
