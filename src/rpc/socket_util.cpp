@@ -62,7 +62,12 @@ int32_t Socket(int32_t family, int32_t type, int32_t protocol) {
     return fd;
 }
 
-int32_t TcpListen(const char *host, const char *port, int32_t family, bool is_block) {
+int32_t TcpListen(
+        const char *host,
+        const char *port,
+        int32_t family,
+        bool is_block) {
+
     struct addrinfo hints, *res = NULL, *ressave = NULL;
 
     bzero(&hints, sizeof(struct addrinfo));
@@ -101,8 +106,8 @@ int32_t TcpListen(const char *host, const char *port, int32_t family, bool is_bl
             break;
         }
         DS_LOG(WARNING, "Bind failed!, errno is: %s.", strerror(errno));
-        
-        close(listenfd);    
+
+        close(listenfd);
     } while ((res = res->ai_next) != NULL);
 
     if (NULL == res) {
@@ -126,7 +131,7 @@ int32_t TcpListen(const char *host, const char *port, int32_t family, bool is_bl
 
 int32_t TcpConnect(const char *host, const char *port, int32_t family) {
     struct addrinfo hints, *res = NULL, *ressave = NULL;
-       
+
     bzero(&hints, sizeof(struct addrinfo));
     hints.ai_family = family;
     hints.ai_socktype = SOCK_STREAM;
@@ -135,7 +140,7 @@ int32_t TcpConnect(const char *host, const char *port, int32_t family) {
         DS_LOG(ERROR,"tcp_connect error for %s, %s.", host, port);
         return -1;
     }
-    
+
     ressave = res;
     int32_t  sockfd;
     do {
@@ -149,7 +154,7 @@ int32_t TcpConnect(const char *host, const char *port, int32_t family) {
         }
         close(sockfd);  /* ignore this one */
     } while ((res = res->ai_next) != NULL);
-    
+
     if (res == NULL) {    /* errno set from final connect() */
         DS_LOG(ERROR, "tcp_connect error! the errno is: %s.", strerror(errno));
         freeaddrinfo(ressave);
@@ -243,7 +248,7 @@ int32_t SendMsg(int32_t fd, std::string& send_msg_str) {
     } while(send_size > 0);
 
     return 0;
-}   
+}
 
 }  // end of namespace dist_storage
 

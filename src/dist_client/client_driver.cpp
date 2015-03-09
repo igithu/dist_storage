@@ -118,7 +118,7 @@ bool DistStorageClientDriver::GetNodeClient(const char* key, DSC_PTR& dsc_ptr) {
         DS_LOG(ERROR, "Alive node map is empty!please check!");
         return false;
     }
- 
+
     const NODE_LIST& node_list = *((*bn_map_ptr_)[hash_key]);
     dsc_ptr.reset();
     for (NODE_LIST::const_iterator nl_iter = node_list.begin();
@@ -213,7 +213,7 @@ bool DistStorageClientDriver::BuildDSClientMap() {
         DS_LOG(ERROR, "Get node info failed!");
         return false;
     }
-    
+
     // build new data server map
     DSCLINT_MAP_PTR new_client_map_ptr(new DSCLINT_MAP());
     for (vector<string>::iterator nl_iter = node_list.begin();
@@ -229,7 +229,7 @@ bool DistStorageClientDriver::BuildDSClientMap() {
     {
         WriteLockGuard wguard(ds_client_rwlock_);
         ds_client_map_ptr_.swap(new_client_map_ptr);
-    }  
+    }
 
     return true;
 }

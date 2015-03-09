@@ -155,8 +155,10 @@ bool NodeManager::UpdateNodeStatus() {
 
     int64_t now_time = time(NULL);
 
-    int64_t pend_time = DS_SYS_CONF.IniGetInt("name_service:dataserver_pendingtimeout");
-    int64_t dead_time = DS_SYS_CONF.IniGetInt("name_service:dataserver_deadtimeout");
+    int64_t pend_time = DS_SYS_CONF.IniGetInt(
+            "name_service:dataserver_pendingtimeout");
+    int64_t dead_time = DS_SYS_CONF.IniGetInt(
+            "name_service:dataserver_deadtimeout");
 
     if (dead_time - pend_time < 30) {
         //DS_LOG(WARNING, "invalid pending_timeout and dead_timeout set! 

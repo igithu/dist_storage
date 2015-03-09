@@ -78,7 +78,7 @@ void Channel::CallMethod(const MethodDescriptor* method,
         close(connect_fd_);
         return;
     }
-  
+
     if (SendMsg(connect_fd_, send_str) < 0) {
         DS_LOG(ERROR, "Send msg error!");
         close(connect_fd_);
@@ -146,7 +146,6 @@ bool FormatRecvMsg(const string& recv_str, Message* response) {
         DS_LOG(ERROR, "Parse recv msg error! %s", recv_str.c_str());
         return false;
     }
-        
 
     if (SER_INTERNAL_ERROR == recv_rpc_msg.head_code()) {
         DS_LOG(ERROR, "Server internal error!");

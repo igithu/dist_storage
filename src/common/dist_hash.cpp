@@ -21,10 +21,11 @@
 namespace dist_storage {
 
 Long KetamaHash(unsigned char digest[], Long locate) {
-    unsigned int hash_val = (digest[3 + locate * 4] << 24) | 
-                   (digest[2 + locate * 4] << 16) | 
-                   (digest[1 + locate * 4] << 8) | 
-                   (digest[3 + locate * 4]);
+    unsigned int hash_val =
+        (digest[3 + locate * 4] << 24) |
+        (digest[2 + locate * 4] << 16) |
+        (digest[1 + locate * 4] << 8) |
+        (digest[0 + locate * 4]);
 
     return hash_val & 0xffffffffL;
 }

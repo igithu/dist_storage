@@ -21,7 +21,7 @@
 #include "config/config_manager.h"
 
 namespace dist_storage {
-    
+
 namespace dist_client {
 
 DistStorageClientThread::DistStorageClientThread() {
@@ -34,7 +34,8 @@ void DistStorageClientThread::Run() {
 
     DistStorageClientDriver& dsc_driver = 
         DistStorageClientDriver::GetInstance();
-    time_t bucket_interval = DS_SYS_CONF.IniGetInt("dist_client:bucket_update_interval");
+    time_t bucket_interval = DS_SYS_CONF.IniGetInt(
+            "dist_client:bucket_update_interval");
     if (bucket_interval <= 0) {
         bucket_interval = 60 * 30;
     }

@@ -23,7 +23,7 @@
 #include "common/crytocpp.h"
 #include "common/dist_hash.h"
 
-namespace dist_storage {    
+namespace dist_storage {
 
 namespace name_server {
 
@@ -35,20 +35,26 @@ bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_map) {
 
     int32_t buckt_num = 100;
     int32_t group_num = buckt_num / 4;
-    
-    const char* server_list_str = DS_SYS_CONF.IniGetString("service:data_server_list");
+
+    const char* server_list_str =
+        DS_SYS_CONF.IniGetString("service:data_server_list");
     vector<string> data_node_list;
     Split(server_list_str, ",", data_node_list);
+
+    // get the bucket and  server host mapping
     for (vector<string>::iterator ser_iter = data_node_list.begin();
          ser_iter != data_node_list.end();
          ++ser_iter) {
         const string& server_str = *ser_iter;
         for (int32_t i = 0; i < group_num; ++i) {
             unsigned char md5_str[server_str.size() + 2];
-            sprintf((char*)md5_str, "%s%c", server_str.c_str(), static_cast<char>(i));
+            sprintf((char*)md5_str, "%s%c",
+                    server_str.c_str(), static_cast<char>(i));
             unsigned char digest[16];
+
             MD5(md5_str, digest);
             for (int j = 0; j < 4; ++j) {
+                // get hash number
                 Long m = KetamaHash(digest, j);
                 BI_PTR bi_ptr(new BucketInfo());
                 bi_ptr->number = m;
@@ -65,6 +71,7 @@ bool KetamaDistAlg::BuildDistTable(BUCKET_NODE_MAP& bi_map) {
     return true;
 }
 
+// fow now, there is no need to call this api
 bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_map,
                                 const string& key, 
                                 string& host) {
@@ -89,7 +96,8 @@ bool KetamaDistAlg::GetDistNode(const BUCKET_NODE_MAP& bi_map,
         do {
             bi_itr = bi_map.lower_bound(m);
             if (bi_itr != bi_map.end()) {
-                const BN_LIST& bi_list = *(bi_itr->second->bnode_list_ptr);
+                const BN_LIST& bi_list =
+                    *(bi_itr->second->bnode_list_ptr);
                 if (bi_list.size() == 0) {
                     return false;
                 }

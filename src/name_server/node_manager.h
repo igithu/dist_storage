@@ -45,9 +45,9 @@ namespace name_server {
 enum Status {
     Reg,
     UnReg,
-    Alive, 
+    Alive,
     Pending,
-    Dead 
+    Dead
 };
 
 typedef struct NodeInfo_t {
@@ -56,7 +56,7 @@ typedef struct NodeInfo_t {
     // node available space
     int64_t disk_space;
     // current flow
-    int64_t visit_flow; 
+    int64_t visit_flow;
 } NodeInfo;
 
 typedef struct NodeStatus_t {
@@ -68,7 +68,7 @@ typedef boost::shared_ptr<NodeInfo> NI_PTR;
 typedef boost::shared_ptr<NodeStatus> NS_PTR;
 typedef struct NodeStatusInfo_t {
     // ctor
-    NodeStatusInfo_t() : 
+    NodeStatusInfo_t() :
         node_info_ptr(new NodeInfo_t()), node_status_ptr(new NodeStatus_t()) {
     }
 
@@ -115,7 +115,7 @@ class NodeManager {
 
         // stop all
         bool Stop();
-        
+
         // api to node_info_map_
         bool UpdateNodeInfo(const string& server_str, NI_PTR& hb_ni_ptr);
 
@@ -144,13 +144,13 @@ class NodeManager {
         NODE_LIST_PTR unavail_nlist_ptr_;
 
         // for node_info_map_
-        PUBLIC_UTIL::ATOMIC_BOOL is_status_updated_;       
+        PUBLIC_UTIL::ATOMIC_BOOL is_status_updated_;
 
-        // rw lock for alive_nlist_ptr_ 
-        PUBLIC_UTIL::RWLock alive_rwlock_;  
+        // rw lock for alive_nlist_ptr_
+        PUBLIC_UTIL::RWLock alive_rwlock_;
 
         // rw lock for unavail_nlist_ptr_
-        PUBLIC_UTIL::RWLock unavail_rwlock_;  
+        PUBLIC_UTIL::RWLock unavail_rwlock_;
 
         // for static
         static NMSmartPtr node_manager_ptr_;

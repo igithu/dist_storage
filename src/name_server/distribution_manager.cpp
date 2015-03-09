@@ -46,7 +46,7 @@ DistributionManager& DistributionManager::GetInstance() {
         MutexLockGuard lock(instance_mutex_);
         dist_manager_ptr_.reset(new DistributionManager());
         return *dist_manager_ptr_;
-    }   
+    }
     return *dist_manager_ptr_;
 }
 

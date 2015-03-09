@@ -79,8 +79,10 @@ void NameServiceThread::Run() {
     NameServiceImpl name_service;
     rpc_server.RegisteService(&name_service);
 
-    int32_t thread_num = DS_SYS_CONF.IniGetInt("name_service:thread_num");
-    const char* port = DS_SYS_CONF.IniGetString("name_service:port");
+    int32_t thread_num = DS_SYS_CONF.IniGetInt(
+            "name_service:thread_num");
+    const char* port = DS_SYS_CONF.IniGetString(
+            "name_service:port");
     const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
     DS_LOG(INFO, "Name service: the port is %s, addr is %s ", port, addr);
 

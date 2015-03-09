@@ -42,8 +42,10 @@ NameServerClient::~NameServerClient() {
 }
 
 bool NameServerClient::ClientInit() {
-    const char* ns_host = DS_SYS_CONF.IniGetString("name_service:host");
-    const char* ns_port = DS_SYS_CONF.IniGetString("name_service:port");
+    const char* ns_host = DS_SYS_CONF.IniGetString(
+            "name_service:host");
+    const char* ns_port = DS_SYS_CONF.IniGetString(
+            "name_service:port");
 
     rpc_channel_ptr_ = new Channel(ns_host, ns_port);
     service_stub_ptr_ = new NameService::Stub(rpc_channel_ptr_);
@@ -121,9 +123,9 @@ bool NameServerClient::GetNodeInfo(vector<string>& node_list, string& ds_port) {
         DS_LOG(WARNING, "Get the node info id empty!");
         return false;
     }
-    
+
     return true;
-} 
+}
 
 }  // end of namespace dist_client
 

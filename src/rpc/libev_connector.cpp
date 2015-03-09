@@ -42,7 +42,7 @@ bool LibevConnector::Initialize(const char *host, const char *port) {
         DS_LOG(ERROR, "Rpc server listen failed!")
         return false;
     }
-    
+
     epoller_ = ev_loop_new(EVBACKEND_EPOLL | EVFLAG_NOENV);
 
     ev_io_init(&socket_watcher_, LibevConnector::AcceptCb, listenfd, EV_READ);
@@ -56,7 +56,7 @@ void LibevConnector::LibevLoop() {
         DS_LOG(ERROR, "It is not Initialize!");
         return;
     }
-    
+
     while (true) {
         ev_loop(epoller_, 0);
     }

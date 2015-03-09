@@ -190,7 +190,7 @@ void* RpcServer::RpcProcessor(void *arg) {
     const MethodDescriptor* method_desc = rpc_method->method;
     Message* response = rpc_method->response->New();
     rpc_method->service->CallMethod(method_desc, NULL, request, response, NULL);
-    
+
     if (!rpc_serv_ptr->SendFormatStringMsg(event_fd, response)) {
         DS_LOG(ERROR, "Send format response failed!");
         rpc_serv_ptr->ErrorSendMsg(event_fd, "send format response failed!");

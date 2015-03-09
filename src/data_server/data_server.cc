@@ -57,12 +57,12 @@ inline void Daemonize() {
         if (fd > STDERR_FILENO) {
             close(fd);
         }
-    }  
+    }
 }
 
 int main(int argc, char* argv[]) {
-    InitSignal();
 
+    InitSignal();
 
     if (true) {
          Daemonize();
@@ -84,8 +84,10 @@ int main(int argc, char* argv[]) {
     }
 
     const char* addr = DS_SYS_CONF.IniGetLocalIPAddr();
-    const char* port = DS_SYS_CONF.IniGetString("data_service:port");
-    int32_t thread_num = DS_SYS_CONF.IniGetInt("data_service:threadpool_num");
+    const char* port = DS_SYS_CONF.IniGetString(
+            "data_service:port");
+    int32_t thread_num = DS_SYS_CONF.IniGetInt(
+            "data_service:threadpool_num");
 
     DS_LOG(INFO, "get the rpc sever....");
     RpcServer& rpc_server = RpcServer::GetInstance();
