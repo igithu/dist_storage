@@ -1,5 +1,5 @@
 # dist_storage
-分布式存储引擎，主要涵盖实现 RPC，一致性Hash，master-slave-client架构，心跳机制等。 数据迁移，数据副本，节点增加宕机容错等讲在本阶段后继续增加
+mini分布式存储引擎，主要涵盖实现 RPC，一致性Hash，master-slave-client架构，心跳机制等。 数据迁移，数据副本，节点增加宕机容错等讲在本阶段后继续增加
 
 总体说明
 
