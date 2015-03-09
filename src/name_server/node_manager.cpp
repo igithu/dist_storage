@@ -43,7 +43,7 @@ NodeManager::~NodeManager() {
    //if (NULL != nse_thread_ptr_) {
    //    delete nse_thread_ptr_;
    //}
-   
+
    if (NULL != nsu_thread_ptr_) {
        delete nsu_thread_ptr_;
    }
@@ -54,7 +54,7 @@ NodeManager& NodeManager::GetInstance() {
         MutexLockGuard lock(instance_mutex_);
         node_manager_ptr_.reset(new NodeManager());
         return *node_manager_ptr_;
-    }   
+    }
     return *node_manager_ptr_;
 }
 
@@ -86,7 +86,7 @@ bool NodeManager::InitNM() {
             nsi_ptr->host = server_str;
 
             node_info_map_.insert(std::make_pair(server_str, nsi_ptr));
-        } 
+        }
     }
     is_status_updated_ = true;
     DS_LOG(INFO, "The first node_info_map_ size is %d.", node_info_map_.size());
@@ -99,7 +99,7 @@ bool NodeManager::Start() {
 
     //nse_thread_ptr_ = new NameServiceThread();
     nsu_thread_ptr_ = new NodeStatusUpdater();
-    
+
     //nse_thread_ptr_->Start();
     nsu_thread_ptr_->Start();
 
@@ -165,7 +165,7 @@ bool NodeManager::UpdateNodeStatus() {
         pend_time = 60;
         dead_time = 120;
     }
-    
+
     for (NS_HASH_MAP::iterator nsi_iter = node_info_map_.begin();
          nsi_iter != node_info_map_.end();
          ++nsi_iter) {
@@ -215,7 +215,7 @@ bool NodeManager::UpdateNodeList() {
     for (NS_HASH_MAP::iterator nsi_iter = node_info_map_.begin();
          nsi_iter != node_info_map_.end();
          ++nsi_iter) {
-        
+
         NodeStatusInfo& nsi = *(nsi_iter->second);
         const string& cur_host = nsi_iter->first;
         {

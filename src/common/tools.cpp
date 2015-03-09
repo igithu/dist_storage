@@ -28,6 +28,7 @@ using std::string;
 using std::vector;
 
 bool Split(string& splited_str, const string& split_ch, vector<string>& split_vec) {
+    // split the splited_str by split_ch and insert these string into split_vec
     vector<string> split_tmp_vec;
     split_vec.clear();
     boost::split(split_tmp_vec, splited_str, boost::is_any_of(split_ch));

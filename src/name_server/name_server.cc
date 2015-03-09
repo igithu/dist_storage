@@ -59,7 +59,7 @@ inline void Daemonize() {
         if (fd > STDERR_FILENO) {
             close(fd);
         }
-    }  
+    }
 }
 
 int main(int argc, char* argv[]) {

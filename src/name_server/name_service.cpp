@@ -73,6 +73,7 @@ void NameServiceImpl::GetNodeInfo(RpcController* controller,
     response->set_ds_port(ds_port);
 }
 
+// name service thread run
 void NameServiceThread::Run() {
     RpcServer& rpc_server = RpcServer::GetInstance();
     NameServiceImpl name_service;

@@ -21,7 +21,7 @@
 #include "common/crytocpp.h"
 #include "common/dist_hash.h"
 
-namespace dist_storage {    
+namespace dist_storage {
 
 namespace dist_client {
 
@@ -44,6 +44,7 @@ bool KetamaDistAlg::GetNodeHashKey(const BUCKET_NODE_MAP& bi_hash_map,
 
     BUCKET_NODE_MAP::const_iterator bi_itr = bi_hash_map.find(m);
     if (bi_itr != bi_hash_map.end()) {
+        // goal the bucket
         const NODE_LIST& bi_list = *(bi_itr->second);
         if (bi_list.size() == 0) {
             return false;
@@ -51,6 +52,7 @@ bool KetamaDistAlg::GetNodeHashKey(const BUCKET_NODE_MAP& bi_hash_map,
         hash_key = m;
     } else {
         do {
+            // find the nearest bucket
             bi_itr = bi_hash_map.lower_bound(m);
             if (bi_itr != bi_hash_map.end()) {
                 if (!bi_itr->second || bi_itr->second->size() == 0) {

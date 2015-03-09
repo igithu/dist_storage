@@ -32,20 +32,13 @@ CL_CONF_PATH=$CL_PATH/conf
 
 
 function start_build()
-{ 
-    echo $1
-    echo $2
-    echo $3
-
+{
     BIN_FILE=$1
     CONF_FILE=$2
     START_FILE=$3
     DI_BIN_PATH=$4
     DI_CONF_PATH=$5
 
-    echo "------$START_FILE"
-    echo "------$CONF_FILE"
-    
     if [ ! -f $BIN_FILE ]
     then
         echo "1.The $BIN_FILE bin file is not exist!"
@@ -63,7 +56,7 @@ function start_build()
         echo "3.The $START_FILE  file is not exist!"
         return -1
     fi
-    
+
     if [ ! -d $DI_BIN_PATH ]
     then
         mkdir -p $DI_BIN_PATH
