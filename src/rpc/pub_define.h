@@ -26,7 +26,7 @@ namespace dist_storage {
 #define SER_RETURN_SUCCU   200
 
 // Be caution! if you chage MAX_INFO_LEN, MUST be note the send/recv max buf len
-#define MAX_INFO_LEN 1024 * 1024
+#define MAX_INFO_LEN 512
 
 
 }  // namespace 

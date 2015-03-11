@@ -169,7 +169,7 @@ int32_t Accept(int fd, struct sockaddr_in &sa, int32_t addrlen) {
     int32_t new_fd;
     do {
         new_fd = accept(fd, (struct sockaddr *) &sa, (socklen_t *) &addrlen);
-        //SetNonBlock(new_fd);
+        SetNonBlock(new_fd);
 
         if (new_fd < 0) {
 #ifdef  EPROTO
@@ -181,6 +181,7 @@ int32_t Accept(int fd, struct sockaddr_in &sa, int32_t addrlen) {
         }
 
     } while (false);
+
     return new_fd;
 }
 
@@ -193,7 +194,8 @@ int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
 
     do {
         int32_t buf_len = recv(fd, buf, sizeof(buf) + 1, 0);
-        buf[buf_len] = '\0';
+        // also fflush(stdio) work,why???
+        fflush(stdout);
         if (buf_len < 0) {
             if (EAGAIN == errno || EINTR == errno) {
                 //DS_LOG(ERROR, "EAGAIN or EINTR in RecvMsg!");
@@ -204,6 +206,7 @@ int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
         } else if (0 == buf_len) {
             break;
         }
+        buf[buf_len] = '\0';
 
         if (buf_len > 0) {
             recv_msg_str.append(buf, strlen(buf));
@@ -220,32 +223,37 @@ int32_t RecvMsg(int32_t fd, std::string& recv_msg_str) {
 int32_t SendMsg(int32_t fd, std::string& send_msg_str) {
     int32_t send_size = send_msg_str.size();
 
-    if (MAX_INFO_LEN < send_size) {
-        DS_LOG(ERROR, "You send msg is too large, please redefine code!");
-        return -1;
-    }
-
+    // if (MAX_INFO_LEN < send_size) {
+    //     DS_LOG(ERROR, "You send msg is too large, please redefine code!");
+    //     return -1;
+    // }
     const char* send_ptr = send_msg_str.c_str();
     do {
-        int32_t buf_len = send(fd, send_ptr, send_size + 1, 0);
+        int32_t buf_len = send(fd, send_ptr, MAX_INFO_LEN, 0);
         if (buf_len < 0) {
             if (EINTR == errno) {
                 DS_LOG(ERROR, "send error errno is EINTR.");
                 return -1;
-            } 
+            }
             if (EAGAIN == errno) {
+                DS_LOG(ERROR, "send error errno is EAGAIN.");
                 sleep(1);
                 continue;
             }
             return -1;
         }
         if (buf_len >= send_size) {
+            DS_LOG(INFO, "Send the msg buf len is %d", buf_len);
+            shutdown(fd, 1);
             return buf_len;
         }
 
         send_size -= buf_len;
         send_ptr += buf_len;
+        DS_LOG(INFO, "Send the msg send_size is %d", send_size);
     } while(send_size > 0);
+    DS_LOG(INFO, "Send the msg is done!");
+    shutdown(fd, 1);
 
     return 0;
 }

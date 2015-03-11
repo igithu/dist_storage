@@ -30,8 +30,15 @@ int main() {
 
     string send_str = "123456789|123456789";
     if (SendMsg(connect_fd, send_str) < 0) {
-        printf("send msg error!");
+        printf("send msg error!\n");
     }
+
+    string ss;
+    if (RecvMsg(connect_fd, ss) < 0) {
+        printf("erroe recv!");
+    }
+    printf("ss %s\n", ss.c_str());
+
     close(connect_fd);
 
 

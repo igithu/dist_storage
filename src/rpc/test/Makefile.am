@@ -32,7 +32,7 @@ TSC_SRC=${test_rootdir}/testsocket_client.cpp \
 testsocket_client_SOURCES=${TSC_SRC}
 
 
-TSS_SRC=${test_rootdir}/testsocket_server.cpp \
+TSS_SRC=${test_rootdir}/test_server.cpp \
 		${rpc_rootdir}/socket_util.h \
 		${rpc_rootdir}/socket_util.cpp
 

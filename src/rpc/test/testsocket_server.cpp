@@ -35,8 +35,16 @@ int main() {
         return 0;
     }
 
+    fd_set fds;
+    struct timeval tv;
+    int32_t max_sock;
+
+
     printf("errno is %s , listenfd %d\n", strerror(errno), listenfd);
     while (true) {
+        FD_ZERO(&fds);
+        FD_SET(listenfd, &fds)
+
         struct sockaddr_in client_addr;
         socklen_t len = sizeof(struct sockaddr_in);
         int32_t cfd = Accept(listenfd, client_addr, len);
@@ -50,6 +58,10 @@ int main() {
             printf("recv msg failed!\n");
         }
         printf("recv_msg_str is %s.\n", recv_msg_str.c_str());
+        string send_str = recv_msg_str;
+        if (SendMsg(cfd, send_str) < 0) {
+            printf("send msg failed!\n");
+        }
         close(cfd);
     }
     close(listenfd);
