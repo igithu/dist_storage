@@ -29,7 +29,7 @@ namespace dist_storage {
 #define MAX_INFO_LEN 512
 
 
-}  // namespace 
+}  // end of namespace dist_storage
 
 
 
