@@ -20,6 +20,8 @@
 #ifndef  __DISTRIBUTE_ALG_H_
 #define  __DISTRIBUTE_ALG_H_
 
+#include <stdint.h>
+
 #include <string>
 #include <vector>
 #include <map>

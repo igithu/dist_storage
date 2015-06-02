@@ -1,8 +1,9 @@
+AUTOMAKE_OPTIONS = foreign subdir-objects
 
 nameserver_rootdir=${top_srcdir}/src/name_server
 test_rootdir=${nameserver_rootdir}/test
 top_dir=../../../..
-third_dir=../../../../third-64
+third_dir=../../../../third-32
 pub_dir=${top_dir}/pub_util
 
 AM_CPPFLAGS=-I${top_srcdir}/src \

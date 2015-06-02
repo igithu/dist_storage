@@ -14,6 +14,9 @@
  *  
  **/
 
+#include <stdio.h>
+#include <unistd.h>
+
 #include "rpc/socket_util.h"
 
 using namespace std;

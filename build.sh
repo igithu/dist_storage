@@ -102,7 +102,7 @@ then
 fi
 
 # make the project
-./configure 
+./configure --disable-dependency-tracking
 if [ $? -ne 0 ]
 then
     echo "The configure the project failed!"

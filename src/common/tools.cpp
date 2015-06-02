@@ -18,6 +18,7 @@
 #include "tools.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/detail/classification.hpp>

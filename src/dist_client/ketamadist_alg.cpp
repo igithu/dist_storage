@@ -14,6 +14,7 @@
  *  
  **/
 
+#include <string.h>
 
 #include "ketamadist_alg.h"
 

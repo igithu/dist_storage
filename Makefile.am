@@ -2,7 +2,7 @@
 #TEST = test
 #endif
 
-AUTOMAKE_OPTIONS=foreign
-SUBDIRS=src
+AUTOMAKE_OPTIONS = foreign subdir-objects
+SUBDIRS = src
 
 

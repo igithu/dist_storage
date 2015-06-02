@@ -1,13 +1,17 @@
+AUTOMAKE_OPTIONS = foreign subdir-objects
+
 top_dir = ${top_srcdir}/..
 common_rootdir = ${top_srcdir}/src/common
-third_dir = ${top_dir}/third-64
+third_dir = ${top_dir}/third-32
 
 AM_CPPFLAGS = -I${third_dir}/glog/include/ \
+			  -I${third_dir}/boost/include/ \
 			  -I${third_dir}/crypto/include/
 
 AM_LDFLAGS = -lz -lrt -rdynamic
 
 LDADD = ${third_dir}/glog/lib/libglog.a \
+		${third_dir}/boost/lib/*.a \
 		${third_dir}/crypto/lib/*.a
 
 AM_CXXFLAGS = -Werror
