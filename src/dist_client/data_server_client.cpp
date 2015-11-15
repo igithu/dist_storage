@@ -22,6 +22,8 @@ namespace dist_storage {
 
 namespace dist_client {
 
+using namespace livevrpc;
+
 DataServerClient::DataServerClient(const char* ds_host, const char* ds_port) :
    rpc_channel_ptr_(NULL), service_stub_ptr_(NULL) {
        ClientInit(ds_host, ds_port);

@@ -26,6 +26,8 @@ namespace dist_storage {
 
 namespace name_server {
 
+using libevrpc;
+
 
 NameServiceImpl::NameServiceImpl() {
 

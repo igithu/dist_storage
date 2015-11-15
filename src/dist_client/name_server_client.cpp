@@ -25,6 +25,7 @@ namespace dist_storage {
 namespace dist_client {
 
 using namespace google::protobuf;
+using namespace libevrpc;
 using std::string;
 
 NameServerClient::NameServerClient():

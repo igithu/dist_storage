@@ -45,9 +45,9 @@ class DataServerClient {
     private:
         // get init paramters
         bool ClientInit(const char* ds_host, const char* ds_port);
-        
+
     private:
-         Channel* rpc_channel_ptr_;
+        livevrpc::Channel* rpc_channel_ptr_;
 
          DataService::Stub* service_stub_ptr_;
 
