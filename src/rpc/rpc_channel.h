@@ -24,19 +24,15 @@
 #include <google/protobuf/service.h>
 #include <google/protobuf/message.h>
 
-namespace dist_storage {
+namespace libevrpc {
 
 using namespace google::protobuf;
 
 class Channel : public RpcChannel {
     public:
-        Channel(const char* addr, const char* port, bool allow_overlong = false);
+        Channel(const char* addr, const char* port);
 
         virtual ~Channel();
-
-        bool ResetHost(const char* addr);
-
-        bool ResetPort(const char* port);
 
         virtual void CallMethod(const MethodDescriptor* method,
                                 RpcController* controll,
@@ -46,11 +42,10 @@ class Channel : public RpcChannel {
 
         void Close();
 
-    private:
-        //FormatSendMsg();
+        bool OpenRpcAsyncMode();
 
-        //FormatRecvMsg();
-    
+        bool RpcCommunication();
+
     private:
         char* addr_;
 
@@ -58,11 +53,11 @@ class Channel : public RpcChannel {
 
         int32_t connect_fd_;
 
-        bool allow_overlong_;
+        bool is_channel_async_call_;
 
 };
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 

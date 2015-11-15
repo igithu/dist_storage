@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2014 aishuyu, Inc. All Rights Reserved
+ * Copyright (c) 2014 aishuyu.com, Inc. All Rights Reserved
  * 
  **************************************************************************/
  
@@ -28,7 +28,7 @@
 #include "atomic.h"
 #include "pthread_cond.h"
 
-namespace dist_storage {
+namespace libevrpc {
 
 using namespace PUBLIC_UTIL;
 
@@ -82,7 +82,7 @@ class ThreadPool {
 };
 
 
-} // end of namespace dist_storage
+} // end of namespace libevrpc
 
 #endif  //__THREAD_POOL_H_
 

@@ -1,6 +1,6 @@
 /***************************************************************************
  * 
- * Copyright (c) 2014 aishuyu, Inc. All Rights Reserved
+ * Copyright (c) 2014 aishuyu.com, Inc. All Rights Reserved
  * 
  **************************************************************************/
  
@@ -18,7 +18,7 @@
 
 #include "pthread_mutex.h"
 
-namespace dist_storage {
+namespace libevrpc {
 
 volatile ATOMIC_BOOL ThreadPool::running_(true);
 
@@ -43,6 +43,7 @@ ThreadPool::~ThreadPool() {
 }
 
 bool ThreadPool::Initialize() {
+    // init the task list
     thread_ids_ = (pthread_t *) malloc(nthread_num_ * sizeof(pthread_t));
     task_list_.task_head = (Task*) malloc(sizeof(Task));
     memset(thread_ids_, 0, sizeof(thread_ids_));
@@ -54,6 +55,7 @@ bool ThreadPool::Initialize() {
 
 
 bool ThreadPool::Start() {
+    // start all threads in the pool
     for (int i = 0; i < nthread_num_; ++i) {
         pthread_create(&thread_ids_[i], NULL, WorkerThread, this);
     }

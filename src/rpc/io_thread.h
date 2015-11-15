@@ -22,7 +22,7 @@
 
 #include "thread.h"
 
-namespace dist_storage {
+namespace libevrpc {
 
 using namespace PUBLIC_UTIL;
 
@@ -39,7 +39,7 @@ class IOThread : public Thread {
         char* port_;
 };
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 

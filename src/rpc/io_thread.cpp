@@ -16,13 +16,11 @@
 
 #include "io_thread.h"
 
-//#include <sys/epoll.h>
 #include <sys/socket.h>
 
 #include "rpc_server.h"
-#include "common/ds_log.h"
 
-namespace dist_storage {
+namespace libevrpc {
 
 #define MAXEVENTS 100
 
@@ -38,16 +36,18 @@ IOThread::~IOThread() {
 
 void IOThread::Run() {
     RpcServer& rpc_server = RpcServer::GetInstance();
+
     LibevConnector* libev_connector_ptr = rpc_server.GetLibevConnector();
     if (NULL == libev_connector_ptr) {
         return;
     }
-    libev_connector_ptr->Initialize(addr_, port_);
-    libev_connector_ptr->LibevLoop();
 
+    libev_connector_ptr->Initialize(addr_, port_);
+    // call loop and block here
+    libev_connector_ptr->LibevLoop();
 }
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 

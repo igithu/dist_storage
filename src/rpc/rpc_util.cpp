@@ -18,7 +18,7 @@
 
 #include <cstddef>
 
-namespace dist_storage {
+namespace libevrpc {
 
 uint32_t BKDRHash(const char *orig_str) {
 
@@ -32,7 +32,7 @@ uint32_t BKDRHash(const char *orig_str) {
     return (hash_code & 0x7FFFFFFF);
 }
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 

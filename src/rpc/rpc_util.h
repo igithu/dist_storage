@@ -22,11 +22,11 @@
 
 #include <stdint.h>
 
-namespace dist_storage {
+namespace libevrpc {
 
 uint32_t BKDRHash(const char *orig_str);
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 

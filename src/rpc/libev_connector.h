@@ -24,7 +24,7 @@
 
 #include <ev.h>
 
-namespace dist_storage {
+namespace libevrpc {
 
 class LibevConnector {
     public:
@@ -51,7 +51,7 @@ class LibevConnector {
 };
 
 
-}  // end of namespace dist_storage
+}  // end of namespace libevrpc
 
 
 
